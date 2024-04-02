@@ -11,6 +11,7 @@ function ListFilm() {
       key={`Film${item.id}`}
       name={item.name}
       url={item.imageurl}
+      description={item.description}
     />
   ))
   return (

@@ -128,8 +128,7 @@ export default function Film(props) {
                 display: 'flex',
                 margin: 'auto'
               }}>
-                <Box sx={{ color: 'white' }}>Làm việc từ xa đã trở thành một xu hướng phổ biến trong thế giới công việc hiện đại. Việc này mang lại nhiều lợi ích, bao gồm linh hoạt về thời gian, tiết kiệm chi phí đi lại, và tăng cường sự cân bằng giữa cuộc sống và công việc. Tuy nhiên, cũng có những thách thức cần phải vượt qua, như quản lý thời gian hiệu quả và duy trì mối liên kết xã hội trong môi trường làm việc từ xa.</Box>
-                <Box sx={{ color: 'white' }}>1</Box>
+                <Box sx={{ color: 'white' }}>{selectedMovie?.description}</Box>
               </Box>
             </Box>
           </Fade>

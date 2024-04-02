@@ -24,17 +24,17 @@ export const productData = [
     id: 1,
     imageurl:
       'https://www.bhdstar.vn/wp-content/uploads/2024/02/referenceSchemeHeadOfficeallowPlaceHoldertrueheight700ldapp-1.jpg',
-    name: 'Colorful sneakers',
+    name: 'MAI',
     price: '$19.99',
-    description: 'Some text about the product..'
+    description: 'MAI là câu chuyện về cuộc đời của người phụ nữ cùng tên, với ánh nhìn tĩnh lặng, xuyên thấu " Quá khứ chưa ngủ yên, ngày mai liệu sẽ đến?.."'
   },
   {
     id: 2,
     imageurl:
       'https://www.bhdstar.vn/wp-content/uploads/2024/02/referenceSchemeHeadOfficeallowPlaceHoldertrueheight700ldapp-2.jpg',
-    name: 'Sport sneakers',
+    name: 'DUNE: PART II',
     price: '$21.99',
-    description: 'Some text about the product..'
+    description: 'Một cậu bé trở thành Đấng cứu thế của những người du mục trên một hành tinh sa mạc có những con sâu khổng lồ bảo vệ một loại hàng hóa có tên là Spice. Anh ta sẽ trả cái giá nào để trở thành người cai trị mới của vũ trụ ?'
   },
   {
     id: 3,
