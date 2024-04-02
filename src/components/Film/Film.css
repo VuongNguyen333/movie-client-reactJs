@@ -1,0 +1,29 @@
+.card {
+  margin: 0;
+  /* Xóa margin của thẻ div */
+}
+
+.card img {
+  display: block;
+  /* Đảm bảo ảnh là một phần tử block */
+  margin-bottom: 10px;
+  /* Thiết lập margin dưới cho ảnh */
+}
+
+.card h2,
+.card p {
+  margin: 0;
+  /* Xóa margin của các phần tử heading và paragraph */
+}
+
+.card button {
+  padding: 5px 10px;
+  /* Tùy chỉnh padding cho nút */
+  width: '70%';
+
+}
+
+.card button:hover {
+  background-color: brown;
+}
+
