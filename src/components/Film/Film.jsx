@@ -72,7 +72,12 @@ export default function Film(props) {
           }}>
             {props.isActive &&
               <Box >
-                <Button startIcon={<ConfirmationNumberIcon fontSize='medium' />} onClick={() => handleOpen(props)}>Đặt vé</Button>
+                <Button
+                  startIcon={<ConfirmationNumberIcon fontSize='medium' />}
+                  onClick={() => {
+                    navigate(`/order/${props.id}/${props.name}`)
+                  }
+                  }>Đặt vé</Button>
               </Box>
             }
             {

@@ -1,12 +1,11 @@
 import MainOrder from './MainOrder'
 import Footer from '~/components/Footer'
-import ResponsiveAppBar from '~/components/AppBar/AppBar'
-import { Box } from '@mui/material'
+import AppBarCustom from '~/components/Appbar/AppBar'
 
 export default function Order() {
   return (
     <div>
-      <ResponsiveAppBar />
+      <AppBarCustom />
       <MainOrder />
       <Footer />
     </div>
