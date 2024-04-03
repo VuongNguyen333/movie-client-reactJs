@@ -1,14 +1,15 @@
+import React from 'react'
 import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Fade from '@mui/material/Fade'
 import Modal from '@mui/material/Modal'
-
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber'
 import InfoIcon from '@mui/icons-material/Info'
-import React from 'react'
 import './Film.css'
+import { useNavigate } from 'react-router-dom'
 export default function Film(props) {
-
+  const navigate = useNavigate()
   const handleOpen = (movie) => {
     setSelectedMovie(movie)
     setOpen(true)
@@ -60,7 +61,7 @@ export default function Film(props) {
           onClick={() => handleOpen(props)}
           className="truncate-text"
           title={props.name.toUpperCase()}
-          style={{ color: 'white', fontWeight: 'bold', cursor:'pointer', width:'fit-content', ':hover' : { color: 'red' } }}
+          style={{ color: 'white', fontWeight: 'bold', cursor: 'pointer', width: 'fit-content', ':hover': { color: 'red' } }}
         >
           {props.name.toUpperCase()}
         </div>
@@ -69,9 +70,9 @@ export default function Film(props) {
             display: 'flex',
             alignItems: 'center'
           }}>
-            { props.isActive &&
-              <Box>
-                <Button onClick={() => handleOpen(props)}>Đặt vé ngay</Button>
+            {props.isActive &&
+              <Box >
+                <Button startIcon={<ConfirmationNumberIcon fontSize='medium' />} onClick={() => handleOpen(props)}>Đặt vé</Button>
               </Box>
             }
             {
@@ -104,6 +105,7 @@ export default function Film(props) {
                     bgcolor: '#222831',
                     borderRadius: '5px',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     display: 'flex',
                     p: '5px',
                     border: '2px solid #87A922',
@@ -117,7 +119,7 @@ export default function Film(props) {
                   }}
                   onClick={() => handleOpen(props)}
                 >
-                  <InfoIcon sx={{ display: 'flex', alignItems: 'center', color: 'white', mr:'5px' }}/>
+                  <InfoIcon sx={{ display: 'flex', alignItems: 'center', color: 'white', mr: '5px', justifyContent: 'center' }} />
                   THÔNG TIN
                 </Box>
             }
@@ -142,8 +144,9 @@ export default function Film(props) {
             <Box sx={style}>
               <Box sx={modalStyle}>
                 <img style={{ maxWidth: '300px', borderRadius: '10px' }} src={selectedMovie?.url} alt="product image" />
-                { props.isActive &&
+                {props.isActive &&
                   <Button
+                    startIcon={<ConfirmationNumberIcon />}
                     sx={{
                       width: '180px',
                       height: '45px',
@@ -152,7 +155,7 @@ export default function Film(props) {
                       outline: '0',
                       padding: '12px',
                       color: 'white',
-                      background: 'linear-gradient(180deg, #72b343, #72b343, #BFEA7C)',
+                      background: 'linear-gradient(180deg, #72be43, #F0FF42)',
                       textAlign: 'center',
                       cursor: 'pointer',
                       fontSize: '18px',
@@ -160,8 +163,9 @@ export default function Film(props) {
                         opacity: 0.7
                       }
                     }}
+                    onClick={() => navigate(`/order/${selectedMovie.id}/${selectedMovie.name}`)}
                   >
-                    Đặt vé ngay
+                    Đặt vé
                   </Button>
                 }
               </Box>
