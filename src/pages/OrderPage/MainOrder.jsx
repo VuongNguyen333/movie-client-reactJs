@@ -5,8 +5,8 @@ import Step from '@mui/material/Step'
 import StepLabel from '@mui/material/StepLabel'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import OrderDateTime from './OrderDateTime'
-import OrderFilm from './OrderFilm'
+import OrderDateTime from './OrderSeat'
+import OrderFilm from './Payment'
 import OrderSchedule from './OrderSchedule'
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material/styles'
@@ -14,6 +14,11 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import VideoLabelIcon from '@mui/icons-material/VideoLabel'
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector'
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import PaidIcon from '@mui/icons-material/Paid';
+import ChairIcon from '@mui/icons-material/Chair';
+import OrderSeat from './OrderSeat'
+import Payment from './Payment'
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -22,13 +27,13 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       backgroundImage:
-        'linear-gradient(136deg, rgb(255, 215, 0) 0%, rgb(0, 128, 0) 100%)'
+        'linear-gradient(136deg, rgb(255, 240, 0) 0%, rgb(0, 200, 0) 100%)'
     }
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       backgroundImage:
-        'linear-gradient(136deg, rgb(255, 215, 0) 0%, rgb(0, 128, 0) 100%)'
+        'linear-gradient(136deg, rgb(255, 240, 0) 0%, rgb(0, 200, 0) 100%)'
     }
   },
   [`& .${stepConnectorClasses.line}`]: {
@@ -52,12 +57,12 @@ const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   alignItems: 'center',
   ...(ownerState.active && {
     backgroundImage:
-      'linear-gradient(136deg, rgb(255, 215, 0) 0%, rgb(0, 128, 0) 100%)',
+      'linear-gradient(136deg, rgb(255, 240, 0) 0%, rgb(0, 200, 0) 100%)',
     boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
   }),
   ...(ownerState.completed && {
     backgroundImage:
-      'linear-gradient(136deg, rgb(255, 215, 0) 0%, rgb(0, 128, 0) 100%)'
+      'linear-gradient(136deg, rgb(255, 240, 0) 0%, rgb(0, 200, 0) 100%)'
   })
 }))
 
@@ -65,9 +70,9 @@ function ColorlibStepIcon(props) {
   const { active, completed, className } = props
 
   const icons = {
-    1: <SettingsIcon />,
-    2: <GroupAddIcon />,
-    3: <VideoLabelIcon />
+    1: <PendingActionsIcon />,
+    2: <ChairIcon />,
+    3: <PaidIcon />
   }
 
   return (
@@ -116,7 +121,7 @@ export default function MainOrder() {
       <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#1a1d29', width: '100%', justifyContent: 'center' }}>
         <Box sx={{ alignItems: 'center', bgcolor: '#1a1d29', height: '70vh', width: '60%', justifyContent: 'center' }}>
           <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-            <Box sx={{ width: '50%', alignItems: 'center', justifyContent: 'center' }}>
+            <Box sx={{ width: '80%', alignItems: 'center', justifyContent: 'center' }}>
               <Stepper sx={{ color: 'white', alignItems: 'center', justifyContent: 'center', display: 'flex' }} activeStep={activeStep} connector={<ColorlibConnector />}>
                 {steps.map((label, index) => {
                   const stepProps = {}
@@ -145,7 +150,7 @@ export default function MainOrder() {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {activeStep === 0 ? <OrderDateTime /> : activeStep === 1 ? <OrderFilm /> : <OrderSchedule />}
+              {activeStep === 0 ? <OrderSchedule /> : activeStep === 1 ? <OrderSeat /> : <Payment />}
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                   color='warning'

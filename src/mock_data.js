@@ -168,3 +168,123 @@ export const productDataComming = [
     description: 'Mùa hè năm 1998, Kabul hoang tàn bị Taliban chiếm đóng. Trong tình yêu bất chấp bạo lực và đau khổ thường ngày, Mohsen và Zunaira muốn tin tưởng vào tương lai. Nhưng hành động vô nghĩa của Mohsen sẽ khiến cuộc sống của họ đảo lộn mãi mãi.'
   }
 ]
+
+export const branchs = [
+  {
+    'branch_id': 1,
+    'name': 'Branch A',
+    'theater_id': 101
+  },
+  {
+    'branch_id': 2,
+    'name': 'Branch B',
+    'theater_id': 102
+  },
+  {
+    'branch_id': 3,
+    'name': 'Branch C',
+    'theater_id': 103
+  }
+]
+
+export const theaters = [
+  {
+    'theater_id': 101,
+    'name': 'Theater 1',
+    'branch_id': 1
+  },
+  {
+    'theater_id': 102,
+    'name': 'Theater 2',
+    'branch_id': 2
+  },
+  {
+    'theater_id': 103,
+    'name': 'Theater 3',
+    'branch_id': 3
+  }
+]
+
+export const schedules = [
+  {
+    'schedule_id': 1,
+    'movie_id': 1,
+    'theater_id': 101,
+    'start_time': '2024-04-01 10:00:00',
+    'end_time': '2024-04-01 12:00:00',
+    'price': 100000,
+    'status': 'ongoing'
+  },
+  {
+    'schedule_id': 2,
+    'movie_id': 1,
+    'theater_id': 102,
+    'start_time': '2024-04-01 13:00:00',
+    'end_time': '2024-04-01 15:00:00',
+    'price': 120000,
+    'status': 'upcoming'
+  },
+  {
+    'schedule_id': 3,
+    'movie_id': 1,
+    'theater_id': 103,
+    'start_time': '2024-04-01 16:00:00',
+    'end_time': '2024-04-01 18:00:00',
+    'price': 110000,
+    'status': 'finished'
+  },
+  {
+    'schedule_id': 4,
+    'movie_id': 2,
+    'theater_id': 101,
+    'start_time': '2024-04-02 10:00:00',
+    'end_time': '2024-04-02 12:00:00',
+    'price': 100000,
+    'status': 'ongoing'
+  },
+  {
+    'schedule_id': 5,
+    'movie_id': 2,
+    'theater_id': 102,
+    'start_time': '2024-04-02 13:00:00',
+    'end_time': '2024-04-02 15:00:00',
+    'price': 120000,
+    'status': 'upcoming'
+  },
+  {
+    'schedule_id': 6,
+    'movie_id': 2,
+    'theater_id': 103,
+    'start_time': '2024-04-02 16:00:00',
+    'end_time': '2024-04-02 18:00:00',
+    'price': 110000,
+    'status': 'finished'
+  },
+  {
+    'schedule_id': 7,
+    'movie_id': 3,
+    'theater_id': 101,
+    'start_time': '2024-04-03 10:00:00',
+    'end_time': '2024-04-03 12:00:00',
+    'price': 100000,
+    'status': 'ongoing'
+  },
+  {
+    'schedule_id': 8,
+    'movie_id': 3,
+    'theater_id': 102,
+    'start_time': '2024-04-03 13:00:00',
+    'end_time': '2024-04-03 15:00:00',
+    'price': 120000,
+    'status': 'upcoming'
+  },
+  {
+    'schedule_id': 9,
+    'movie_id': 3,
+    'theater_id': 103,
+    'start_time': '2024-04-03 16:00:00',
+    'end_time': '2024-04-03 18:00:00',
+    'price': 110000,
+    'status': 'finished'
+  }
+]

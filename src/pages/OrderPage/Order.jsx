@@ -1,6 +1,6 @@
 import MainOrder from './MainOrder'
 import Footer from '~/components/Footer'
-import AppBarCustom from '~/components/Appbar/AppBar'
+import AppBarCustom from '~/components/AppBar/AppBar'
 
 export default function Order() {
   return (
