@@ -9,6 +9,7 @@ function ListFilm({ productData }) {
   const product = productData.map((item) => (
     <Film
       key={`Film${item.id}`}
+      id={item.id}
       name={item.name}
       url={item.imageurl}
       description={item.description}
