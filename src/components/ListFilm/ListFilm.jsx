@@ -1,10 +1,10 @@
 import Carousel from 'react-multi-carousel'
 import Film from '~/components/Film/Film'
-import { productData, responsive } from '~/mock_data'
+import { responsive } from '~/mock_data'
 import 'react-multi-carousel/lib/styles.css'
 import 'react-multi-carousel/lib/styles.css'
 import './ListFilm.css'
-function ListFilm() {
+function ListFilm({ productData }) {
 
   const product = productData.map((item) => (
     <Film
@@ -12,12 +12,13 @@ function ListFilm() {
       name={item.name}
       url={item.imageurl}
       description={item.description}
+      isActive={item.isActive}
     />
   ))
   return (
     <div>
-      <h1 >Phim đang chiếu</h1>
-      <Carousel showDots={true} responsive={responsive} swipeable={false} draggable={false}>
+      { productData[0].isActive ? <h1 >Phim đang chiếu</h1> : <h1 >Phim sắp chiếu</h1>}
+      <Carousel showDots={true} responsive={responsive} draggable={false}>
         {product}
       </Carousel>
     </div>

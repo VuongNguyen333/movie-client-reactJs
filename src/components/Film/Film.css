@@ -1,29 +1,15 @@
-.card {
-  margin: 0;
-  /* Xóa margin của thẻ div */
+
+.truncate-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /* Hiển thị dấu "..." khi dòng chữ bị cắt */
+  max-width: 250px;
+  /* Độ rộng tối đa của phần tử */
 }
 
-.card img {
-  display: block;
-  /* Đảm bảo ảnh là một phần tử block */
-  margin-bottom: 10px;
-  /* Thiết lập margin dưới cho ảnh */
+.truncate-text:hover {
+  /* Thêm các thuộc tính CSS cho kiểu dáng mong muốn khi hover */
+  color: 'red'; /* Màu chữ thành màu xanh khi hover */
+  font-weight: bolder;
 }
-
-.card h2,
-.card p {
-  margin: 0;
-  /* Xóa margin của các phần tử heading và paragraph */
-}
-
-.card button {
-  padding: 5px 10px;
-  /* Tùy chỉnh padding cho nút */
-  width: '70%';
-
-}
-
-.card button:hover {
-  background-color: brown;
-}
-
