@@ -119,7 +119,7 @@ export default function MainOrder() {
   return (
     <div style={{}}>
       <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#1a1d29', width: '100%', justifyContent: 'center' }}>
-        <Box sx={{ alignItems: 'center', bgcolor: '#1a1d29', height: '70vh', width: '60%', justifyContent: 'center' }}>
+        <Box sx={{ alignItems: 'center', bgcolor: '#1a1d29', width: '60%', justifyContent: 'center' }}>
           <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
             <Box sx={{ width: '80%', alignItems: 'center', justifyContent: 'center' }}>
               <Stepper sx={{ color: 'white', alignItems: 'center', justifyContent: 'center', display: 'flex' }} activeStep={activeStep} connector={<ColorlibConnector />}>

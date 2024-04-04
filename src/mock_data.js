@@ -184,6 +184,11 @@ export const branchs = [
     'branch_id': 3,
     'name': 'Branch C',
     'theater_id': 103
+  },
+  {
+    'branch_id': 4,
+    'name': 'Branch D',
+    'theater_id': 104
   }
 ]
 
@@ -202,6 +207,11 @@ export const theaters = [
     'theater_id': 103,
     'name': 'Theater 3',
     'branch_id': 3
+  },
+  {
+    'theater_id': 104,
+    'name': 'Theater 4',
+    'branch_id': 4
   }
 ]
 
