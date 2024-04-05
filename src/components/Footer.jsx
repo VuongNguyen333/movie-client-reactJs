@@ -8,7 +8,7 @@ function Footer() {
         padding: '20px',
         textAlign: 'center',
         bgcolor: '#222831',
-        height: '20vh'
+        height: '15vh'
       }}
     >
       <Link

@@ -212,6 +212,11 @@ export const theaters = [
     'theater_id': 104,
     'name': 'Theater 4',
     'branch_id': 4
+  },
+  {
+    'theater_id': 105,
+    'name': 'Theater 5',
+    'branch_id': 1
   }
 ]
 
@@ -294,6 +299,15 @@ export const schedules = [
     'theater_id': 103,
     'start_time': '2024-04-03 16:00:00',
     'end_time': '2024-04-03 18:00:00',
+    'price': 110000,
+    'status': 'finished'
+  },
+  {
+    'schedule_id': 10,
+    'movie_id': 4,
+    'theater_id': 105,
+    'start_time': '2024-04-07 16:00:00',
+    'end_time': '2024-04-07 18:00:00',
     'price': 110000,
     'status': 'finished'
   }

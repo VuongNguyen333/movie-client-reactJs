@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import OrderDateTime from './OrderSeat'
 import OrderFilm from './Payment'
-import OrderSchedule from './OrderSchedule'
+import OrderSchedule from './OrderSchedule/OrderSchedule'
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material/styles'
 import SettingsIcon from '@mui/icons-material/Settings'
@@ -117,11 +117,11 @@ export default function MainOrder() {
   }
 
   return (
-    <div style={{}}>
+    <Box sx={{ bgcolor: '#1a1d29', height: '100vh' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#1a1d29', width: '100%', justifyContent: 'center' }}>
         <Box sx={{ alignItems: 'center', bgcolor: '#1a1d29', width: '60%', justifyContent: 'center' }}>
           <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-            <Box sx={{ width: '80%', alignItems: 'center', justifyContent: 'center' }}>
+            <Box sx={{ width: '90%', alignItems: 'center', justifyContent: 'center' }}>
               <Stepper sx={{ color: 'white', alignItems: 'center', justifyContent: 'center', display: 'flex' }} activeStep={activeStep} connector={<ColorlibConnector />}>
                 {steps.map((label, index) => {
                   const stepProps = {}
@@ -172,7 +172,6 @@ export default function MainOrder() {
           )}
         </Box>
       </Box>
-
-    </div >
+    </Box >
   )
 }
