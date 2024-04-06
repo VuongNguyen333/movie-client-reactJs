@@ -5,7 +5,7 @@ import { Container } from '@mui/material'
 
 export default function Order() {
   return (
-    <Container disableGutters maxWidth={false}>
+    <Container disableGutters sx={{ height: '100vh' }} maxWidth={false}>
       <AppBarCustom />
       <MainOrder />
       <Footer />

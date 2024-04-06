@@ -42,7 +42,7 @@ export const productData = [
     id: 3,
     imageurl:
       'https://www.bhdstar.vn/wp-content/uploads/2024/03/referenceSchemeHeadOfficeallowPlaceHoldertrueheight700ldapp.jpg',
-    name: 'iWatch',
+    name: 'Kungfu Panda',
     price: '$99.99',
     isActive: true,
     description: 'Some text about the product..'
@@ -169,52 +169,71 @@ export const productDataComming = [
   }
 ]
 
+export const areas = [
+  {
+    'area_id': 1,
+    'name':'Ha Noi'
+  },
+  {
+    'area_id': 2,
+    'name':'Hue'
+  },
+  {
+    'area_id': 3,
+    'name':'Da Nang'
+  },
+  {
+    'area_id': 4,
+    'name':'Ho Chi Minh'
+  }
+]
+
 export const branchs = [
   {
     'branch_id': 1,
     'name': 'Branch A',
-    'theater_id': 101
+    'area_id': 1
   },
   {
     'branch_id': 2,
     'name': 'Branch B',
-    'theater_id': 102
+    'area_id': 2
   },
   {
     'branch_id': 3,
     'name': 'Branch C',
-    'theater_id': 103
+    'area_id': 3
   },
   {
     'branch_id': 4,
     'name': 'Branch D',
-    'theater_id': 104
+    'area_id': 4
   }
 ]
 
-export const theaters = [
+export const rooms = [
   {
-    'theater_id': 101,
+    'roomId': 101,
     'name': 'Theater 1',
     'branch_id': 1
   },
   {
-    'theater_id': 102,
+    'roomId': 102,
     'name': 'Theater 2',
     'branch_id': 2
   },
   {
-    'theater_id': 103,
+    'roomId': 103,
     'name': 'Theater 3',
     'branch_id': 3
   },
   {
-    'theater_id': 104,
+    'roomId': 104,
     'name': 'Theater 4',
     'branch_id': 4
   },
   {
-    'theater_id': 105,
+    'roomId': 105,
     'name': 'Theater 5',
     'branch_id': 1
   }
@@ -224,7 +243,7 @@ export const schedules = [
   {
     'schedule_id': 1,
     'movie_id': 1,
-    'theater_id': 101,
+    'roomId': 101,
     'start_time': '2024-04-01 10:00:00',
     'end_time': '2024-04-01 12:00:00',
     'price': 100000,
@@ -233,7 +252,7 @@ export const schedules = [
   {
     'schedule_id': 2,
     'movie_id': 1,
-    'theater_id': 102,
+    'roomId': 102,
     'start_time': '2024-04-01 13:00:00',
     'end_time': '2024-04-01 15:00:00',
     'price': 120000,
@@ -242,7 +261,7 @@ export const schedules = [
   {
     'schedule_id': 3,
     'movie_id': 1,
-    'theater_id': 103,
+    'roomId': 103,
     'start_time': '2024-04-01 16:00:00',
     'end_time': '2024-04-01 18:00:00',
     'price': 110000,
@@ -251,7 +270,7 @@ export const schedules = [
   {
     'schedule_id': 4,
     'movie_id': 2,
-    'theater_id': 101,
+    'roomId': 101,
     'start_time': '2024-04-02 10:00:00',
     'end_time': '2024-04-02 12:00:00',
     'price': 100000,
@@ -260,7 +279,7 @@ export const schedules = [
   {
     'schedule_id': 5,
     'movie_id': 2,
-    'theater_id': 102,
+    'roomId': 102,
     'start_time': '2024-04-02 13:00:00',
     'end_time': '2024-04-02 15:00:00',
     'price': 120000,
@@ -269,7 +288,7 @@ export const schedules = [
   {
     'schedule_id': 6,
     'movie_id': 2,
-    'theater_id': 103,
+    'roomId': 103,
     'start_time': '2024-04-02 16:00:00',
     'end_time': '2024-04-02 18:00:00',
     'price': 110000,
@@ -278,7 +297,7 @@ export const schedules = [
   {
     'schedule_id': 7,
     'movie_id': 3,
-    'theater_id': 101,
+    'roomId': 101,
     'start_time': '2024-04-03 10:00:00',
     'end_time': '2024-04-03 12:00:00',
     'price': 100000,
@@ -287,7 +306,7 @@ export const schedules = [
   {
     'schedule_id': 8,
     'movie_id': 3,
-    'theater_id': 102,
+    'roomId': 102,
     'start_time': '2024-04-03 13:00:00',
     'end_time': '2024-04-03 15:00:00',
     'price': 120000,
@@ -296,7 +315,7 @@ export const schedules = [
   {
     'schedule_id': 9,
     'movie_id': 3,
-    'theater_id': 103,
+    'roomId': 103,
     'start_time': '2024-04-03 16:00:00',
     'end_time': '2024-04-03 18:00:00',
     'price': 110000,
@@ -305,10 +324,38 @@ export const schedules = [
   {
     'schedule_id': 10,
     'movie_id': 4,
-    'theater_id': 105,
+    'roomId': 105,
     'start_time': '2024-04-07 16:00:00',
     'end_time': '2024-04-07 18:00:00',
     'price': 110000,
     'status': 'finished'
   }
 ]
+
+const listSeat = [];
+
+const roomIds = [1, 2, 3, 4]; // Mảng các roomId
+const seatLetters = ['A', 'B', 'C', 'D']; // Mảng các chữ cái đầu tiên cho tên ghế
+
+let seatId = 1;
+
+  // Lặp qua từng chữ cái
+seatLetters.forEach(letter => {
+  // Tạo 6 ghế cho mỗi chữ cái
+  for (let i = 1; i <= 6; i++) {
+    const seatName = letter + ('0' + i).slice(-2); // Tạo tên ghế từ chữ cái và số
+    const seat = {
+      seatId: seatId++,
+      name: seatName,
+      price: 60000,
+      isOrder: false,
+      roomId: 101
+    };
+    if (i%6===0) seat.isOrder = true
+    listSeat.push(seat);
+  }
+});
+
+const seats = [...listSeat]
+
+export default seats

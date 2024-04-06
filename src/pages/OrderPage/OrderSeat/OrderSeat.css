@@ -1,0 +1,17 @@
+.container {
+  background-color: #1a1d29;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.moon {
+  height: 100px;
+  width: 500px;
+  background-color: transparent;
+  box-shadow: 0px 10px 0px 0px white;
+  transform: rotate(180deg); 
+  border-radius: 60%;
+  align-items: center;
+  justify-content: center;
+}
