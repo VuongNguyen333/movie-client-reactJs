@@ -1,8 +1,7 @@
 import React from 'react'
 import { TreeItem2 } from '@mui/x-tree-view/TreeItem2'
-import { schedules } from '~/mock_data'
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { schedules, rooms } from '~/mock_data'
+import { useParams } from 'react-router-dom'
 
 const CustomTreeItem = React.forwardRef((props, ref) => (
   <TreeItem2
@@ -16,11 +15,29 @@ const CustomTreeItem = React.forwardRef((props, ref) => (
   />
 ))
 
-export default function ListSchedule({ theaterId }) {
-  const listSchedules = [...schedules].filter(item => item.theater_id.toString() === theaterId.toString())
+export default function ListSchedule({ orderSchedule, branchId }) {
+  const listRoomOfBranch = [...rooms].filter(item => item.branch_id.toString() === branchId.toString())
+  let listSchedules = []
+  listRoomOfBranch.map(item => {
+    [...schedules].map(item1 => {
+      if (item.roomId.toString() === item1.roomId.toString()) {
+        listSchedules.push(item1)
+      }
+    })
+  })
+  console.log('🚀 ~ ListSchedule ~ listSchedules:', listSchedules)
+
+  const { filmId } = useParams()
   return (
     <>
-      {listSchedules.map((item, index) => <CustomTreeItem key={index} itemId={`${item.schedule_id}`} label={item.start_time} />)}
+      {listSchedules.map((item, index) =>
+        <CustomTreeItem
+          key={index}
+          itemId={`schedule${item.schedule_id}`}
+          label={item.start_time}
+          onClick={() => orderSchedule(branchId, item.schedule_id, filmId )}
+        />)
+      }
     </>
   )
 }

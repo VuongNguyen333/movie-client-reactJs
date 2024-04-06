@@ -1,18 +1,19 @@
 import { BrowserRouter } from 'react-router-dom'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import theme from './theme.js'
 import './index.css'
 import CssBaseline from '@mui/material/CssBaseline'
-import { StyledEngineProvider } from '@mui/material'
+import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
-  <StyledEngineProvider >
+    <CssVarsProvider theme={theme}>
       <BrowserRouter>
-        <CssBaseline>
+        <CssBaseline theme={theme}>
           <App />
         </CssBaseline>
       </BrowserRouter>
-    </StyledEngineProvider>
+    </CssVarsProvider>
   </>
 )
