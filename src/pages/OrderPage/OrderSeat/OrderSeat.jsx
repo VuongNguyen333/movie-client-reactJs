@@ -49,7 +49,7 @@ export default function OrderSeat({ branchId, scheduleId }) {
   const rowD = seats.filter(seat => seat.name.startsWith('D'))
   const rows = [rowA, rowB, rowC, rowD]
   return (
-    <Box>
+    <Box sx={{ }}>
       <Box sx={{ color: 'white', display: 'flex', alignItems: 'center' }}>
         <Box>
           <h3>{branch.name}</h3>

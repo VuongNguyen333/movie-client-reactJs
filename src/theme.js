@@ -14,11 +14,11 @@ const theme = extendTheme({
             height: '8px'
           },
           '*::-webkit-scrollbar-thumb ': {
-            backgroundColor: '#dcdde1',
+            backgroundColor: '#1a1d29',
             borderRadius: '8px'
           },
           '*::-webkit-scrollbar-thumb: hover ': {
-            backgroundColor: 'white',
+            backgroundColor: '#1a1d29',
             borderRadius: '8px'
           }
         }
