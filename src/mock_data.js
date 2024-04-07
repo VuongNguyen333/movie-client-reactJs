@@ -332,29 +332,28 @@ export const schedules = [
   }
 ]
 
-const listSeat = [];
+const listSeat = []
 
-const roomIds = [1, 2, 3, 4]; // Mảng các roomId
-const seatLetters = ['A', 'B', 'C', 'D']; // Mảng các chữ cái đầu tiên cho tên ghế
+const seatLetters = ['A', 'B', 'C', 'D'] // Mảng các chữ cái đầu tiên cho tên ghế
 
-let seatId = 1;
+let seatId = 1
 
-  // Lặp qua từng chữ cái
+// Lặp qua từng chữ cái
 seatLetters.forEach(letter => {
   // Tạo 6 ghế cho mỗi chữ cái
   for (let i = 1; i <= 6; i++) {
-    const seatName = letter + ('0' + i).slice(-2); // Tạo tên ghế từ chữ cái và số
+    const seatName = letter + ('0' + i).slice(-2) // Tạo tên ghế từ chữ cái và số
     const seat = {
       seatId: seatId++,
       name: seatName,
       price: 60000,
       isOrder: false,
       roomId: 101
-    };
+    }
     if (i%6===0) seat.isOrder = true
-    listSeat.push(seat);
+    listSeat.push(seat)
   }
-});
+})
 
 const seats = [...listSeat]
 

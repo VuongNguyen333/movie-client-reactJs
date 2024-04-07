@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
@@ -8,9 +9,7 @@ import TabPanel from '@mui/lab/TabPanel'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import { CardActionArea } from '@mui/material'
-import { branchs, productData, areas } from '~/mock_data'
-import ListRooms from './ListTheaters/ListBranchs'
-import Tabs from '@mui/material/Tabs';
+import { productData, areas } from '~/mock_data'
 import ListBranchs from './ListTheaters/ListBranchs'
 
 export default function OrderSchedule({ orderSchedule }) {
@@ -21,7 +20,7 @@ export default function OrderSchedule({ orderSchedule }) {
       film = item
     }
   })
-  const [showFilmList, setShowFilmList] = useState(false);
+  const [showFilmList, setShowFilmList] = useState(false)
 
   const [area, setArea] = React.useState('1')
 
@@ -45,7 +44,6 @@ export default function OrderSchedule({ orderSchedule }) {
                 image={film.imageurl}
                 alt={filmName}
               />
-              <Box>{filmName}</Box>
             </CardActionArea>
           </Card>
           <Box sx={{ maxWidth: 500, color: 'white' }}>

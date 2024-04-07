@@ -12,6 +12,14 @@ const CustomTreeItem = React.forwardRef((props, ref) => (
         id: `${props.itemId}-label`
       }
     }}
+    sx={{
+      '.MuiTreeItem-content': { color: 'white' },
+      '&:hover .MuiTreeItem-content': { color: '#87A922' },
+      '& .MuiTreeItem2-content': {
+        '&.Mui-selected': { bgcolor: 'green' }
+      },
+      '& .Mui-selected': { bgcolor: 'green' }
+    }}
   />
 ))
 
@@ -25,17 +33,18 @@ export default function ListSchedule({ orderSchedule, branchId }) {
       }
     })
   })
-  console.log('🚀 ~ ListSchedule ~ listSchedules:', listSchedules)
+  // console.log('🚀 ~ ListSchedule ~ listSchedules:', listSchedules)
 
   const { filmId } = useParams()
   return (
     <>
       {listSchedules.map((item, index) =>
         <CustomTreeItem
+
           key={index}
           itemId={`schedule${item.schedule_id}`}
           label={item.start_time}
-          onClick={() => orderSchedule(branchId, item.schedule_id, filmId )}
+          onClick={() => orderSchedule(branchId, item.schedule_id, filmId)}
         />)
       }
     </>

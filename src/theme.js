@@ -10,15 +10,15 @@ const theme = extendTheme({
       styleOverrides: {
         body: {
           '*::-webkit-scrollbar ': {
-            width: '8px',
+            width: '4px',
             height: '8px'
           },
           '*::-webkit-scrollbar-thumb ': {
-            backgroundColor: '#1a1d29',
+            backgroundColor: '#2D3250',
             borderRadius: '8px'
           },
           '*::-webkit-scrollbar-thumb: hover ': {
-            backgroundColor: '#1a1d29',
+            backgroundColor: '#white',
             borderRadius: '8px'
           }
         }

@@ -1,18 +1,18 @@
+/* eslint-disable no-unused-vars */
 import * as React from 'react'
-import Box from '@mui/material/Box'
-import Stepper from '@mui/material/Stepper'
-import Step from '@mui/material/Step'
-import StepLabel from '@mui/material/StepLabel'
-import Container from '@mui/material/Container'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import OrderSchedule from './OrderSchedule/OrderSchedule'
-import PropTypes from 'prop-types'
-import { styled } from '@mui/material/styles'
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector'
 import PendingActionsIcon from '@mui/icons-material/PendingActions'
-import PaidIcon from '@mui/icons-material/Paid'
+import OrderSchedule from './OrderSchedule/OrderSchedule'
 import ChairIcon from '@mui/icons-material/Chair'
+import Typography from '@mui/material/Typography'
+import StepLabel from '@mui/material/StepLabel'
+import PaidIcon from '@mui/icons-material/Paid'
+import Stepper from '@mui/material/Stepper'
+import Button from '@mui/material/Button'
+import Step from '@mui/material/Step'
+import Box from '@mui/material/Box'
+import PropTypes from 'prop-types'
+import { styled } from '@mui/material/styles'
 import OrderSeat from './OrderSeat/OrderSeat'
 import Payment from './Payment'
 
@@ -103,6 +103,7 @@ export default function MainOrder() {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    setEnableNext(0)
   }
 
   const handleBack = () => {
@@ -113,26 +114,42 @@ export default function MainOrder() {
   }
 
   const [branchId, setBranchId] = React.useState(0)
-  const [roomId, setRoomId] = React.useState(0)
   const [scheduleId, setScheduleId] = React.useState(0)
   const [movieId, setMovieId] = React.useState(0)
   const [enableNext, setEnableNext] = React.useState(0)
+  const [listSeatId, setListSeatId] = React.useState(() => [])
+  const [total, setTotal] = React.useState(0)
+  const payment = (type) => {
+    // console.log('🚀 ~ payment ~ type:', type)
+    if (type) setEnableNext(1)
+  }
+
+  const orderSeat = (listSeat, bill) => {
+    setListSeatId(listSeat)
+    setTotal(bill)
+    // console.log('🚀 ~ orderSeat ~ listSeat:', listSeat)
+    // console.log('🚀 ~ orderSeat ~ total:', bill)
+    // console.log('🚀 ~ MainOrder ~ enableNext:', enableNext)
+    // console.log('🚀 ~ orderSeat ~ listSeatId:', listSeat)
+    if ( activeStep === 2 || listSeat.length>1) setEnableNext(1)
+    else setEnableNext(0)
+  }
 
   const orderSchedule = (branchId, scheduleId, movieId) => {
     setBranchId(branchId)
     setScheduleId(scheduleId)
     setMovieId(movieId)
     setEnableNext(1)
-    console.log('🚀 ~ orderSchedule ~ branchId, scheduleId, movieId:', branchId, scheduleId, movieId)
+    // console.log('🚀 ~ orderSchedule ~ branchId, scheduleId, movieId:', branchId, scheduleId, movieId)
   }
   return (
     <Box sx={{ bgcolor: '#1a1d29', height: '100%', width: '100%', display: 'flex', alignItems:'center', justifyContent: 'center', overflowY: 'auto' }}>
-      <Box sx={{ bgcolor: '#1a1d29', height: '100%', width: '60%', overflowY: 'auto', '&::-webkit-scrollbar-track ': { m: 2 } }}>
+      <Box sx={{ bgcolor: '#1a1d29', height: '100%', width: '80%', overflowY: 'hidden', ':hover': { overflowY: 'auto' }, alignItems:'center', justifyContent: 'center' }} >
         <Box sx={{ display: 'flex', alignItems:'center', justifyContent: 'center' }}>
-          <Box sx={{ alignItems: 'center', bgcolor: '#1a1d29', width: '60%', justifyContent: 'center' }}>
+          <Box sx={{ alignItems: 'center', bgcolor: '#1a1d29', height: '100%', width: '80%', justifyContent: 'center' }}>
             <Box sx={{ alignItems: 'center', bgcolor: '#1a1d29', width: '100%', justifyContent: 'center' }}>
               <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                <Box sx={{ width: '70%', alignItems: 'center', justifyContent: 'center' }}>
+                <Box sx={{ width: '75%', alignItems: 'center', justifyContent: 'center' }}>
                   <Stepper sx={{ color: 'white', alignItems: 'center', justifyContent: 'center', display: 'flex' }} activeStep={activeStep} connector={<ColorlibConnector />}>
                     {steps.map((label) => {
                       const stepProps = {}
@@ -161,7 +178,22 @@ export default function MainOrder() {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {activeStep === 0 ? <OrderSchedule orderSchedule={orderSchedule} /> : activeStep === 1 ? <OrderSeat branchId={branchId} roomId={roomId} scheduleId={scheduleId} /> : <Payment />}
+                  {activeStep === 0 ?
+                    <OrderSchedule orderSchedule={orderSchedule} />
+                    : activeStep === 1
+                      ? <OrderSeat
+                        branchId={branchId}
+                        scheduleId={scheduleId}
+                        orderSeat={orderSeat}
+                      />
+                      : <Payment
+                        branchId={branchId}
+                        scheduleId={scheduleId}
+                        total={total}
+                        payment={payment}
+                        listSeatId={listSeatId}
+                      />
+                  }
                   <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                     <Button
                       color='warning'

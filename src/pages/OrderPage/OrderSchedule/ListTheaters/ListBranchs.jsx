@@ -1,7 +1,7 @@
 import React from 'react'
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView'
 import { TreeItem2 } from '@mui/x-tree-view/TreeItem2'
-import { rooms, branchs } from '~/mock_data'
+import { branchs } from '~/mock_data'
 import Box from '@mui/material/Box'
 import ListSchedule from './ListSchedules/ListSchedule'
 
@@ -16,7 +16,10 @@ const CustomTreeItem = React.forwardRef((props, ref) => (
     }}
     sx={{
       borderBottom: '1px solid white',
-      borderTop: '1px solid white'
+      borderTop: '1px solid white',
+      '&.Mui-focused &.MuiTreeItem2-content.Mui-selected' : { bgcolor: 'green' }
+      ,
+      '&.MuiTreeItem2-content': { bgcolor: 'green' }
     }}
   />
 ))
@@ -33,14 +36,20 @@ function ListBranchs({ area_id, orderSchedule }) {
         width: '50%',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        '& .MuiTreeItem-content' : {
+          '.Mui-selected' : { bgcolor: 'green' }
+        }
       }}
     >
       <Box sx={{
         minHeight: 224,
         flexGrow: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        '& .MuiTreeItem-content' : {
+          '.Mui-selected' : { bgcolor: 'green' }
+        }
       }}>
         {listBranchs.map((item, index) =>
           <CustomTreeItem key={index} itemId={`branch${item.branch_id}`} label={item.name}>
