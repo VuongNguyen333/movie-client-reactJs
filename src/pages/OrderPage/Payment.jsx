@@ -26,7 +26,6 @@ export default function Payment({ branchId, scheduleId, total, payment, listSeat
         Thanh Toan
           </Box>
         </Box>
-
         <Box sx={{ display:'flex', width:'100%', height:'100%', alignContent:'center', justifyContent:'center' }}>
           <Box sx={{ display:'flex', width: '90%', alignContent:'center', justifyContent:'space-between' }}>
             <Box sx={{ color: 'white', m:'5px', width:'60%' }}>

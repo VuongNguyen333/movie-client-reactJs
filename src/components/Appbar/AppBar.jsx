@@ -37,7 +37,7 @@ function AppBarCustom() {
 
   return (
     <AppBar position="static" >
-      <Container maxWidth="false" sx={{ bgcolor: '#222831', height: '10vh' }}>
+      <Container maxWidth="false" sx={{ bgcolor: '#222831' }}>
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography

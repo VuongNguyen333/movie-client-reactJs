@@ -18,6 +18,25 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Màu nền của thanh cuộn */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Màu của nút trượt */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  /* Bo tròn cho nút trượt khi hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }
 
 code {
@@ -56,4 +75,24 @@ a {
   height: 3px;
   margin: 5px auto;
   background-color: var(--primary-color);
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Màu nền của thanh cuộn */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Màu của nút trượt */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Bo tròn cho nút trượt khi hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
