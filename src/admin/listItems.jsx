@@ -4,19 +4,12 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import ListSubheader from '@mui/material/ListSubheader'
 import DashboardIcon from '@mui/icons-material/Dashboard'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import PeopleIcon from '@mui/icons-material/People'
-import BarChartIcon from '@mui/icons-material/BarChart'
-import LayersIcon from '@mui/icons-material/Layers'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import { Link } from 'react-router-dom'
 import MovieIcon from '@mui/icons-material/Movie'
 import BusinessIcon from '@mui/icons-material/Business'
-import SettingsSystemDaydreamIcon from '@mui/icons-material/SettingsSystemDaydream'
 import EventNoteIcon from '@mui/icons-material/EventNote'
-import Box from '@mui/material/Box'
-import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView'
-import { TreeItem } from '@mui/x-tree-view/TreeItem'
 export const mainListItems = (
   <React.Fragment>
     <Link to='/admin'>
@@ -57,14 +50,6 @@ export const mainListItems = (
         <ListItemText primary="Schedules Manager" />
       </ListItemButton>
     </Link>
-    {/* <Link to='/admin/schedules'>
-      <ListItemButton sx={{ color:'white' }}>
-        <ListItemIcon>
-          <EventNoteIcon sx={{ color:'white' }}/>
-        </ListItemIcon>
-        <ListItemText primary="Schedules Manager" />
-      </ListItemButton>
-    </Link> */}
   </React.Fragment>
 )
 

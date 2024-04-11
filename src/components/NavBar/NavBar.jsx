@@ -16,6 +16,7 @@ import { useState } from 'react'
 import logo2 from '~/assets/logo2.png'
 
 import './NavBar.css'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
 
@@ -171,10 +172,14 @@ const Navbar = () => {
                   {page}
                 </Button>
               ))}
-
             </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow: 0, display:'flex', alignItems:'center', justifyContent:'center' }}>
+              <MenuItem>
+              <Link to='/admin'>
+                <Typography textAlign="center" sx={{ color: 'white', mr:'15px' }}>Dashboard</Typography>
+              </Link>
+                
+              </MenuItem>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="" />

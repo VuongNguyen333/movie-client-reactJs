@@ -53,10 +53,10 @@ a {
 }
 
 .button {
-  padding: 17px 28px;
-  font-size: 1.2rem;
+  /* padding: 17px 28px; */
+  /* font-size: 1.2rem; */
   color: #fff;
-  font-weight: 600;
+  /* font-weight: 600; */
   text-transform: uppercase;
   background-color: var(--primary-color);
   border: 1px solid var(--primary-color);
