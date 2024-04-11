@@ -6,6 +6,7 @@ import Fade from '@mui/material/Fade'
 import Modal from '@mui/material/Modal'
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber'
 import InfoIcon from '@mui/icons-material/Info'
+import Typography from '@mui/material/Typography'
 import './Film.css'
 import { useNavigate } from 'react-router-dom'
 export default function Film(props) {
@@ -41,22 +42,23 @@ export default function Film(props) {
     gap: 2,
     overflowX: 'auto',
     alignItems: 'center',
+    justifyContent:'center',
     maxHeight: '90%'
   }
 
   const modalStyle = {
-    width: '90%',
+    // width: '90%',
     maxWidth: '400px', // Giới hạn kích thước modal tối đa
     margin: 'auto',
     borderRadius: '10px',
-    alignItems: 'center',
+    // alignItems: 'center',
     overFlow: 'hidden'
   }
 
   return (
     <>
       <div className="card">
-        <img style={{ cursor: 'pointer' }} onClick={() => handleOpen(props)} className="product--image" src={props.url} alt="product image" />
+        <img style={{ cursor: 'pointer' }} onClick={() => handleOpen(props)} className="product--image" src={props.photo} alt="product image" />
         <div
           onClick={() => handleOpen(props)}
           className="truncate-text"
@@ -148,12 +150,13 @@ export default function Film(props) {
           <Fade in={open}>
             <Box sx={style}>
               <Box sx={modalStyle}>
-                <img style={{ maxWidth: '300px', borderRadius: '10px' }} src={selectedMovie?.url} alt="product image" />
+                <img style={{ width: '400px', borderRadius: '10px' }} src={selectedMovie?.photo} alt="product image" />
                 {props.isActive &&
+                <>
                   <Button
                     startIcon={<ConfirmationNumberIcon />}
                     sx={{
-                      width: '180px',
+                      width: '45%',
                       height: '45px',
                       borderRadius: '5px',
                       border: 'none',
@@ -166,20 +169,50 @@ export default function Film(props) {
                       fontSize: '18px',
                       ':hover': {
                         opacity: 0.7
-                      }
+                      },
+                      mr:'20px'
                     }}
                     onClick={() => navigate(`/order/${selectedMovie.id}/${selectedMovie.name}`)}
                   >
                     Đặt vé
                   </Button>
+                  <Button
+                    sx={{
+                      width: 'fit-content',
+                      height: '45px',
+                      borderRadius: '5px',
+                      border: '1px solid white',
+                      outline: '0',
+                      padding: '12px',
+                      color: 'white',
+                      background: 'black',
+                      textAlign: 'center',
+                      cursor: 'pointer',
+                      fontSize: '18px',
+                      ':hover': {
+                        opacity: 0.7
+                      }
+                    }}
+                    href={selectedMovie?.trailerURL}
+                  >
+                    <Typography sx={{ fontSize:15 }}>Xem Trailer</Typography>
+                  </Button>
+                </>
                 }
               </Box>
               <Box sx={{
-                alignItems: 'center',
-                display: 'flex',
-                margin: 'auto'
+                margin: 'auto', display:'flex'
               }}>
-                <Box sx={{ color: 'white' }}>{selectedMovie?.description}</Box>
+                <Box>
+                  <Box sx={{ color: '#72be43', typography:'h6', fontSize:25, mb:'10px' }}>{selectedMovie?.name.toUpperCase()}</Box>
+                  <Box sx={{ color: 'white', typography:'h6', fontSize:18 }}>{selectedMovie?.description}</Box>
+                  <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Đạo diễn:{<Typography sx={{ color:'white', fontSize:18 }}>{selectedMovie?.director}</Typography>}</Box>
+                  <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Diễn viên:{<Typography sx={{ color:'white', fontSize:18 }}>{selectedMovie?.actor}</Typography>}</Box>
+                  <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Thể loại:{<Typography sx={{ color:'white', fontSize:18 }}>{selectedMovie?.category}</Typography>}</Box>
+                  <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Thời lượng:{<Typography sx={{ color:'white', fontSize:18 }}>{selectedMovie?.duration} phút</Typography>}</Box>
+                  <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Ngôn ngữ:{<Typography sx={{ color:'white', fontSize:18 }}>{selectedMovie?.language}</Typography>}</Box>
+                  <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Ngày ra mắt:{<Typography sx={{ color:'white', fontSize:18 }}>{selectedMovie?.releaseDate}</Typography>}</Box>
+                </Box>
               </Box>
             </Box>
           </Fade>

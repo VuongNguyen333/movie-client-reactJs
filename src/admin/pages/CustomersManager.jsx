@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import Box from '@mui/material/Box'
-import { productData } from '~/mock_data'
+import { productData, users } from '~/mock_data'
 import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import PreviewIcon from '@mui/icons-material/Preview'
@@ -28,13 +28,25 @@ const handleButtonClick = (id) => {
 }
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'name', headerName: 'Name', width: 200, editable: true },
+  { field: 'fullName', headerName: 'Full Name', width: 160, editable: true },
   {
-    field: 'price',
-    headerName: 'Price ($)',
-    type: 'number',
-    width: 90,
+    field: 'email',
+    headerName: 'Email',
+    width: 250,
     editable: true
+  },
+  { field: 'password', headerName: 'Password', width: 100, editable: true },
+  { field: 'dob', headerName: 'Birth Day', width: 100, editable: true },
+  { field: 'age', headerName: 'Age', width: 60, editable: true },
+  {
+    field: 'roles',
+    headerName: 'roles',
+    width: 300,
+    editable: true,
+    valueGetter: (params) => {
+      console.log('🚀 ~ params:', params)
+      return params.map(role => role.name).join(', ')
+    }
   },
   {
     field: 'button',
@@ -66,7 +78,9 @@ const columns = [
           </Button>
         </Box>
       )
-    }
+    },
+    disableColumnMenu: true,
+    sortable: false
   }
 ]
 function CustomersManager() {
@@ -93,9 +107,9 @@ function CustomersManager() {
         <Box typography='h3' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Customers</Box>
       </Box>
       <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Button onClick={handleOpen} variant="outlined" startIcon={<AddIcon />}>Add new film</Button>
+        <Button onClick={handleOpen} variant="outlined" startIcon={<AddIcon />}>Add new User</Button>
       </Box>
-      <DataTable rows={productData} columns={columns} />
+      <DataTable rows={users} columns={columns} />
       <div>
         <Modal
           open={open}
@@ -105,7 +119,7 @@ function CustomersManager() {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Add new film
+              Add new User
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               Comming soon...

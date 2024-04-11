@@ -10,12 +10,17 @@ const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'name', headerName: 'Name', width: 200, editable: true },
   {
-    field: 'price',
-    headerName: 'Price ($)',
-    type: 'number',
-    width: 90,
+    field: 'actor',
+    headerName: 'Actor',
+    type: 'array',
+    width: 100,
     editable: true
   },
+  { field: 'director', headerName: 'Director', width: 100, editable: true },
+  { field: 'language', headerName: 'Language', width: 100, editable: true },
+  { field: 'category', headerName: 'Category', width: 100, editable: true },
+  { field: 'releaseDate', headerName: 'ReleaseDate', width: 100, editable: true },
+  { field: 'isActive', headerName: 'Active', width: 100, editable: true },
   {
     field: 'button',
     headerName: 'Action',

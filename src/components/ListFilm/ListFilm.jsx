@@ -11,8 +11,15 @@ function ListFilm({ productData }) {
       key={`Film${item.id}`}
       id={item.id}
       name={item.name}
-      url={item.imageurl}
+      photo={`data:image/jpeg;base64,${item.photo}`}
       description={item.description}
+      category={item.category}
+      actor={item.actor}
+      director={item.director}
+      language={item.language}
+      trailerURL={item.trailerURL}
+      duration={item.duration}
+      releaseDate={item.releaseDate}
       isActive={item.isActive}
     />
   ))
