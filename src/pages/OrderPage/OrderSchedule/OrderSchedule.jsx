@@ -41,7 +41,7 @@ export default function OrderSchedule({ orderSchedule }) {
                 component="img"
                 width='200'
                 height="400px"
-                image={film.imageurl}
+                image={`data:image/jpeg;base64,${film.photo}`}
                 alt={filmName}
               />
             </CardActionArea>

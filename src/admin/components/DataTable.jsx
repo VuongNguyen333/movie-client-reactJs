@@ -8,7 +8,8 @@ function DataTable({ rows, columns }) {
         sx={{
           '& .MuiDataGrid-cell--selected': {
             borderColor: 'transparent'
-          }
+          },
+          overflowX:'auto'
         }}
         rows={rows}
         columns={columns}
