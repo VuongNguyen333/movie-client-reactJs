@@ -35,7 +35,6 @@ const columns = [
     width: 250,
     editable: true
   },
-  { field: 'password', headerName: 'Password', width: 100, editable: true },
   { field: 'dob', headerName: 'Birth Day', width: 100, editable: true },
   { field: 'age', headerName: 'Age', width: 60, editable: true },
   {
@@ -44,7 +43,6 @@ const columns = [
     width: 300,
     editable: true,
     valueGetter: (params) => {
-      console.log('🚀 ~ params:', params)
       return params.map(role => role.name).join(', ')
     }
   },
@@ -60,7 +58,7 @@ const columns = [
             sx={{
               mr: '2px',
               bgcolor: '#65B741',
-              minWidth:'40px',
+              minWidth: '40px',
               ':hover': { bgcolor: 'green' }
             }}
           >
@@ -70,11 +68,11 @@ const columns = [
             onClick={() => handleButtonClick(params.row.id)}
             sx={{
               bgcolor: '#DC6B19',
-              minWidth:'40px',
+              minWidth: '40px',
               ':hover': { bgcolor: '#F7C566' }
             }}
           >
-            <BuildIcon fontSize='small' sx={{ color:'white' }} />
+            <BuildIcon fontSize='small' sx={{ color: 'white' }} />
           </Button>
         </Box>
       )

@@ -8,7 +8,7 @@ import ToggleButtonGroup, {
   toggleButtonGroupClasses
 } from '@mui/material/ToggleButtonGroup'
 import './OrderSeat.css'
-import { branchs, schedules } from '~/mock_data'
+import { branchs, schedules, productData } from '~/mock_data'
 import seats from '~/mock_data'
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -28,8 +28,9 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 }))
 
 export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
-  const { filmName } = useParams()
-  const branch = branchs.find(item => item.branch_id.toString() === branchId.toString())
+  const { filmId, filmName } = useParams()
+  const film = productData.find(item => item.id.toString() === filmId.toString())
+  const branch = branchs.find(item => item.id.toString() === branchId.toString())
   const schedule = schedules.find(item => item.schedule_id.toString() === scheduleId.toString())
   const [formats, setFormats] = React.useState(() => [''])
   const [total, setTotal] = React.useState(0)
@@ -54,22 +55,18 @@ export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
   const rows = [rowA, rowB, rowC, rowD]
   return (
     <Box sx={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-      {/* <Box sx={{ color: 'white', display: 'flex', alignItems: 'center', width:'23%', border:'1px solid white', borderRadius:'10px', justifyContent:'center', p:'10px', margin:'5px' }}>
-        <Box sx={{ border:'1px solid white', p:'5px', borderRadius:'10px' }}>
-          <Box sx={{ alignItems:'center', justifyContent:'center', typography:'h5', borderBottom:'1px solid white', color:'#16FF00', width:'100%' }} >{filmName}</Box>
-          <Box sx={{ typography:'h5', width:' 100%' }}>{branch.name}</Box>
-          <Box sx={{ width:' 100%' }}>{schedule.start_time}</Box>
-          { total!==0 && <Box sx={{ color: 'white', borderTop:'1px solid white', width:' 100%' }}>Tổng hóa đơn: {total}</Box> }
-        </Box>
-      </Box> */}
-      <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px' }} >
-        <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px', color:'white' }}>
-          <Box sx={{ alignItems:'center', justifyContent:'center', typography:'h5', borderBottom:'1px solid white', color:'#16FF00', width:'100%' }} >{filmName}</Box>
-          <Box sx={{ typography:'h5', width:' 100%' }}>{branch.name}</Box>
-          <Box sx={{ width:' 100%' }}>{schedule.start_time}</Box>
-          { total!==0 && <Box sx={{ color: 'white', borderTop:'1px solid white', width:' 100%' }}>Tổng hóa đơn: {total}</Box> }
+      <Box sx={{ alignItems:'center', justifyContent:'center' }}>
+        <img style={{ width: '250px', borderRadius: '10px', height:'350px' }} src={`data:image/jpeg;base64,${film.photo}`} alt="product image" />
+        <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px' }} >
+          <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px', color:'white' }}>
+            <Box sx={{ alignItems:'center', justifyContent:'center', typography:'h5', borderBottom:'1px solid white', color:'#16FF00', width:'100%' }} >{filmName}</Box>
+            <Box sx={{ typography:'h5', width:' 100%' }}>{branch.name}</Box>
+            <Box sx={{ width:' 100%' }}>{schedule.start_time}</Box>
+            { total!==0 && <Box sx={{ color: 'white', borderTop:'1px solid white', width:' 100%' }}>Tổng hóa đơn: {total}</Box> }
+          </Box>
         </Box>
       </Box>
+
       <Box>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px' }}>
           <div className='container'>

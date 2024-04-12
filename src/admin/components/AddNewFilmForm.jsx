@@ -95,6 +95,20 @@ function AddNewForm() {
   const handleChangeCategory = (event) => {
     setCategory(event.target.value)
   }
+  const ValidationTextField = styled(TextField)({
+    '& input:valid + fieldset': {
+      borderColor: '#E0E3E7',
+      borderWidth: 1
+    },
+    '& input:invalid + fieldset': {
+      borderColor: 'red',
+      borderWidth: 1
+    },
+    '& input:valid:focus + fieldset': {
+      borderLeftWidth: 4,
+      padding: '4px !important' // override inline-style
+    }
+  })
 
   const languages = ['Subtitle', 'Dubbing']
   const genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History', 'Horror', 'Music', 'Mystery', 'Romance', 'Science Fiction', 'Thriller', 'War', 'Western']
@@ -113,12 +127,20 @@ function AddNewForm() {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Add new film
           </Typography>
-          <Box sx={{ }}>
+          <form >
             <TextField sx={{ mb:'5px', width:'100%' }} id="outlined-basic" label="Name" variant="outlined" >abc</TextField>
             <TextField sx={{ mb:'5px', width:'100%' }} id="outlined-basic" label="Actor" variant="outlined" />
             <TextField sx={{ mb:'5px', width:'100%' }} id="outlined-basic" label="Director" variant="outlined" />
             <TextField sx={{ mb:'5px', width:'100%' }} id="outlined-basic" label="TrailerURL" variant="outlined" />
             <TextField sx={{ mb:'5px', width:'100%' }} id="outlined-basic" label="Duration" variant="outlined" />
+            {/* <ValidationTextField
+              label="CSS validation style"
+              required
+              variant="outlined"
+              defaultValue="Success"
+              id="validation-outlined-input"
+              sx={{ mb:'5px', width:'100%' }}
+            /> */}
             <TextField
               id="outlined-multiline-flexible"
               label="Description"
@@ -181,7 +203,7 @@ function AddNewForm() {
               Upload image film
               <VisuallyHiddenInput type="file" />
             </Button>
-          </Box>
+          </form>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Comming soon...
           </Typography>
