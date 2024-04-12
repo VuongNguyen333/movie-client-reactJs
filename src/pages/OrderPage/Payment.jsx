@@ -15,7 +15,7 @@ export default function Payment({ branchId, scheduleId, total, payment, listSeat
     if (listSeatId.includes(item.seatId))
       listSeat.push(item)
   })
-  const branch = branchs.find(item => item.branch_id.toString() === branchId.toString())
+  const branch = branchs.find(item => item.id.toString() === branchId.toString())
   const schedule = schedules.find(item => item.schedule_id.toString() === scheduleId.toString())
   const { filmName } = useParams()
   return (

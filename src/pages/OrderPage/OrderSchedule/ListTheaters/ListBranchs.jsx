@@ -25,7 +25,7 @@ const CustomTreeItem = React.forwardRef((props, ref) => (
 ))
 
 function ListBranchs({ area_id, orderSchedule }) {
-  const listBranchs = [...branchs].filter(item => item.area_id.toString() === area_id.toString())
+  const listBranchs = [...branchs].filter(item => item?.areaResponse?.id.toString() === area_id.toString())
   return (
     <SimpleTreeView
       aria-label="customized"
@@ -52,8 +52,8 @@ function ListBranchs({ area_id, orderSchedule }) {
         }
       }}>
         {listBranchs.map((item, index) =>
-          <CustomTreeItem key={index} itemId={`branch${item.branch_id}`} label={item.name}>
-            <ListSchedule orderSchedule={orderSchedule} branchId={item.branch_id}/>
+          <CustomTreeItem key={index} itemId={`branch${item.id}`} label={item.name}>
+            <ListSchedule orderSchedule={orderSchedule} branchId={item.id}/>
           </CustomTreeItem>)}
       </Box>
 

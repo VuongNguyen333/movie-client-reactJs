@@ -22,16 +22,16 @@ export default function OrderSchedule({ orderSchedule }) {
   })
   const [showFilmList, setShowFilmList] = useState(false)
 
-  const [area, setArea] = React.useState('1')
+  const [areaId, setAreaId] = React.useState('1')
 
   const handleChangeArea = (event, newValue) => {
-    setArea(newValue)
+    setAreaId(newValue)
   }
 
   return (
     <div style={{ overflow: 'auto', width: '100%' }}>
       <Box>
-        <h1 style={{ color: 'white' }}>{filmName}</h1>
+        <h1 style={{ color: 'white' }}>{filmName.toUpperCase()}</h1>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', overflow: 'auto' }}>
         <Box sx={{ alignItems: 'center', justifyContent: 'center', overflow: 'auto' }}>
@@ -40,7 +40,7 @@ export default function OrderSchedule({ orderSchedule }) {
               <CardMedia
                 component="img"
                 width='200'
-                height="400px"
+                height="500px"
                 image={`data:image/jpeg;base64,${film.photo}`}
                 alt={filmName}
               />
@@ -52,7 +52,7 @@ export default function OrderSchedule({ orderSchedule }) {
         </Box>
         <Box sx={{ typography: 'body1', alignItems: 'center', justifyContent: 'center', width: '60%' }}>
           <Box sx={{ typography: 'body1', alignItems: 'center', justifyContent: 'center' }}>
-            <TabContext value={area} >
+            <TabContext value={areaId} >
               <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'auto' }}>
                 <TabList
                   variant="scrollable"
@@ -71,13 +71,13 @@ export default function OrderSchedule({ orderSchedule }) {
                       }}
                       key={index}
                       label={`${item.name}`}
-                      value={item.area_id.toString()}
+                      value={item.id.toString()}
                     />
                   )}
                 </TabList>
               </Box>
-              <TabPanel sx={{ alignItems: 'center', justifyContent: 'center', color: 'white', maxWidth: '100%', display: 'flex' }} value={`${area}`}>
-                <ListBranchs area_id={area} orderSchedule={orderSchedule} show={showFilmList}/>
+              <TabPanel sx={{ alignItems: 'center', justifyContent: 'center', color: 'white', maxWidth: '100%', display: 'flex' }} value={`${areaId}`}>
+                <ListBranchs area_id={areaId} orderSchedule={orderSchedule} show={showFilmList}/>
               </TabPanel>
             </TabContext>
           </Box>

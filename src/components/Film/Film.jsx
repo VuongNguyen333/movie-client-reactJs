@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -7,6 +7,9 @@ import Modal from '@mui/material/Modal'
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber'
 import InfoIcon from '@mui/icons-material/Info'
 import Typography from '@mui/material/Typography'
+import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+
 import './Film.css'
 import { useNavigate } from 'react-router-dom'
 export default function Film(props) {
@@ -53,6 +56,15 @@ export default function Film(props) {
     borderRadius: '10px',
     // alignItems: 'center',
     overFlow: 'hidden'
+  }
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
+  const handleOpenDialog = () => {
+    setIsDialogOpen(true)
+  }
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false)
   }
 
   return (
@@ -150,7 +162,7 @@ export default function Film(props) {
           <Fade in={open}>
             <Box sx={style}>
               <Box sx={modalStyle}>
-                <img style={{ width: '400px', borderRadius: '10px' }} src={selectedMovie?.photo} alt="product image" />
+                <img style={{ width: '350px', borderRadius: '10px', height:'500px' }} src={selectedMovie?.photo} alt="product image" />
                 {props.isActive &&
                 <>
                   <Button
@@ -193,13 +205,33 @@ export default function Film(props) {
                         opacity: 0.7
                       }
                     }}
-                    href={selectedMovie?.trailerURL}
+                    onClick={handleOpenDialog}
+                    // href={selectedMovie?.trailerURL}
                   >
+
                     <Typography sx={{ fontSize:15 }}>Xem Trailer</Typography>
                   </Button>
                 </>
                 }
               </Box>
+              <Dialog open={isDialogOpen} onClose={handleCloseDialog} >
+                <DialogTitle sx={{ bgcolor:'#1A1A1A', color:'white' }}>
+                  Xem Trailer
+                  <IconButton sx={{ position: 'absolute', right: 8, top: 8 }} onClick={handleCloseDialog}>
+                    <CloseIcon sx={{ color:'white' }} />
+                  </IconButton>
+                </DialogTitle>
+                <DialogContent sx={{ bgcolor:'#1A1A1A' }}>
+                  <iframe
+                    width="550"
+                    height="315"
+                    src={selectedMovie?.trailerURL}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allowFullScreen
+                  ></iframe>
+                </DialogContent>
+              </Dialog>
               <Box sx={{
                 margin: 'auto', display:'flex'
               }}>
