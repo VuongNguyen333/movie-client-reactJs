@@ -6,13 +6,16 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import Tooltip from '@mui/material/Tooltip'
 import Stack from '@mui/material/Stack'
 import SendIcon from '@mui/icons-material/Send'
+import Card from '@mui/material/Card'
+import CardMedia from '@mui/material/CardMedia'
+import { CardActionArea } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -20,7 +23,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { productData } from '~/mock_data'
 import dayjs from 'dayjs'
-
+import { validateBeforeSubmit } from '../utils/validateBeforeSubmit'
+import { JoiObjectFilm } from '../utils/FilmModel'
+import { convertDate } from '../utils/convertDate'
 
 const ProSpan = styled('span')({
   display: 'inline-block',
@@ -95,7 +100,7 @@ function UpdateFilmForm({ open, onClose, itemId }) {
       borderWidth: 1
     },
     '& input:invalid + fieldset': {
-      borderColor: 'red',
+      borderColor: 'red !important',
       borderWidth: 1
     },
     '& input:valid:focus + fieldset': {
@@ -107,6 +112,7 @@ function UpdateFilmForm({ open, onClose, itemId }) {
   const genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History', 'Horror', 'Music', 'Mystery', 'Romance', 'Science Fiction', 'Thriller', 'War', 'Western']
   const [language, setLanguage] = React.useState(film ? film.language : 'Phụ đề')
   const [category, setCategory] = React.useState(film ? film.category : 'Action')
+  const [photo, setPhoto] = React.useState({})
 
   const handleChangeLanguage = (event) => {
     setLanguage(event.target.value)
@@ -114,24 +120,8 @@ function UpdateFilmForm({ open, onClose, itemId }) {
   const handleChangeCategory = (event) => {
     setCategory(event.target.value)
   }
-  function convert(input) {
-    const parts = input.split('/') // Tách chuỗi thành các thành phần ngày, tháng và năm
-    const day = parts[0] // Lấy ngày từ chuỗi
-    const month = parts[1] // Lấy tháng từ chuỗi
-    const year = parts[2] // Lấy năm từ chuỗi
-    const res = `${year}-${month}-${day}`
-    return res
-  }
-  function convertToRequest(input) {
-    const parts = input.split('/') // Tách chuỗi thành các thành phần ngày, tháng và năm
-    const day = parts[0] // Lấy ngày từ chuỗi
-    const month = parts[1] // Lấy tháng từ chuỗi
-    const year = parts[2] // Lấy năm từ chuỗi
-    const res = `${year}/${month}/${day}`
-    return res
-  }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     const formData = new FormData(event.target)
     // Kiểm tra định dạng email
@@ -144,10 +134,21 @@ function UpdateFilmForm({ open, onClose, itemId }) {
       'duration': formData.get('duration'),
       'language': formData.get('language'),
       'category': formData.get('category'),
-      'releaseDate': convertToRequest(formData.get('date')),
-      'photo': formData.get('photo'),
+      'releaseDate': convertDate.convertToRequest(formData.get('date')),
+      'photo': photo
     }
+    await validateBeforeSubmit(JoiObjectFilm, data)
     console.log('🚀 ~ handleSubmit ~ data:', data)
+    // Call Api
+  }
+
+  const [fileName, setFileName] = useState('')
+
+  // Hàm xử lý sự kiện khi người dùng chọn tệp
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0] // Lấy ra tệp được chọn
+    setPhoto(file)
+    setFileName(file.name) // Cập nhật tên của tệp vào trạng thái
   }
   return (
     <Modal
@@ -160,73 +161,91 @@ function UpdateFilmForm({ open, onClose, itemId }) {
         <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: '5px' }}>
           Update film
         </Typography>
-        <form onSubmit={handleSubmit}>
-          <ValidationTextField name='name' label="Name" required variant="outlined" defaultValue={film ? film.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-          <ValidationTextField name='actor' label="Actor" required variant="outlined" defaultValue={film ? film.actor : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-          <ValidationTextField name='director' label="Director" required variant="outlined" defaultValue={film ? film.director : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-          <ValidationTextField name='trailerURL' label="TrailerURL" required variant="outlined" defaultValue={film ? film.trailerURL : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-          <ValidationTextField name='description' label="Description" required variant="outlined" defaultValue={film ? film.description : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} multiline />
-          <ValidationTextField name='duration' multiline label="Duration (minute)" required variant="outlined" defaultValue={film ? film.duration : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Language</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              defaultValue={language}
-              label="Language"
-              onChange={handleChangeLanguage}
-              sx={{ mb: '10px' }}
-              name='language'
+        <form onSubmit={handleSubmit} style={{ display:'flex' }}>
+          <Box sx={{ mr:'10px' }}>
+            <Card sx={{ minWidth: 200 }}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  width='200'
+                  height="350"
+                  image={film ? `data:image/jpeg;base64,${film.photo}` : ''}
+                  alt='avatar'
+                />
+              </CardActionArea>
+            </Card>
+          </Box>
+          <Box>
+            <ValidationTextField name='name' label="Name" required variant="outlined" defaultValue={film ? film.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <ValidationTextField name='actor' label="Actor" required variant="outlined" defaultValue={film ? film.actor : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <ValidationTextField name='director' label="Director" required variant="outlined" defaultValue={film ? film.director : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <ValidationTextField name='trailerURL' label="TrailerURL" required variant="outlined" defaultValue={film ? film.trailerURL : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <ValidationTextField name='description' label="Description" required variant="outlined" defaultValue={film ? film.description : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} multiline />
+            <ValidationTextField name='duration' multiline label="Duration (minute)" required variant="outlined" defaultValue={film ? film.duration : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Language</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                defaultValue={language}
+                label="Language"
+                onChange={handleChangeLanguage}
+                sx={{ mb: '10px' }}
+                name='language'
+              >
+                {languages.map((item, index) => {
+                  return <MenuItem key={`languages${index}`} value={item}>{item}</MenuItem>
+                })}
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={category}
+                label="Category"
+                name='category'
+                onChange={handleChangeCategory}
+                sx={{ mb: '5px' }}
+              >
+                {genres.map((item, index) => {
+                  return <MenuItem key={`category${index}`} value={item}>{item}</MenuItem>
+                })}
+              </Select>
+            </FormControl>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer
+                components={[
+                  'DatePicker',
+                  'TimePicker',
+                  'DateTimePicker',
+                  'DateRangePicker'
+                ]}
+                sx={{ mb: '5px' }}
+              >
+                <DemoItem label={<Label componentName="DatePicker" valueType="release" />}>
+                  <DatePicker name='date' defaultValue={dayjs(convertDate.convert(film ? film.releaseDate : ''))} />
+                </DemoItem>
+              </DemoContainer>
+            </LocalizationProvider>
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+              sx={{ mr:'10px' }}
             >
-              {languages.map((item, index) => {
-                return <MenuItem key={`languages${index}`} value={item}>{item}</MenuItem>
-              })}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Category</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={category}
-              label="Category"
-              name='category'
-              onChange={handleChangeCategory}
-              sx={{ mb: '5px' }}
-            >
-              {genres.map((item, index) => {
-                return <MenuItem key={`category${index}`} value={item}>{item}</MenuItem>
-              })}
-            </Select>
-          </FormControl>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer
-              components={[
-                'DatePicker',
-                'TimePicker',
-                'DateTimePicker',
-                'DateRangePicker'
-              ]}
-              sx={{ mb: '5px' }}
-            >
-              <DemoItem label={<Label componentName="DatePicker" valueType="release" />}>
-                <DatePicker name='date' defaultValue={dayjs(convert(film ? film.releaseDate : ''))} />
-              </DemoItem>
-            </DemoContainer>
-          </LocalizationProvider>
-          <Button
-            component="label"
-            role={undefined}
-            variant="contained"
-            tabIndex={-1}
-            startIcon={<CloudUploadIcon />}
-          >
             Upload image film
-            <VisuallyHiddenInput name='photo' type="file" />
-          </Button>
-          <Button variant="contained" endIcon={<SendIcon />} type='submit'>
-            Send
-          </Button>
+              <VisuallyHiddenInput name='photo' type="file" onChange={handleFileInputChange} />
+            </Button>
+            <p>{fileName}</p>
+            <Button sx={{ bgcolor:'green', ':hover': { bgcolor:'#90D26D' } }} variant="contained" endIcon={<SendIcon />} type='submit'>
+            Update
+            </Button>
+          </Box>
+
         </form>
       </Box>
     </Modal>

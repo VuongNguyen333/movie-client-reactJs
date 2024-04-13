@@ -84,64 +84,37 @@ export default function Film(props) {
             display: 'flex',
             alignItems: 'center'
           }}>
-            {props.isActive &&
-              <Box >
-                <Button
-                  startIcon={<ConfirmationNumberIcon fontSize='medium' />}
-                  onClick={() => {
-                    navigate(`/order/${props.id}/${props.name}`)
-                  }
-                  }>Đặt vé</Button>
-              </Box>
-            }
-            {
-              props.isActive ?
-                <Box
-                  sx={{
-                    ml: '10px',
-                    width: '45px',
-                    height: '45px',
-                    bgcolor: '#222831',
-                    borderRadius: '5px',
-                    alignItems: 'center',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    border: '2px solid #87A922',
-                    cursor: 'pointer',
-                    ':hover': {
-                      bgcolor: '#72b343'
-                    }
-                  }}
-                  onClick={() => handleOpen(props)}
-                >
-                  <InfoIcon sx={{ display: 'flex', alignItems: 'center', color: 'white' }} />
-                </Box>
-                : <Box
-                  sx={{
-                    ml: '10px',
-                    width: '70%',
-                    height: '45px',
-                    bgcolor: '#222831',
-                    borderRadius: '5px',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    display: 'flex',
-                    p: '5px',
-                    border: '2px solid #87A922',
-                    cursor: 'pointer',
-                    ':hover': {
-                      bgcolor: '#72b343'
-                    },
-                    color: 'white',
-                    fontWeight: 'bold',
-                    marginLeft: '0px'
-                  }}
-                  onClick={() => handleOpen(props)}
-                >
-                  <InfoIcon sx={{ display: 'flex', alignItems: 'center', color: 'white', mr: '5px', justifyContent: 'center' }} />
-                  THÔNG TIN
-                </Box>
-            }
+            <Box >
+              <Button
+                startIcon={<ConfirmationNumberIcon fontSize='medium' />}
+                onClick={() => {
+                  navigate(`/order/${props.id}/${props.name}`)
+                }
+                }>Đặt vé</Button>
+            </Box>
+
+
+            <Box
+              sx={{
+                ml: '10px',
+                width: '45px',
+                height: '45px',
+                bgcolor: '#222831',
+                borderRadius: '5px',
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                border: '2px solid #87A922',
+                cursor: 'pointer',
+                ':hover': {
+                  bgcolor: '#72b343'
+                }
+              }}
+              onClick={() => handleOpen(props)}
+            >
+              <InfoIcon sx={{ display: 'flex', alignItems: 'center', color: 'white' }} />
+            </Box>
+
           </Box>
         </p>
       </div>
@@ -163,7 +136,6 @@ export default function Film(props) {
             <Box sx={style}>
               <Box sx={modalStyle}>
                 <img style={{ width: '350px', borderRadius: '10px', height:'500px' }} src={selectedMovie?.photo} alt="product image" />
-                {props.isActive &&
                 <>
                   <Button
                     startIcon={<ConfirmationNumberIcon />}
@@ -208,11 +180,9 @@ export default function Film(props) {
                     onClick={handleOpenDialog}
                     // href={selectedMovie?.trailerURL}
                   >
-
                     <Typography sx={{ fontSize:15 }}>Xem Trailer</Typography>
                   </Button>
                 </>
-                }
               </Box>
               <Dialog open={isDialogOpen} onClose={handleCloseDialog} >
                 <DialogTitle sx={{ bgcolor:'#1A1A1A', color:'white' }}>

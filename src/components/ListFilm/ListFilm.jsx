@@ -25,7 +25,7 @@ function ListFilm({ productData }) {
   ))
   return (
     <div>
-      { productData[0].isActive ? <h1 >Phim đang chiếu</h1> : <h1 >Phim sắp chiếu</h1>}
+      <h1 >Phim đang chiếu</h1>
       <Carousel showDots={true} responsive={responsive} draggable={false}>
         {product}
       </Carousel>

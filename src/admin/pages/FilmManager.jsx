@@ -27,7 +27,7 @@ const columns = [
     width: 100,
     renderCell: (params) => {
       return (
-        <ViewAndUpdateButton params={params} />
+        <ViewAndUpdateButton params={params} type='film'/>
       )
     },
     disableColumnMenu: true,

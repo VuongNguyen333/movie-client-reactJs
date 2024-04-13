@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-imports */
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
@@ -14,10 +14,15 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import Tooltip from '@mui/material/Tooltip'
 import Stack from '@mui/material/Stack'
+import SendIcon from '@mui/icons-material/Send'
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import { validateBeforeSubmit } from '../utils/validateBeforeSubmit'
+import { JoiObjectFilmAddNew } from '../utils/FilmModel'
+import { convertDate } from '../utils/convertDate'
+import dayjs from 'dayjs'
 
 const ProSpan = styled('span')({
   display: 'inline-block',
@@ -66,14 +71,15 @@ function AddNewForm() {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 700,
+    maxWidth: 700,
     bgcolor: 'background.paper',
     border: '1px solid #000',
     boxShadow: 24,
     p: 4,
     borderRadius: '8px',
-    maxHeight:'100%',
-    overflowY:'auto'
+    maxHeight: '90%',
+    overflowY: 'auto',
+    minWidth: 150
   }
   const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -86,29 +92,65 @@ function AddNewForm() {
     whiteSpace: 'nowrap',
     width: 1
   })
-  const [language, setLanguage] = React.useState('')
-  const [category, setCategory] = React.useState('')
 
-  const handleChangeLanguage = (event) => {
-    setLanguage(event.target.value)
+  const initFormData = {
+    name : '',
+    actor : '',
+    director : '',
+    trailerURL : '',
+    description : '',
+    duration: '',
+    language: '',
+    category: '',
+    releaseDate: '',
+    photo: {}
   }
-  const handleChangeCategory = (event) => {
-    setCategory(event.target.value)
+
+  const [formDataInit, setFormDataInit] = useState(initFormData)
+  const [photo, setPhoto] = useState({})
+  const [fileName, setFileName] = useState('')
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setFormDataInit((prevData) => ({
+      ...prevData,
+      [name]: value
+    }))
   }
-  const ValidationTextField = styled(TextField)({
-    '& input:valid + fieldset': {
-      borderColor: '#E0E3E7',
-      borderWidth: 1
-    },
-    '& input:invalid + fieldset': {
-      borderColor: 'red',
-      borderWidth: 1
-    },
-    '& input:valid:focus + fieldset': {
-      borderLeftWidth: 4,
-      padding: '4px !important' // override inline-style
+
+  const handleSetFormData = () => {
+    setFormDataInit(initFormData)
+    setPhoto({})
+    setFileName('')
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const formData = new FormData(event.target)
+    // Kiểm tra định dạng email
+    const data = {
+      'name': formData.get('name'),
+      'actor': formData.get('actor'),
+      'director': formData.get('director'),
+      'trailerURL': formData.get('trailerURL'),
+      'description': formData.get('description'),
+      'duration': formData.get('duration'),
+      'language': formData.get('language'),
+      'category': formData.get('category'),
+      'releaseDate': convertDate.convertToRequest(formData.get('date')),
+      'photo': photo
     }
-  })
+    await validateBeforeSubmit(JoiObjectFilmAddNew, data, handleSetFormData)
+    // Call Api
+  }
+
+
+  // Hàm xử lý sự kiện khi người dùng chọn tệp
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0] // Lấy ra tệp được chọn
+    setPhoto(file)
+    setFileName(file.name) // Cập nhật tên của tệp vào trạng thái
+  }
 
   const languages = ['Subtitle', 'Dubbing']
   const genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History', 'Horror', 'Music', 'Mystery', 'Romance', 'Science Fiction', 'Thriller', 'War', 'Western']
@@ -127,39 +169,26 @@ function AddNewForm() {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Add new film
           </Typography>
-          <form >
-            <TextField sx={{ mb:'5px', width:'100%' }} id="outlined-basic" label="Name" variant="outlined" >abc</TextField>
-            <TextField sx={{ mb:'5px', width:'100%' }} id="outlined-basic" label="Actor" variant="outlined" />
-            <TextField sx={{ mb:'5px', width:'100%' }} id="outlined-basic" label="Director" variant="outlined" />
-            <TextField sx={{ mb:'5px', width:'100%' }} id="outlined-basic" label="TrailerURL" variant="outlined" />
-            <TextField sx={{ mb:'5px', width:'100%' }} id="outlined-basic" label="Duration" variant="outlined" />
-            {/* <ValidationTextField
-              label="CSS validation style"
-              required
-              variant="outlined"
-              defaultValue="Success"
-              id="validation-outlined-input"
-              sx={{ mb:'5px', width:'100%' }}
-            /> */}
-            <TextField
-              id="outlined-multiline-flexible"
-              label="Description"
-              multiline
-              maxRows={4}
-              sx={{ mb:'5px', width:'100%' }}
-            />
+          <form onSubmit={handleSubmit}>
+            <TextField value={formDataInit.name} onChange={handleChange} name='name' label="Name" required variant="outlined" id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField value={formDataInit.actor} onChange={handleChange} name='actor' label="Actor" required variant="outlined" id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField value={formDataInit.director} onChange={handleChange} name='director' label="Director" required variant="outlined" id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField value={formDataInit.trailerURL} onChange={handleChange} name='trailerURL' label="TrailerURL" required variant="outlined" id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField value={formDataInit.description} onChange={handleChange} name='description' label="Description" required variant="outlined" id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} multiline />
+            <TextField value={formDataInit.duration} onChange={handleChange} name='duration' multiline label="Duration (minute)" required variant="outlined" id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Language</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={language}
+                value={formDataInit.language}
                 label="Language"
-                onChange={handleChangeLanguage}
-                sx={{ mb:'5px' }}
+                onChange={handleChange}
+                sx={{ mb: '10px' }}
+                name='language'
               >
                 {languages.map((item, index) => {
-                  return <MenuItem key={`languages${index}`} value={index}>{item}</MenuItem>
+                  return <MenuItem key={`languages${index}`} value={item}>{item}</MenuItem>
                 })}
               </Select>
             </FormControl>
@@ -168,28 +197,30 @@ function AddNewForm() {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={category}
+                value={formDataInit.category}
                 label="Category"
-                onChange={handleChangeCategory}
-                sx={{ mb:'5px' }}
+                name='category'
+                onChange={handleChange}
+                sx={{ mb: '5px' }}
               >
                 {genres.map((item, index) => {
-                  return <MenuItem key={`category${index}`} value={index}>{item}</MenuItem>
+                  return <MenuItem key={`category${index}`} value={item}>{item}</MenuItem>
                 })}
               </Select>
             </FormControl>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer
+                required
                 components={[
                   'DatePicker',
                   'TimePicker',
                   'DateTimePicker',
                   'DateRangePicker'
                 ]}
-                sx={{ mb:'5px' }}
+                sx={{ mb: '5px' }}
               >
-                <DemoItem label={<Label componentName="DatePicker" valueType="release" />}>
-                  <DatePicker />
+                <DemoItem required label={<Label componentName="DatePicker" valueType="release" />}>
+                  <DatePicker required name='date' defaultValue={dayjs(convertDate.convert(formDataInit.releaseDate || ''))} />
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>
@@ -199,14 +230,16 @@ function AddNewForm() {
               variant="contained"
               tabIndex={-1}
               startIcon={<CloudUploadIcon />}
+              sx={{ mr:'10px' }}
             >
-              Upload image film
-              <VisuallyHiddenInput type="file" />
+            Upload image film
+              <VisuallyHiddenInput name='photo' type="file" onChange={handleFileInputChange} />
+            </Button>
+            <p>{fileName}</p>
+            <Button sx={{ bgcolor:'green', ':hover': { bgcolor:'#90D26D' } }} variant="contained" endIcon={<SendIcon />} type='submit'>
+            Update
             </Button>
           </form>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Comming soon...
-          </Typography>
         </Box>
       </Modal>
     </div>

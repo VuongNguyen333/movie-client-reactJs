@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import MovieIcon from '@mui/icons-material/Movie'
 import BusinessIcon from '@mui/icons-material/Business'
 import EventNoteIcon from '@mui/icons-material/EventNote'
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 export const mainListItems = (
   <React.Fragment>
     <Link to='/admin'>
@@ -76,5 +77,14 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Year-end sale" />
     </ListItemButton>
+    <Link to='/'>
+      <ListItemButton sx={{ color:'white' }}>
+        <ListItemIcon>
+          <KeyboardReturnIcon sx={{ color:'white' }} />
+        </ListItemIcon>
+        <ListItemText primary="Home Page" />
+      </ListItemButton>
+    </Link>
+
   </React.Fragment>
 )

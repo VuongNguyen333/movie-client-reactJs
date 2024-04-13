@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import Badge from '@mui/material/Badge'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import NotificationsIcon from '@mui/icons-material/Notifications'
@@ -143,24 +143,6 @@ function HomeAdmin() {
           <Route path='branchs' element={<BranchsManager />}></Route>
           <Route path='schedules' element={<SchedulesManager />}></Route>
         </Routes>
-        {/* <Box>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-              <li>
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
-              <li>
-                <Link to="/nothing-here">Nothing Here</Link>
-              </li>
-            </ul>
-          </nav>
-        </Box> */}
       </Box>
     </ThemeProvider>
   )

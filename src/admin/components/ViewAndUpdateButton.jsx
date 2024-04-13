@@ -4,8 +4,10 @@ import PreviewIcon from '@mui/icons-material/Preview'
 import BuildIcon from '@mui/icons-material/Build'
 import { useState } from 'react'
 import UpdateFilmForm from './UpdateFilmForm'
-
-function ViewAndUpdateButton({ params }) {
+import UpdateCustomerForm from './UpdateCustomerForm'
+import { users, branchs } from '~/mock_data'
+import UpdateBranchForm from './UpdateBranchForm'
+function ViewAndUpdateButton({ params, type }) {
   const handleButtonClick = (id) => {
     setItemId(id)
     // Handle button click action here
@@ -13,8 +15,9 @@ function ViewAndUpdateButton({ params }) {
   }
   const [itemId, setItemId] = useState(0)
   const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const handleClose = () => {
+    setOpen(false)
+  }
   return (
     <Box>
       <Button
@@ -30,8 +33,8 @@ function ViewAndUpdateButton({ params }) {
       </Button>
       <Button
         onClick={() => {
-          setOpen(true)
           handleButtonClick(params.row.id)
+          setOpen(true)
         }}
         sx={{
           bgcolor: '#DC6B19',
@@ -44,7 +47,9 @@ function ViewAndUpdateButton({ params }) {
           sx={{ color:'white' }}
         />
       </Button>
-      <UpdateFilmForm open={open} onClose={handleClose} itemId={itemId}/>
+      {type === 'film' && <UpdateFilmForm open={open} onClose={handleClose} itemId={itemId}/>}
+      {type === 'customer' && <UpdateCustomerForm open={open} onClose={handleClose} userId={itemId}/>}
+      {type === 'branch' && <UpdateBranchForm open={open} onClose={handleClose} branchId={itemId}/>}
     </Box>
   )
 }
