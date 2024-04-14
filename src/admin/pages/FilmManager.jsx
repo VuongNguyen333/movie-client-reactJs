@@ -5,6 +5,7 @@ import Toolbar from '@mui/material/Toolbar'
 import DataTable from '../components/DataTable'
 import ViewAndUpdateButton from '../components/ViewAndUpdateButton'
 import AddNewForm from '../components/AddNewFilmForm'
+import ViewAndUpdateButtonFilm from '../components/ViewAndUpdateButtonFIlm'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -20,14 +21,14 @@ const columns = [
   { field: 'language', headerName: 'Language', width: 100, editable: true },
   { field: 'category', headerName: 'Category', width: 100, editable: true },
   { field: 'releaseDate', headerName: 'ReleaseDate', width: 100, editable: true },
-  { field: 'isActive', headerName: 'Active', width: 100, editable: true },
+  { field: 'duration', headerName: 'Duration (minute)', width: 200, editable: true },
   {
     field: 'button',
     headerName: 'Action',
     width: 100,
     renderCell: (params) => {
       return (
-        <ViewAndUpdateButton params={params} type='film'/>
+        <ViewAndUpdateButtonFilm params={params}/>
       )
     },
     disableColumnMenu: true,
@@ -51,7 +52,7 @@ function FilmManager() {
       }}>
       <Toolbar />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box typography='h3' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Film</Box>
+        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Film</Box>
       </Box>
       <AddNewForm />
       <DataTable rows={productData} columns={columns} />

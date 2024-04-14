@@ -19,6 +19,9 @@ import FilmManager from './FilmManager'
 import CustomersManager from './CustomersManager'
 import BranchsManager from './BranchsManager'
 import SchedulesManager from './ScheduleManager'
+import RoomsManager from './RoomsManager'
+import BillsManager from './BillsManager'
+import TicketsManager from './TicketsManager'
 
 
 const drawerWidth = 240
@@ -142,6 +145,9 @@ function HomeAdmin() {
           <Route path='customers' element={<CustomersManager />}></Route>
           <Route path='branchs' element={<BranchsManager />}></Route>
           <Route path='schedules' element={<SchedulesManager />}></Route>
+          <Route path='rooms' element={<RoomsManager />}></Route>
+          <Route path='bills/schedule/:scheduleId' element={<BillsManager />}></Route>
+          <Route path='tickets/bill/:billId' element={<TicketsManager />}></Route>
         </Routes>
       </Box>
     </ThemeProvider>

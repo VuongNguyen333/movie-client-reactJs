@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView'
 import { TreeItem2 } from '@mui/x-tree-view/TreeItem2'
 import { branchs } from '~/mock_data'
@@ -25,7 +25,13 @@ const CustomTreeItem = React.forwardRef((props, ref) => (
 ))
 
 function ListBranchs({ area_id, orderSchedule }) {
-  const listBranchs = [...branchs].filter(item => item?.areaResponse?.id.toString() === area_id.toString())
+  const [listBranchs, setListBranchs] = useState([])
+
+  useEffect(() => {
+    // call api
+    setListBranchs([...branchs].filter(item => item?.areaResponse?.id.toString() === area_id.toString()))
+  }, [area_id])
+
   return (
     <SimpleTreeView
       aria-label="customized"
@@ -51,12 +57,13 @@ function ListBranchs({ area_id, orderSchedule }) {
           '.Mui-selected' : { bgcolor: 'green' }
         }
       }}>
-        {listBranchs.map((item, index) =>
-          <CustomTreeItem key={index} itemId={`branch${item.id}`} label={item.name}>
-            <ListSchedule orderSchedule={orderSchedule} branchId={item.id}/>
-          </CustomTreeItem>)}
+        {
+          listBranchs?.map((item, index) =>
+            <CustomTreeItem key={index} itemId={`branch${item?.id}`} label={item?.name}>
+              <ListSchedule orderSchedule={orderSchedule} branchId={item?.id} />
+            </CustomTreeItem>)
+        }
       </Box>
-
     </SimpleTreeView>
   )
 }

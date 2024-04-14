@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
 function DataTable({ rows, columns }) {
   return (
-    <Box sx={{ width: '100%', height: 'calc(100vh-52px)' }}>
+    <Box sx={{ width: '100%', height: 'calc(100vh - 150px)' }}>
       <DataGrid
         sx={{
           '& .MuiDataGrid-cell--selected': {

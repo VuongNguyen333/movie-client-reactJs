@@ -13,10 +13,12 @@ export default function Payment({ branchId, scheduleId, total, payment, listSeat
   let listSeat = []
   seats.forEach(item => {
     if (listSeatId.includes(item.seatId))
-      listSeat.push(item)
+      listSeat.push(item.name)
   })
+  console.log('🚀 ~ Payment ~ listSeat:', listSeat)
+  const stringListSeat = listSeat.join(', ')
   const branch = branchs.find(item => item.id.toString() === branchId.toString())
-  const schedule = schedules.find(item => item.schedule_id.toString() === scheduleId.toString())
+  const schedule = schedules.find(item => item.id.toString() === scheduleId.toString())
   const { filmName } = useParams()
   return (
     <Box sx={{ height:'100%', alignItems: 'center', justifyContent:'center' }}>
@@ -28,27 +30,20 @@ export default function Payment({ branchId, scheduleId, total, payment, listSeat
         </Box>
         <Box sx={{ display:'flex', width:'100%', height:'100%', alignContent:'center', justifyContent:'center' }}>
           <Box sx={{ display:'flex', width: '90%', alignContent:'center', justifyContent:'space-between' }}>
-            <Box sx={{ color: 'white', m:'5px', width:'60%' }}>
+            <Box sx={{ color: 'white', m:'5px', width:'50%' }}>
               <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px' }} >
                 <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px' }}>
                   <Box sx={{ alignItems:'center', justifyContent:'center', typography:'h5', borderBottom:'1px solid white', color:'#16FF00', width:'100%' }} >{filmName}</Box>
                   <Box sx={{ typography:'h5', width:' 100%' }}>{branch.name}</Box>
                   <Box sx={{ width:' 100%' }}>{schedule.start_time}</Box>
-                  <Box sx={{ display: 'flex', alignItems:'center' }}>
-                    <Box sx={{ alignItems:'center', justifyContent:'center', mr:'5px' }}>Vi tri ghe: </Box>
-                    {listSeat.map((seat, index) => {
-                      return <Box sx={{ alignItems:'center', justifyContent:'center' }} key={`seat${index}`}>
-                        { index === listSeat.length-1 ? `${seat.name}` : `${seat.name},` }
-                      </Box>
-                    })}
-                  </Box>
+                  <Box sx={{ width:' 100%' }}>Vị trí ghế: {stringListSeat}</Box>
                   <Box sx={{ color: 'white', borderTop:'1px solid white', width:' 100%' }}>
-                    Tổng hóa đơn: {total}
+                    Tổng hóa đơn: {total}đ
                   </Box>
                 </Box>
               </Box>
             </Box>
-            <Box sx={{ border:'1px solid white', color: 'white', p :'5px', m:'5px', display:'flex', alignItems:'center', justifyContent:'center', borderRadius: '10px', width:'100%' }}>
+            <Box sx={{ border:'1px solid white', color: 'white', p :'5px', m:'5px', display:'flex', alignItems:'center', justifyContent:'center', borderRadius: '10px', width:'70%', height:'fit-content', minWidth:200 }}>
               <Box sx={{ border:'1px solid white', p:'5px', borderRadius:'10px', width:'100%', height:'100%' }} >
                 <FormControl sx={{ justifyContent:'center' }}>
                   <FormLabel

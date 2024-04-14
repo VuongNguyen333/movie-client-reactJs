@@ -31,7 +31,7 @@ export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
   const { filmId, filmName } = useParams()
   const film = productData.find(item => item.id.toString() === filmId.toString())
   const branch = branchs.find(item => item.id.toString() === branchId.toString())
-  const schedule = schedules.find(item => item.schedule_id.toString() === scheduleId.toString())
+  const schedule = schedules.find(item => item.id.toString() === scheduleId.toString())
   const [formats, setFormats] = React.useState(() => [''])
   const [total, setTotal] = React.useState(0)
   const handleFormat = (event, newFormats) => {

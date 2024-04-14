@@ -2,8 +2,8 @@ import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import { branchs } from '~/mock_data'
 import DataTable from '../components/DataTable'
-import ViewAndUpdateButton from '../components/ViewAndUpdateButton'
 import AddNewBranchForm from '../components/AddNewBranchForm'
+import ViewAndUpdateButtonBranch from '../components/ViewAndUpdateButtonBranch'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 50 },
@@ -30,7 +30,7 @@ const columns = [
     width: 100,
     renderCell: (params) => {
       return (
-        <ViewAndUpdateButton params={params} type='branch'/>
+        <ViewAndUpdateButtonBranch params={params} type='branch'/>
       )
     },
     disableColumnMenu: true,
@@ -55,7 +55,7 @@ function BranchsManager() {
       }}>
       <Toolbar />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box typography='h3' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Branchs</Box>
+        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Branchs</Box>
       </Box>
       <AddNewBranchForm />
       <DataTable rows={branchs} columns={columns} />

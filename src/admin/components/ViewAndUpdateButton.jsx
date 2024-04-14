@@ -5,8 +5,10 @@ import BuildIcon from '@mui/icons-material/Build'
 import { useState } from 'react'
 import UpdateFilmForm from './UpdateFilmForm'
 import UpdateCustomerForm from './UpdateCustomerForm'
-import { users, branchs } from '~/mock_data'
+import { users, branchs, scheduleMovieMai } from '~/mock_data'
 import UpdateBranchForm from './UpdateBranchForm'
+import SchedulesManager from '../pages/ScheduleManager'
+import { Link } from 'react-router-dom'
 function ViewAndUpdateButton({ params, type }) {
   const handleButtonClick = (id) => {
     setItemId(id)
@@ -20,17 +22,21 @@ function ViewAndUpdateButton({ params, type }) {
   }
   return (
     <Box>
-      <Button
-        onClick={() => handleButtonClick(params.row.id)}
-        sx={{
-          mr: '2px',
-          bgcolor: '#65B741',
-          minWidth:'40px',
-          ':hover': { bgcolor: 'green' }
-        }}
-      >
-        <PreviewIcon fontSize='small' sx={{ color: 'white' }} />
-      </Button>
+      <Link to={`/admin/bills/schedule/${params.row.id}`}>
+        <Button
+          onClick={() => {
+            handleButtonClick(params.row.id)
+          }}
+          sx={{
+            mr: '2px',
+            bgcolor: '#65B741',
+            minWidth:'40px',
+            ':hover': { bgcolor: 'green' }
+          }}
+        >
+          <PreviewIcon fontSize='small' sx={{ color: 'white' }} />
+        </Button>
+      </Link>
       <Button
         onClick={() => {
           handleButtonClick(params.row.id)
@@ -47,9 +53,6 @@ function ViewAndUpdateButton({ params, type }) {
           sx={{ color:'white' }}
         />
       </Button>
-      {type === 'film' && <UpdateFilmForm open={open} onClose={handleClose} itemId={itemId}/>}
-      {type === 'customer' && <UpdateCustomerForm open={open} onClose={handleClose} userId={itemId}/>}
-      {type === 'branch' && <UpdateBranchForm open={open} onClose={handleClose} branchId={itemId}/>}
     </Box>
   )
 }

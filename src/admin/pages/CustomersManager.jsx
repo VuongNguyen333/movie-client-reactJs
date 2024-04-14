@@ -10,7 +10,7 @@ import React from 'react'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import DataTable from '../components/DataTable'
-import ViewAndUpdateButton from '../components/ViewAndUpdateButton'
+import ViewAndUpdateButtonCustomer from '../components/ViewAndUpdateButtonCustomer'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -38,7 +38,7 @@ const columns = [
     width: 100,
     renderCell: (params) => {
       return (
-        <ViewAndUpdateButton params={params} type='customer'/>
+        <ViewAndUpdateButtonCustomer params={params} />
       )
     },
     disableColumnMenu: true,
@@ -63,7 +63,7 @@ function CustomersManager() {
       }}>
       <Toolbar />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box typography='h3' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Customers</Box>
+        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Customers</Box>
       </Box>
       <DataTable rows={users} columns={columns} />
     </Box>

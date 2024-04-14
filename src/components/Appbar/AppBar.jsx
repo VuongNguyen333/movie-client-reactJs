@@ -44,7 +44,7 @@ function AppBarCustom() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="http://localhost:5173"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
