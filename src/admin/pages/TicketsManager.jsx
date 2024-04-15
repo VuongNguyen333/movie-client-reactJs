@@ -9,21 +9,19 @@ import ViewButtonBill from '../components/ViewButtonBill'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'price', headerName: 'Price', width: 100, editable: true },
+  { field: 'price', headerName: 'Price', width: 100 },
   {
     field: 'seatResponse',
     headerName: 'Seat',
     width: 200,
-    editable: true,
     valueGetter: (params) => {
-      return `${params.name} (Room ${params.roomResponse.name})`
+      return `${params.name} (Room ${params.roomResponse?.name})`
     }
   },
   {
     field: 'scheduleResponse',
     headerName: 'Schedule',
     width: 200,
-    editable: true,
     valueGetter: (params) => {
       return `${params.startTime} (${params.startDate})`
     }

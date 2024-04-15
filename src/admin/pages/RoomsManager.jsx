@@ -1,10 +1,8 @@
 /* eslint-disable no-console */
 import Box from '@mui/material/Box'
-import { branchs, productData, roomOfBranchThuDuc, scheduleMovieMai, scheduleOfRoomId52 } from '~/mock_data'
+import { branchs, roomOfBranchThuDuc } from '~/mock_data'
 import Toolbar from '@mui/material/Toolbar'
 import DataTable from '../components/DataTable'
-import ViewAndUpdateButton from '../components/ViewAndUpdateButton'
-import AddNewForm from '../components/AddNewFilmForm'
 import { useLocation } from 'react-router-dom'
 import ViewAndUpdateButtonRoom from '../components/ViewAndUpdateButtonRoom'
 import AddNewRoomForm from '../components/AddNewRoomForm'

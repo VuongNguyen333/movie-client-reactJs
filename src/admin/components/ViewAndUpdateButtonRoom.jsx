@@ -4,10 +4,6 @@ import PreviewIcon from '@mui/icons-material/Preview'
 import BuildIcon from '@mui/icons-material/Build'
 import { useState } from 'react'
 import UpdateFilmForm from './UpdateFilmForm'
-import UpdateCustomerForm from './UpdateCustomerForm'
-import { users, branchs, scheduleMovieMai } from '~/mock_data'
-import UpdateBranchForm from './UpdateBranchForm'
-import SchedulesManager from '../pages/ScheduleManager'
 import { Link } from 'react-router-dom'
 function ViewAndUpdateButtonRoom({ params }) {
   const handleButtonClick = (id) => {

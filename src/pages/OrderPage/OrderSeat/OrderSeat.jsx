@@ -61,7 +61,7 @@ export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
           <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px', color:'white' }}>
             <Box sx={{ alignItems:'center', justifyContent:'center', typography:'h5', borderBottom:'1px solid white', color:'#16FF00', width:'100%' }} >{filmName}</Box>
             <Box sx={{ typography:'h5', width:' 100%' }}>{branch.name}</Box>
-            <Box sx={{ width:' 100%' }}>{schedule.start_time}</Box>
+            <Box sx={{ width:' 100%' }}>{`${schedule.startTime.toString() + ' ' + schedule.startDate+ ' Room: ' + schedule.roomResponse.name}`}</Box>
             { total!==0 && <Box sx={{ color: 'white', borderTop:'1px solid white', width:' 100%' }}>Tổng hóa đơn: {total}</Box> }
           </Box>
         </Box>
