@@ -14,7 +14,6 @@ import Paper from '@mui/material/Paper'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { billScheduleId111, ticketBillId10 } from '../../mock_data'
-import { Button } from '@mui/material'
 
 function createData(bill, ticket) {
   return {
@@ -29,7 +28,7 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow sx={{ bgcolor:'#FEFAF6'}}>
+      <TableRow sx={{ bgcolor:'#FEFAF6' }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -46,7 +45,6 @@ function Row(props) {
         <TableCell align="center">{row.bill.payment}</TableCell>
         <TableCell align="center">{row.bill.numberOfTickets}</TableCell>
         <TableCell align="center">{row.bill.userResponse.fullName}</TableCell>
-        <TableCell align="center"><Button/></TableCell>
       </TableRow>
       <TableRow sx={{ borderTop: '1px solid gray' }}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -116,7 +114,7 @@ billScheduleId111.map((item) => {
   rows.push(createData(item, ticketBillId10))
 })
 
-export default function DataTableBill() {
+export default function DataTableBillOfSchedule() {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">

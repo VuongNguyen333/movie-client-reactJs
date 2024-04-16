@@ -1,7 +1,8 @@
 import { toast } from 'react-toastify'
 
 const validate = async(validData, data) => {
-  return await validData.validateAsync(data, { abortEarly: 'false' })
+  const res = await validData.validateAsync(data, { abortEarly: 'false' })
+  return res
 }
 
 export const validateBeforeSubmit = async ( validObject, data, handleSetFormData) => {

@@ -13,13 +13,12 @@ import CardMedia from '@mui/material/CardMedia'
 import CircularProgress from '@mui/material/CircularProgress'
 import { CardActionArea } from '@mui/material'
 import { validateBeforeSubmit } from '~/admin/utils/validateBeforeSubmit'
-import { JoiObjectBranchUpdate } from '../utils/BranchModel'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
-import { branchs, roomOfBranchThuDuc, rooms } from '~/mock_data'
-import { JoiObjectRoomAddNew } from '../utils/RoomModel'
+import { roomOfBranchThuDuc, rooms } from '~/mock_data'
+import { JoiObjectRoomUpdate } from '../utils/RoomModel'
 
 function UpdateRoomForm({ open, onClose, roomId }) {
   const style = {
@@ -102,7 +101,7 @@ function UpdateRoomForm({ open, onClose, roomId }) {
       'photo' : photo
     }
     console.log('🚀 ~ handleSubmit ~ data:', data)
-    await validateBeforeSubmit(JoiObjectRoomAddNew, data)
+    await validateBeforeSubmit(JoiObjectRoomUpdate, data)
     setFileName('')
     setPhoto({})
     onClose
@@ -150,20 +149,19 @@ function UpdateRoomForm({ open, onClose, roomId }) {
           </Box>
           <Box>
             <ValidationTextField name='name' label="Name" required variant="outlined" defaultValue={room ? room?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <FormControl fullWidth>
+            <FormControl fullWidth >
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={formDataInit.status}
+                value={room ? room?.status : formDataInit.status}
                 label="Status"
                 onChange={handleChange}
                 sx={{ mb: '10px' }}
                 name='status'
-                defaultValue={room?.status === true ? true : false}
               >
                 <MenuItem value={true}>Active</MenuItem>
-                <MenuItem value={false}>UnActive</MenuItem>
+                <MenuItem value={false}>InActive</MenuItem>
               </Select>
             </FormControl>
             <Button

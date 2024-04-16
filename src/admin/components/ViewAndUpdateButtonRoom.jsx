@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import PreviewIcon from '@mui/icons-material/Preview'

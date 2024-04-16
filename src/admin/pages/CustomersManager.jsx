@@ -1,14 +1,7 @@
 /* eslint-disable no-console */
 import Box from '@mui/material/Box'
-import { productData, users } from '~/mock_data'
+import { users } from '~/mock_data'
 import Toolbar from '@mui/material/Toolbar'
-import Button from '@mui/material/Button'
-import PreviewIcon from '@mui/icons-material/Preview'
-import BuildIcon from '@mui/icons-material/Build'
-import AddIcon from '@mui/icons-material/Add'
-import React from 'react'
-import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
 import DataTable from '../components/DataTable'
 import ViewAndUpdateButtonCustomer from '../components/ViewAndUpdateButtonCustomer'
 
@@ -65,6 +58,7 @@ function CustomersManager() {
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>LIST CUSTOMERS</Box>
       </Box>
+      <Box sx={{ height: '42px' }}></Box>
       <DataTable rows={users} columns={columns} />
     </Box>
   )

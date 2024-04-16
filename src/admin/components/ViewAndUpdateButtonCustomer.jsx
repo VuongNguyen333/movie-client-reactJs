@@ -3,11 +3,7 @@ import Button from '@mui/material/Button'
 import PreviewIcon from '@mui/icons-material/Preview'
 import BuildIcon from '@mui/icons-material/Build'
 import { useState } from 'react'
-import UpdateFilmForm from './UpdateFilmForm'
 import UpdateCustomerForm from './UpdateCustomerForm'
-import { users, branchs, scheduleMovieMai } from '~/mock_data'
-import UpdateBranchForm from './UpdateBranchForm'
-import SchedulesManager from '../pages/ScheduleManager'
 import { Link } from 'react-router-dom'
 function ViewAndUpdateButtonCustomer({ params }) {
   const handleButtonClick = (id) => {
@@ -22,19 +18,21 @@ function ViewAndUpdateButtonCustomer({ params }) {
   }
   return (
     <Box>
-      <Button
-        onClick={() => {
-          handleButtonClick(params.row.id)
-        }}
-        sx={{
-          mr: '2px',
-          bgcolor: '#65B741',
-          minWidth:'40px',
-          ':hover': { bgcolor: 'green' }
-        }}
-      >
-        <PreviewIcon fontSize='small' sx={{ color: 'white' }} />
-      </Button>
+      <Link to={`/admin/bills/user/${params.row.id}`}>
+        <Button
+          onClick={() => {
+            handleButtonClick(params.row.id)
+          }}
+          sx={{
+            mr: '2px',
+            bgcolor: '#65B741',
+            minWidth:'40px',
+            ':hover': { bgcolor: 'green' }
+          }}
+        >
+          <PreviewIcon fontSize='small' sx={{ color: 'white' }} />
+        </Button>
+      </Link>
       <Button
         onClick={() => {
           handleButtonClick(params.row.id)

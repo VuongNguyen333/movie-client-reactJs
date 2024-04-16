@@ -1,15 +1,14 @@
 /* eslint-disable no-console */
 import Box from '@mui/material/Box'
-import { schedules } from '~/mock_data'
+import { users } from '~/mock_data'
 import Toolbar from '@mui/material/Toolbar'
 import { useParams } from 'react-router-dom'
 import DataTableBillOfSchedule from '../components/DataTableBillOfSchedule'
 
-function BillsManager() {
-  const { scheduleId } = useParams()
-  console.log('🚀 ~ BillsManager ~ scheduleId:', scheduleId)
-  const schedule = [...schedules].find(item => item.id.toString() === scheduleId.toString())
-  console.log('🚀 ~ BillsManager ~ schedule:', schedule)
+function BillOfUserManager() {
+  const { userId } = useParams()
+  const user = [...users].find(item => item.id.toString() === userId.toString())
+  console.log('🚀 ~ BillOfUserManager ~ user:', user)
   return (
     <Box
       component="main"
@@ -30,17 +29,15 @@ function BillsManager() {
       </Box>
       <Box sx={{ height: 'fit-content', display: 'flex' }}>
         <Box sx={{ mr: '30px' }}>
-          <Box sx={{ ml: '5px', fontSize: 15 }}>Film: {schedule?.movieResponse.name}</Box>
-          <Box sx={{ ml: '5px', fontSize: 15 }}>Room: {schedule?.roomResponse.name}</Box>
-        </Box>
-        <Box>
-          <Box sx={{ ml: '5px', fontSize: 15 }}>Branch: {schedule?.roomResponse.branchResponse.name}</Box>
-          <Box sx={{ ml: '5px', fontSize: 15 }}>Time Schedule: {schedule?.startTime.toString() + ' ' + schedule?.startDate}</Box>
+          <Box sx={{ ml: '5px', fontSize: 15 }}>Name: {user?.fullName}</Box>
+          <Box sx={{ ml: '5px', fontSize: 15 }}>Email: {user?.email}</Box>
+          <Box sx={{ ml: '5px', fontSize: 15 }}>Date Of Birth: {user?.dob}</Box>
         </Box>
       </Box>
+      {/* <DataTable rows={data} columns={columns} /> */}
       <DataTableBillOfSchedule />
     </Box>
   )
 }
 
-export default BillsManager
+export default BillOfUserManager

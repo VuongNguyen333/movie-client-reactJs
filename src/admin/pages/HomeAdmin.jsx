@@ -21,7 +21,7 @@ import BranchsManager from './BranchsManager'
 import SchedulesManager from './ScheduleManager'
 import RoomsManager from './RoomsManager'
 import BillsManager from './BillsManager'
-import TicketsManager from './TicketsManager'
+import BillOfUserManager from './BillOfUserManager'
 
 
 const drawerWidth = 240
@@ -147,7 +147,7 @@ function HomeAdmin() {
           <Route path='schedules' element={<SchedulesManager />}></Route>
           <Route path='rooms' element={<RoomsManager />}></Route>
           <Route path='bills/schedule/:scheduleId' element={<BillsManager />}></Route>
-          <Route path='tickets/bill/:billId' element={<TicketsManager />}></Route>
+          <Route path='bills/user/:userId' element={<BillOfUserManager />}></Route>
         </Routes>
       </Box>
     </ThemeProvider>

@@ -92,8 +92,6 @@ export default function Film(props) {
                 }
                 }>Đặt vé</Button>
             </Box>
-
-
             <Box
               sx={{
                 ml: '10px',
@@ -114,7 +112,6 @@ export default function Film(props) {
             >
               <InfoIcon sx={{ display: 'flex', alignItems: 'center', color: 'white' }} />
             </Box>
-
           </Box>
         </p>
       </div>

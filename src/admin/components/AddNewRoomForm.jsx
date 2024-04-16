@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-restricted-imports */
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -6,8 +7,6 @@ import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
-import Tooltip from '@mui/material/Tooltip'
-import Stack from '@mui/material/Stack'
 import SendIcon from '@mui/icons-material/Send'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -16,48 +15,7 @@ import Select from '@mui/material/Select'
 import { styled } from '@mui/material/styles'
 import AddIcon from '@mui/icons-material/Add'
 import { validateBeforeSubmit } from '~/admin/utils/validateBeforeSubmit'
-import { JoiObjectBranchAddNew, JoiObjectBranchUpdate } from '../utils/BranchModel'
-import { areas } from '~/mock_data'
-import { toast } from 'react-toastify'
 import { JoiObjectRoomAddNew } from '../utils/RoomModel'
-
-const ProSpan = styled('span')({
-  display: 'inline-block',
-  height: '1em',
-  width: '1em',
-  verticalAlign: 'middle',
-  marginLeft: '0.3em',
-  marginBottom: '0.08em',
-  backgroundSize: 'contain',
-  backgroundRepeat: 'no-repeat',
-  backgroundImage: 'url(https://mui.com/static/x/pro.svg)'
-})
-
-function Label({ isProOnly }) {
-  const content = (
-    <span>
-      <Box >Date of birth</Box>
-    </span>
-  )
-
-  if (isProOnly) {
-    return (
-      <Stack direction="row" spacing={0.5} component="span">
-        <Tooltip title="Included on Pro package">
-          <a
-            href="https://mui.com/x/introduction/licensing/#pro-plan"
-            aria-label="Included on Pro package"
-          >
-            <ProSpan />
-          </a>
-        </Tooltip>
-        {content}
-      </Stack>
-    )
-  }
-
-  return content
-}
 
 function AddNewRoomForm({ branchId }) {
   const style = {
