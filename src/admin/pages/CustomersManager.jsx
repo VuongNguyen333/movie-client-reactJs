@@ -63,7 +63,7 @@ function CustomersManager() {
       }}>
       <Toolbar />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Customers</Box>
+        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>LIST CUSTOMERS</Box>
       </Box>
       <DataTable rows={users} columns={columns} />
     </Box>

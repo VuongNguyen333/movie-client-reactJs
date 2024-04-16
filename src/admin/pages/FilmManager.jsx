@@ -52,7 +52,7 @@ function FilmManager() {
       }}>
       <Toolbar />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Film</Box>
+        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>LIST FILM</Box>
       </Box>
       <AddNewForm />
       <DataTable rows={productData} columns={columns} />

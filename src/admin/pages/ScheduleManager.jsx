@@ -87,7 +87,7 @@ function SchedulesManager() {
       }}>
       <Toolbar />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Schedule {movie.name ? `Film ${movie.name}` : room.name ? `Room ${room.name}` : ''}</Box>
+        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>SCHEDULE {movie.name ? `FILM ${movie.name.toUpperCase()}` : room.name ? `ROOM ${room.name.toUpperCase()}` : ''}</Box>
       </Box>
       { room?.name &&
         <Box sx={{ height:'45px' }}>

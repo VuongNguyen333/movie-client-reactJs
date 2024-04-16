@@ -8,13 +8,21 @@ import ViewAndUpdateButtonRoom from '../components/ViewAndUpdateButtonRoom'
 import AddNewRoomForm from '../components/AddNewRoomForm'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'name', headerName: 'Name', width: 100, editable: true },
-  { field: 'status', headerName: 'Status', width: 100, editable: true },
+  { field: 'id', headerName: 'ID', width: 100 },
+  { field: 'name', headerName: 'Name', width: 150, editable: true },
+  {
+    field: 'status',
+    headerName: 'Status',
+    width: 150,
+    editable: true,
+    valueGetter: (params) => {
+      return params.toString() ? 'Active' : 'UnActive'
+    }
+  },
   {
     field: 'branchResponse',
     headerName: 'Branch',
-    width: 200,
+    width: 300,
     editable: true,
     valueGetter: (params) => {
       return params.name
@@ -35,11 +43,11 @@ const columns = [
 ]
 function RoomsManager() {
   const location = useLocation()
-  console.log('🚀 ~ SchedulesManager ~ location:', location)
   let data = {}
   let branch = {}
   if (location.state) {
     data = roomOfBranchThuDuc
+    console.log('🚀 ~ RoomsManager ~ data:', data)
     branch = branchs.find(item => location.state.branchId.toString() === item.id.toString())
   } else {
     data = {}
@@ -60,7 +68,7 @@ function RoomsManager() {
       }}>
       <Toolbar />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>List room branch {branch.name}</Box>
+        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center', mt:'3px' }}>{branch.name.toUpperCase()}</Box>
       </Box>
       <AddNewRoomForm branchId={branch?.id} />
       <DataTable rows={data} columns={columns} />

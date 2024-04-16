@@ -11,19 +11,29 @@ const columns = [
   {
     field: 'address',
     headerName: 'Address',
-    width: 600,
+    width: 400,
     editable: true
+  },
+  {
+    field: 'status',
+    headerName: 'Status',
+    width: 100,
+    editable: true,
+    valueGetter: (params) => {
+      return params.toString() ? 'Active' : 'UnActive'
+    }
   },
   { field: 'introduction', headerName: 'Introduction', width: 150, editable: true },
   {
     field: 'areaResponse',
     headerName: 'Area',
-    width: 100,
+    width: 120,
     editable: true,
     valueGetter: (params) => {
       return params.name
     }
   },
+  { field: 'revenue', headerName: 'Revenue', width: 70, editable: true },
   {
     field: 'button',
     headerName: 'Action',
@@ -55,7 +65,7 @@ function BranchsManager() {
       }}>
       <Toolbar />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Branchs</Box>
+        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>LIST BRANCHS</Box>
       </Box>
       <AddNewBranchForm />
       <DataTable rows={branchs} columns={columns} />

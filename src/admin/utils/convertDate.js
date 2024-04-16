@@ -12,7 +12,7 @@ const convertToRequest = (input) => {
   const day = parts[0] // Lấy ngày từ chuỗi
   const month = parts[1] // Lấy tháng từ chuỗi
   const year = parts[2] // Lấy năm từ chuỗi
-  const res = `${year}/${month}/${day}`
+  const res = `${year}-${month}-${day}`
   return res
 }
 

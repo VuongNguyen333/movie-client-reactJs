@@ -6,6 +6,7 @@ import DataTable from '../components/DataTable'
 import { useLocation, useParams } from 'react-router-dom'
 import AddNewRoomForm from '../components/AddNewRoomForm'
 import ViewButtonBill from '../components/ViewButtonBill'
+import DataTableBill from '../components/DataTableBill'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -40,6 +41,7 @@ function BillsManager() {
   console.log('🚀 ~ BillsManager ~ scheduleId:', scheduleId)
   const data = billScheduleId111
   const schedule = [...schedules].find(item => item.id.toString() === scheduleId.toString())
+  console.log('🚀 ~ BillsManager ~ schedule:', schedule)
   return (
     <Box
       component="main"
@@ -56,19 +58,20 @@ function BillsManager() {
       }}>
       <Toolbar />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Bill</Box>
+        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>LIST BILLS</Box>
       </Box>
       <Box sx={{ height:'fit-content', display:'flex' }}>
         <Box sx={{ mr:'30px' }}>
-          <Box sx={{ ml:'5px', fontSize:15 }}>Film: {schedule.movieResponse.name}</Box>
-          <Box sx={{ ml:'5px', fontSize:15 }}>Room: {schedule.roomResponse.name}</Box>
+          <Box sx={{ ml:'5px', fontSize:15 }}>Film: {schedule?.movieResponse.name}</Box>
+          <Box sx={{ ml:'5px', fontSize:15 }}>Room: {schedule?.roomResponse.name}</Box>
         </Box>
         <Box>
-          <Box sx={{ ml:'5px', fontSize:15 }}>Branch: {schedule.roomResponse.branchResponse.name}</Box>
-          <Box sx={{ ml:'5px', fontSize:15 }}>Time Schedule: {schedule.startTime.toString() + ' ' + schedule.startDate}</Box>
+          <Box sx={{ ml:'5px', fontSize:15 }}>Branch: {schedule?.roomResponse.branchResponse.name}</Box>
+          <Box sx={{ ml:'5px', fontSize:15 }}>Time Schedule: {schedule?.startTime.toString() + ' ' + schedule?.startDate}</Box>
         </Box>
       </Box>
-      <DataTable rows={data} columns={columns} />
+      {/* <DataTable rows={data} columns={columns} /> */}
+      <DataTableBill />
     </Box>
   )
 }

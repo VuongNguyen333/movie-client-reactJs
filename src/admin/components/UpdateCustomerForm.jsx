@@ -152,10 +152,11 @@ function UpdateCustomerForm({ open, onClose, userId }) {
     const data = {
       'fullName': formData.get('fullName'),
       'email': formData.get('email'),
-      'dob': convertDate.convertToRequest(formData.get('date')),
+      'dob': convertDate.convertToRequest(user?.dob),
       'avatar': photo,
       'roles' : devices
     }
+    console.log('🚀 ~ handleSubmit ~ data:', data)
     await validateBeforeSubmit(JoiObjectUser, data)
     // Call Api
   }
@@ -201,8 +202,8 @@ function UpdateCustomerForm({ open, onClose, userId }) {
             </Card>
           </Box>
           <Box>
-            <ValidationTextField name='fullName' label="Full Name" required variant="outlined" defaultValue={user ? user.fullName : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField name='email' label="Email" required variant="outlined" defaultValue={user ? user.email :''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <ValidationTextField disabled name='fullName' label="Full Name" required variant="outlined" defaultValue={user ? user.fullName : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <ValidationTextField disabled name='email' label="Email" required variant="outlined" defaultValue={user ? user.email :''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
             <ToggleButtonGroup
               name='roles'
               color="primary"
@@ -223,7 +224,7 @@ function UpdateCustomerForm({ open, onClose, userId }) {
                 sx={{ mb: '5px' }}
               >
                 <DemoItem label={<Label componentName="DatePicker" valueType="release" />}>
-                  <DatePicker name='date' defaultValue={dayjs(convertDate.convert(user ? user.dob : ''))}/>
+                  <DatePicker disabled name='date' defaultValue={dayjs(convertDate.convert(user ? user.dob : ''))}/>
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>

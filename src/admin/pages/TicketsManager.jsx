@@ -1,11 +1,8 @@
 /* eslint-disable no-console */
 import Box from '@mui/material/Box'
-import { billScheduleId111, branchs, roomOfBranchThuDuc, schedules, ticketBillId10 } from '~/mock_data'
+import { ticketBillId10 } from '~/mock_data'
 import Toolbar from '@mui/material/Toolbar'
 import DataTable from '../components/DataTable'
-import { useLocation } from 'react-router-dom'
-import AddNewRoomForm from '../components/AddNewRoomForm'
-import ViewButtonBill from '../components/ViewButtonBill'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -24,6 +21,14 @@ const columns = [
     width: 200,
     valueGetter: (params) => {
       return `${params.startTime} (${params.startDate})`
+    }
+  },
+  {
+    field: 'scheduleResponse.movieResponse',
+    headerName: 'Schedule',
+    width: 200,
+    valueGetter: (params) => {
+      return `${params.name})`
     }
   }
 ]
@@ -45,7 +50,7 @@ function TicketsManager() {
       }}>
       <Toolbar />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>List Tickets</Box>
+        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>LIST TICKETS</Box>
       </Box>
       {/* <Box sx={{ height:'fit-content', display:'flex' }}>
         <Box sx={{ mr:'30px' }}>

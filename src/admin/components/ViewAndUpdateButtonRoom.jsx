@@ -3,8 +3,8 @@ import Button from '@mui/material/Button'
 import PreviewIcon from '@mui/icons-material/Preview'
 import BuildIcon from '@mui/icons-material/Build'
 import { useState } from 'react'
-import UpdateFilmForm from './UpdateFilmForm'
 import { Link } from 'react-router-dom'
+import UpdateRoomForm from './UpdateRoomForm'
 function ViewAndUpdateButtonRoom({ params }) {
   const handleButtonClick = (id) => {
     setItemId(id)
@@ -45,7 +45,7 @@ function ViewAndUpdateButtonRoom({ params }) {
           fontSize='small'
           sx={{ color:'white' }}
         />
-      </Button><UpdateFilmForm open={open} onClose={handleClose} itemId={itemId}/>
+      </Button><UpdateRoomForm open={open} onClose={handleClose} roomId={itemId}/>
     </Box>
   )
 }
