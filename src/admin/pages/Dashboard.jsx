@@ -32,7 +32,7 @@ function DashBoard() {
       }}
     >
       <Toolbar />
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4, bgcolor:'#1a1d29' }}>
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4, bgcolor: '#1a1d29' }}>
         <Grid container spacing={3}>
           {/* Chart */}
           <Grid item xs={12} md={8} lg={9}>
@@ -62,7 +62,7 @@ function DashBoard() {
           </Grid>
           {/* Recent Orders */}
           <Grid item xs={12}>
-            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', color:'white' }}>
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', color: 'white' }}>
               <Orders />
             </Paper>
           </Grid>

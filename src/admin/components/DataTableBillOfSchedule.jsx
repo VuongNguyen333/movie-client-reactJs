@@ -28,23 +28,24 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow sx={{ bgcolor:'#FEFAF6' }}>
+      <TableRow sx={{ bgcolor: '#FEFAF6' }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
+            sx={{ color: 'black' }}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell sx={{ color: 'black' }} component="th" scope="row">
           {row.bill.id}
         </TableCell>
-        <TableCell align="center">{`${row.bill.createdDate.toString() + ' ' + row.bill.createdTime}`}</TableCell>
-        <TableCell align="center">{row.bill.payment}</TableCell>
-        <TableCell align="center">{row.bill.numberOfTickets}</TableCell>
-        <TableCell align="center">{row.bill.userResponse.fullName}</TableCell>
+        <TableCell sx={{ color: 'black' }} align="center">{`${row.bill.createdDate.toString() + ' ' + row.bill.createdTime}`}</TableCell>
+        <TableCell sx={{ color: 'black' }} align="center">{row.bill.payment}</TableCell>
+        <TableCell sx={{ color: 'black' }} align="center">{row.bill.numberOfTickets}</TableCell>
+        <TableCell sx={{ color: 'black' }} align="center">{row.bill.userResponse.fullName}</TableCell>
       </TableRow>
       <TableRow sx={{ borderTop: '1px solid gray' }}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -117,9 +118,9 @@ billScheduleId111.map((item) => {
 export default function DataTableBillOfSchedule() {
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+      <Table aria-label="collapsible table" sx={{ color: 'black' }}>
         <TableHead>
-          <TableRow>
+          <TableRow sx={{ color: 'black' }}>
             <TableCell />
             <TableCell>Id</TableCell>
             <TableCell align="center">Create At</TableCell>
@@ -130,7 +131,7 @@ export default function DataTableBillOfSchedule() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.name} row={row}/>
+            <Row key={row.name} row={row} />
           ))}
         </TableBody>
       </Table>

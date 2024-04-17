@@ -175,10 +175,9 @@ const Navbar = () => {
             </Box>
             <Box sx={{ flexGrow: 0, display:'flex', alignItems:'center', justifyContent:'center' }}>
               <MenuItem>
-              <Link to='/admin'>
-                <Typography textAlign="center" sx={{ color: 'white', mr:'15px' }}>Dashboard</Typography>
-              </Link>
-                
+                <Link to='/admin'>
+                  <Typography textAlign="center" sx={{ color: 'white', mr:'15px' }}>Dashboard</Typography>
+                </Link>
               </MenuItem>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

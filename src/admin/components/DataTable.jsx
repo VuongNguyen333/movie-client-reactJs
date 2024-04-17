@@ -9,7 +9,8 @@ function DataTable({ rows, columns }) {
           '& .MuiDataGrid-cell--selected': {
             borderColor: 'transparent'
           },
-          overflowX:'auto'
+          overflowX: 'auto',
+          color: 'black'
         }}
         rows={rows}
         columns={columns}
