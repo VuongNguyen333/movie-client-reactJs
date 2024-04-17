@@ -51,7 +51,7 @@ function Label({ isProOnly }) {
   }
   return content
 }
-function AddNewScheduleForm({ open, onClose, formData }) {
+function UpdateScheduleForm({ open, onClose, formData }) {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -105,20 +105,6 @@ function AddNewScheduleForm({ open, onClose, formData }) {
     console.log('🚀 ~ handleSubmit ~ dataReq:', dataReq)
     // Call Api
   }
-  if (!formData) {
-    return <Box sx={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: 2,
-      width: '100vh',
-      height: '100vh'
-    }}>
-      <CircularProgress />
-      <Typography>Loading data...</Typography>
-    </Box>
-  }
-
   return (
     <Modal
       open={open}
@@ -146,7 +132,7 @@ function AddNewScheduleForm({ open, onClose, formData }) {
                 sx={{ mb: '5px' }}
               >
                 <DemoItem label={<Label componentName="DatePicker" valueType="release" />}>
-                  <DatePicker disabled name='date' defaultValue={dayjs((formData ? formData.startDate : ''))} />
+                  <DatePicker name='date' defaultValue={dayjs((formData ? formData.startDate : ''))} />
                 </DemoItem>
                 <DemoItem label="Responsive variant">
                   <TimePicker ampm={false} name='time' defaultValue={dayjs('2022-04-17T15:30')} />
@@ -163,4 +149,4 @@ function AddNewScheduleForm({ open, onClose, formData }) {
   )
 }
 
-export default AddNewScheduleForm
+export default UpdateScheduleForm

@@ -131,7 +131,7 @@ function UpdateFilmForm({ open, onClose, itemId }) {
       'director': formData.get('director'),
       'trailerURL': formData.get('trailerURL'),
       'description': formData.get('description'),
-      'duration': formData.get('duration'),
+      'duration': parseInt(formData.get('duration')),
       'language': formData.get('language'),
       'category': formData.get('category'),
       'releaseDate': convertDate.convertToRequest(formData.get('date')),

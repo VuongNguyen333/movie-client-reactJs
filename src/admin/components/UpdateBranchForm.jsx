@@ -113,7 +113,7 @@ function UpdateBranchForm({ open, onClose, branchId }) {
     >
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: '5px' }}>
-          Update Customer
+          Update Branch
         </Typography>
         <form onSubmit={handleSubmit} style={{ display:'flex' }}>
           <Box sx={{ mr:'10px' }}>

@@ -1,15 +1,13 @@
 /* eslint-disable no-restricted-imports */
 import { Button, FormControl, InputLabel, MenuItem, Select, Toolbar } from '@mui/material'
 import Box from '@mui/material/Box'
-import Tooltip from '@mui/material/Tooltip'
-import { useEffect, useState } from 'react'
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
+import { useState } from 'react'
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import SearchIcon from '@mui/icons-material/Search'
-import { convertDate } from '../utils/convertDate'
-import { branchs, productData, roomOfBranchThuDuc } from '~/mock_data'
+import { branchs, productData } from '~/mock_data'
 import { validate } from '../utils/validateBeforeSubmit'
 import { JoiObjectScheduleSearch } from '../utils/ScheduleModel'
 import { toast } from 'react-toastify'
@@ -25,24 +23,17 @@ export default function AddNewSchedule() {
 
   const initFormData = {
     startDate: '',
-    movieId: '',
+    movieId: 0,
     branchId: '',
     roomId: ''
   }
 
   const [formDataReq, setFormDataReq] = useState(initFormData)
-  const handleChange = (event) => {
-    const { name, value } = event.target
-    setFormDataReq((prevData) => ({
-      ...prevData,
-      [name]: value
-    }))
-  }
   const handleSubmit = async (event) => {
     event.preventDefault()
     const formData = new FormData(event.target)
     const data = {
-      'startDate': convertDate.convertToRequest(formData.get('date')),
+      'startDate': (formData.get('date')),
       'movieId': formData.get('film'),
       'branchId': formData.get('branch')
     }

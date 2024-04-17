@@ -1,5 +1,4 @@
 import * as React from 'react'
-import PropTypes from 'prop-types'
 import Box from '@mui/material/Box'
 import Collapse from '@mui/material/Collapse'
 import IconButton from '@mui/material/IconButton'
@@ -18,7 +17,6 @@ import { Button } from '@mui/material'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import AddNewScheduleForm from './AddNewScheduleForm'
-import { idID } from '@mui/material/locale'
 
 function createData(room, schedule) {
   return {
@@ -28,20 +26,13 @@ function createData(room, schedule) {
 }
 
 function Row(props) {
-  const initForm = {
-    'roomId' : '',
-    'movieId' : '',
-    'startDate' : '',
-    'startTime' : ''
-  }
-  const [formDataReq, setFormDataReq] = useState(initForm)
   const { row, formData } = props
   const [openForm, setOpenForm] = React.useState(false)
   const handleButtonClick = (id) => {
     formData.roomId = id
     setItemId(id)
-    console.log('🚀 ~ handleButtonClick ~ formData:', formData)
-    console.log(`Button clicked for row with ID: ${id}`)
+    // console.log('🚀 ~ handleButtonClick ~ formData:', formData)
+    // console.log(`Button clicked for row with ID: ${id}`)
   }
   const [itemId, setItemId] = useState(0)
   const [open, setOpen] = useState(false)
@@ -65,18 +56,32 @@ function Row(props) {
           {row.room.id}
         </TableCell>
         <TableCell align="center">{row.room.name}</TableCell>
+        <TableCell align="center">{row.room.status ? 'Active' : 'InAcitve'}</TableCell>
         <TableCell align="center">{row.room.branchResponse.name}</TableCell>
         <TableCell align="center">{row.room.branchResponse.address}</TableCell>
-        <TableCell align="center">
-          <Button
-            onClick={() => {
-              handleButtonClick(row.room.id)
-              setOpenForm(true)
-            }
-            }>
+        { row.room.status
+          ? < TableCell align="center">
+            <Button
+              onClick={() => {
+                handleButtonClick(row.room.id)
+                setOpenForm(true)
+              }
+              }>
             New Schedule
-          </Button>
-        </TableCell>
+            </Button>
+          </TableCell>
+          : < TableCell align="center">
+            <Button
+              disabled
+              onClick={() => {
+                handleButtonClick(row.room.id)
+                setOpenForm(true)
+              }
+              }>
+          New Schedule
+            </Button>
+          </TableCell>
+        }
       </TableRow>
       <TableRow sx={{ borderTop: '1px solid gray' }}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -135,20 +140,11 @@ function Row(props) {
 //     protein: PropTypes.number.isRequired
 //   }).isRequired
 // }
-
-// const rows = [
-//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-//   createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-//   createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-//   createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5)
-// ]
-
 export default function DataTableScheduleOfRoom({ data, branchId }) {
   const [formData, setFormData] = useState({})
   useEffect(() => {
-    console.log('🚀 ~ useEffect ~ data:', data)
-    console.log('🚀 ~ useEffect ~ branch:', branchId)
+    // console.log('🚀 ~ useEffect ~ data:', data)
+    // console.log('🚀 ~ useEffect ~ branch:', branchId)
     setFormData(data)
   }, [data, branchId])
   let rows = []
@@ -166,6 +162,7 @@ export default function DataTableScheduleOfRoom({ data, branchId }) {
               <TableCell />
               <TableCell>Id</TableCell>
               <TableCell align="center">Room</TableCell>
+              <TableCell align="center">Status</TableCell>
               <TableCell align="center">Branch</TableCell>
               <TableCell align="center">Address</TableCell>
               <TableCell align="center">Action</TableCell>
