@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
 
-const validate = async(validData, data) => {
+export const validate = async(validData, data) => {
   const res = await validData.validateAsync(data, { abortEarly: 'false' })
   return res
 }
@@ -12,7 +12,7 @@ export const validateBeforeSubmit = async ( validObject, data, handleSetFormData
       handleSetFormData()
     }
     console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
-    toast.success('Update succesfully')
+    toast.success('Succesfully')
   } catch (err) {
     toast.error(err.message)
   }

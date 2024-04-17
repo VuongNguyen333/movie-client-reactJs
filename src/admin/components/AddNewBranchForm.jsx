@@ -6,57 +6,16 @@ import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
-import Tooltip from '@mui/material/Tooltip'
-import Stack from '@mui/material/Stack'
 import SendIcon from '@mui/icons-material/Send'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
-import { styled } from '@mui/material/styles'
 import AddIcon from '@mui/icons-material/Add'
+import { styled } from '@mui/material/styles'
 import { validateBeforeSubmit } from '~/admin/utils/validateBeforeSubmit'
-import { JoiObjectBranchAddNew, JoiObjectBranchUpdate } from '../utils/BranchModel'
+import { JoiObjectBranchAddNew } from '../utils/BranchModel'
 import { areas } from '~/mock_data'
-import { toast } from 'react-toastify'
-
-const ProSpan = styled('span')({
-  display: 'inline-block',
-  height: '1em',
-  width: '1em',
-  verticalAlign: 'middle',
-  marginLeft: '0.3em',
-  marginBottom: '0.08em',
-  backgroundSize: 'contain',
-  backgroundRepeat: 'no-repeat',
-  backgroundImage: 'url(https://mui.com/static/x/pro.svg)'
-})
-
-function Label({ isProOnly }) {
-  const content = (
-    <span>
-      <Box >Date of birth</Box>
-    </span>
-  )
-
-  if (isProOnly) {
-    return (
-      <Stack direction="row" spacing={0.5} component="span">
-        <Tooltip title="Included on Pro package">
-          <a
-            href="https://mui.com/x/introduction/licensing/#pro-plan"
-            aria-label="Included on Pro package"
-          >
-            <ProSpan />
-          </a>
-        </Tooltip>
-        {content}
-      </Stack>
-    )
-  }
-
-  return content
-}
 
 function AddNewBranchForm() {
   const style = {
@@ -127,9 +86,10 @@ function AddNewBranchForm() {
       'name': formData.get('name'),
       'address': formData.get('address'),
       'introduction': formData.get('introduction'),
-      'area' : formData.get('area'),
+      'areaId' : formData.get('area'),
       'photo' : photo
     }
+    console.log('🚀 ~ handleSubmit ~ data:', data)
     await validateBeforeSubmit( JoiObjectBranchAddNew, data, handleSetFormData )
   }
 
@@ -164,7 +124,7 @@ function AddNewBranchForm() {
                 name='area'
               >
                 {areas.map((item, index) => {
-                  return <MenuItem key={`area${index}`} value={item?.name}>{item?.name}</MenuItem>
+                  return <MenuItem key={`area${index}`} value={item?.id}>{item?.name}</MenuItem>
                 })}
               </Select>
             </FormControl>

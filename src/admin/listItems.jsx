@@ -43,12 +43,12 @@ export const mainListItems = (
         <ListItemText primary="Branchs Manager" />
       </ListItemButton>
     </Link>
-    <Link to='/admin/schedules'>
+    <Link to='/admin/add/schedule'>
       <ListItemButton sx={{ color:'white' }}>
         <ListItemIcon>
           <EventNoteIcon sx={{ color:'white' }}/>
         </ListItemIcon>
-        <ListItemText primary="Schedules Manager" />
+        <ListItemText primary="Add New Schedule" />
       </ListItemButton>
     </Link>
   </React.Fragment>
