@@ -80,7 +80,7 @@ function UpdateBranchForm({ open, onClose, branchId }) {
       'name': formData.get('name'),
       'address': formData.get('address'),
       'introduction': formData.get('introduction'),
-      'area' : formData.get('introduction'),
+      'areaId' : formData.get('introduction'),
       'photo' : photo
     }
     await validateBeforeSubmit(JoiObjectBranchUpdate, data)
