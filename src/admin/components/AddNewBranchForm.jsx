@@ -16,6 +16,7 @@ import { styled } from '@mui/material/styles'
 import { validateBeforeSubmit } from '~/admin/utils/validateBeforeSubmit'
 import { JoiObjectBranchAddNew } from '../utils/BranchModel'
 import { areas } from '~/mock_data'
+import { addNewBranchAPI } from '~/apis/branchApi'
 
 function AddNewBranchForm() {
   const style = {
@@ -82,6 +83,7 @@ function AddNewBranchForm() {
     event.preventDefault()
     const formData = new FormData(event.target)
     // Kiểm tra định dạng email
+    const areaId = formData.get('area')
     const data = {
       'name': formData.get('name'),
       'address': formData.get('address'),
@@ -91,6 +93,9 @@ function AddNewBranchForm() {
     }
     console.log('🚀 ~ handleSubmit ~ data:', data)
     await validateBeforeSubmit( JoiObjectBranchAddNew, data, handleSetFormData )
+    delete data.areaId
+    data.status = true
+    await addNewBranchAPI(data, areaId)
   }
 
   return (

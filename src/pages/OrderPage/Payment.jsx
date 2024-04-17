@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box'
-import { branchs, schedules } from '~/mock_data'
 import { useParams } from 'react-router-dom'
 import Radio from '@mui/material/Radio'
 import Typography from '@mui/material/Typography'
@@ -7,19 +6,33 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
-import seats from '~/mock_data'
+import { useEffect, useState } from 'react'
+import { getBranchbyId } from '~/apis/branchApi'
+import { getScheduleById } from '~/apis/scheduleApi'
+import { getDetailSeatAPI, getListSeatAPI } from '~/apis/seat'
 
-export default function Payment({ branchId, scheduleId, total, payment, listSeatId }) {
-  let listSeat = []
-  seats.forEach(item => {
-    if (listSeatId.includes(item.seatId))
-      listSeat.push(item.name)
-  })
-  console.log('🚀 ~ Payment ~ listSeat:', listSeat)
-  const stringListSeat = listSeat.join(', ')
-  const branch = branchs.find(item => item.id.toString() === branchId.toString())
-  const schedule = schedules.find(item => item.id.toString() === scheduleId.toString())
+export default function Payment({ branchId, scheduleId, total, payment, listSeatId, stringSeat }) {
+  console.log('🚀 ~ Payment ~ listSeatId:', listSeatId)
+  const [branch, setBranch] = useState({})
+  const [schedule, setSchedule] = useState({})
+  const [seats, setSeats] = useState([])
   const { filmName } = useParams()
+  const [isSeatsLoaded, setIsSeatsLoaded] = useState(false)
+  let listSeat = []
+  useEffect(() => {
+    if (!isSeatsLoaded) {
+      getBranchbyId(branchId).then(res => {
+        setBranch(res)
+      })
+      getScheduleById(scheduleId).then(res => {
+        setSchedule(res)
+      })
+      getListSeatAPI(scheduleId).then(res => {
+        setSeats(res)
+        setIsSeatsLoaded(true)
+      })
+    }
+  }, [branchId, scheduleId, seats, isSeatsLoaded, listSeatId])
   return (
     <Box sx={{ height:'100%', alignItems: 'center', justifyContent:'center' }}>
       <Box sx={{ alignItems: 'center', justifyContent:'center' }}>
@@ -34,11 +47,11 @@ export default function Payment({ branchId, scheduleId, total, payment, listSeat
               <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px' }} >
                 <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px' }}>
                   <Box sx={{ alignItems:'center', justifyContent:'center', typography:'h5', borderBottom:'1px solid white', color:'#16FF00', width:'100%' }} >{filmName}</Box>
-                  <Box sx={{ typography:'h5', width:' 100%' }}>{branch.name}</Box>
-                  <Box sx={{ width:' 100%' }}>{`- ${schedule.startTime.toString() + ' ' + schedule.startDate+ ' Room: ' + schedule.roomResponse.name}`}</Box>
-                  <Box sx={{ width:' 100%' }}> - Vị trí ghế: {stringListSeat}</Box>
+                  <Box sx={{ typography:'h5', width:' 100%' }}>{branch?.name}</Box>
+                  <Box sx={{ width:' 100%' }}>{`- ${schedule?.startTime?.toString() + ' ' + schedule?.startDate+ ' Room: ' + schedule?.roomResponse?.name}`}</Box>
+                  <Box sx={{ width:' 100%' }}> - Vị trí ghế: {stringSeat? stringSeat : ''}</Box>
                   <Box sx={{ color: 'white', borderTop:'1px solid white', width:' 100%' }}>
-                    Tổng hóa đơn: {total}đ
+                    Tổng hóa đơn: {total}.000đ
                   </Box>
                 </Box>
               </Box>

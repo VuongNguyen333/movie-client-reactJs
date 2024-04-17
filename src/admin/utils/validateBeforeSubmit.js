@@ -12,7 +12,6 @@ export const validateBeforeSubmit = async ( validObject, data, handleSetFormData
       handleSetFormData()
     }
     console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
-    toast.success('Succesfully')
   } catch (err) {
     toast.error(err.message)
   }

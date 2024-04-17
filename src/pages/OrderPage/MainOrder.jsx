@@ -15,6 +15,8 @@ import PropTypes from 'prop-types'
 import { styled } from '@mui/material/styles'
 import OrderSeat from './OrderSeat/OrderSeat'
 import Payment from './Payment'
+import { getDetailSeatAPI } from '~/apis/seat'
+import { addNewTicket } from '~/apis/ticketApi'
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -102,7 +104,14 @@ export default function MainOrder() {
   const [activeStep, setActiveStep] = React.useState(0)
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    setActiveStep((prevActiveStep) => {
+      if (prevActiveStep === 2) {
+        // Call Api
+        // addNewTicket({})
+        console.log(stringSeat)
+      }
+      return prevActiveStep + 1
+    })
     setEnableNext(0)
   }
 
@@ -119,18 +128,25 @@ export default function MainOrder() {
   const [enableNext, setEnableNext] = React.useState(0)
   const [listSeatId, setListSeatId] = React.useState(() => [])
   const [total, setTotal] = React.useState(0)
+  const [stringSeat, setStringSeat] = React.useState('')
+  const [seats, setSeats] = React.useState([])
   const payment = (type) => {
     // console.log('🚀 ~ payment ~ type:', type)
     if (type) setEnableNext(1)
   }
 
-  const orderSeat = (listSeat, bill) => {
+  const orderSeat = (listSeat, bill, seatBySchedule) => {
     setListSeatId(listSeat)
+    setSeats(seatBySchedule)
     setTotal(bill)
-    // console.log('🚀 ~ orderSeat ~ listSeat:', listSeat)
-    // console.log('🚀 ~ orderSeat ~ total:', bill)
-    // console.log('🚀 ~ MainOrder ~ enableNext:', enableNext)
-    // console.log('🚀 ~ orderSeat ~ listSeatId:', listSeat)
+    let selectedSeatNames = seatBySchedule.map(item => {
+      if (listSeat.includes(item.id)) {
+        return item.seatResponse.name
+      }
+    });
+    const filteredSeatNames = selectedSeatNames.filter(item => item !== undefined)
+    console.log('🚀 ~ orderSeat ~ filteredSeatNames:', filteredSeatNames)
+    setStringSeat(filteredSeatNames.join(', '))
     if ( activeStep === 2 || listSeat.length>1) setEnableNext(1)
     else setEnableNext(0)
   }
@@ -190,6 +206,7 @@ export default function MainOrder() {
                         branchId={branchId}
                         scheduleId={scheduleId}
                         total={total}
+                        stringSeat={stringSeat}
                         payment={payment}
                         listSeatId={listSeatId}
                       />

@@ -4,6 +4,7 @@ import { TreeItem2 } from '@mui/x-tree-view/TreeItem2'
 import { branchs } from '~/mock_data'
 import Box from '@mui/material/Box'
 import ListSchedule from './ListSchedules/ListSchedule'
+import { getListBranchByAreaIdAPI } from '~/apis/branchApi'
 
 const CustomTreeItem = React.forwardRef((props, ref) => (
   <TreeItem2
@@ -29,7 +30,9 @@ function ListBranchs({ area_id, orderSchedule }) {
 
   useEffect(() => {
     // call api
-    setListBranchs([...branchs].filter(item => item?.areaResponse?.id.toString() === area_id.toString()))
+    getListBranchByAreaIdAPI(area_id).then(res => {
+      setListBranchs(res)
+    })
   }, [area_id])
 
   return (
@@ -59,7 +62,7 @@ function ListBranchs({ area_id, orderSchedule }) {
       }}>
         {
           listBranchs?.map((item, index) =>
-            <CustomTreeItem key={index} itemId={`branch${item?.id}`} label={item?.name}>
+            <CustomTreeItem key={`branch${index}`} itemId={`branch${item?.id}`} label={item?.name}>
               <ListSchedule orderSchedule={orderSchedule} branchId={item?.id} />
             </CustomTreeItem>)
         }

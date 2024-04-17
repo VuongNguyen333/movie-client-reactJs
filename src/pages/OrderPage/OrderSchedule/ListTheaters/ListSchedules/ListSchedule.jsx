@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { TreeItem2 } from '@mui/x-tree-view/TreeItem2'
-import { schedules, rooms } from '~/mock_data'
 import { useParams } from 'react-router-dom'
-import CircularProgress from '@mui/material/CircularProgress'
-import { Box, Typography } from '@mui/material'
+import { getListScheduleByBranchIdAndMovieIdAPI } from '~/apis/scheduleApi'
 
 const CustomTreeItem = React.forwardRef((props, ref) => (
   <TreeItem2
@@ -26,23 +24,13 @@ const CustomTreeItem = React.forwardRef((props, ref) => (
 ))
 
 export default function ListSchedule({ orderSchedule, branchId }) {
-
+  const { filmId } = useParams()
   const [listSchedules, setListSchedules] = useState([])
   useEffect(() => {
-    const listRoomOfBranch = ([...rooms].filter(item => item.branchResponse.id.toString() === branchId.toString()))
-    console.log('🚀 ~ useEffect ~ listRoomOfBranch:', listRoomOfBranch)
-    let listSchedules1 = []
-    listRoomOfBranch.map(item => {
-      [...schedules].map(item1 => {
-        if (item.id.toString() === item1.roomResponse.id.toString()) {
-          listSchedules1.push(item1)
-        }
-      })
+    getListScheduleByBranchIdAndMovieIdAPI(branchId, filmId).then(res => {
+      setListSchedules(res)
     })
-    // console.log('🚀 ~ useEffect ~ listSchedules1:', listSchedules1)
-    setListSchedules(listSchedules1)
-  }, [branchId])
-  const { filmId } = useParams()
+  }, [branchId, filmId])
 
   // if (listSchedules.length === 0 ) {
   //   return (

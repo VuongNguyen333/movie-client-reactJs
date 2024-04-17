@@ -23,6 +23,7 @@ import { validateBeforeSubmit } from '../utils/validateBeforeSubmit'
 import { JoiObjectFilmAddNew } from '../utils/FilmModel'
 import { convertDate } from '../utils/convertDate'
 import dayjs from 'dayjs'
+import { addNewMovieAPI } from '~/apis/movieApi'
 
 const ProSpan = styled('span')({
   display: 'inline-block',
@@ -141,6 +142,7 @@ function AddNewForm() {
       'photo': photo
     }
     await validateBeforeSubmit(JoiObjectFilmAddNew, data, handleSetFormData)
+    await addNewMovieAPI(data)
     // Call Api
   }
 

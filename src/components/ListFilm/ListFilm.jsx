@@ -6,7 +6,7 @@ import 'react-multi-carousel/lib/styles.css'
 import './ListFilm.css'
 function ListFilm({ productData }) {
 
-  const product = productData.map((item) => (
+  const product = productData?.map((item) => (
     <Film
       key={`Film${item.id}`}
       id={item.id}

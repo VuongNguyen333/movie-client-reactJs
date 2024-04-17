@@ -8,8 +8,12 @@ import ToggleButtonGroup, {
   toggleButtonGroupClasses
 } from '@mui/material/ToggleButtonGroup'
 import './OrderSeat.css'
-import { branchs, schedules, productData } from '~/mock_data'
-import seats from '~/mock_data'
+import { useEffect } from 'react'
+import { getMovieByIdAPI } from '~/apis/movieApi'
+import { useState } from 'react'
+import { getBranchbyId } from '~/apis/branchApi'
+import { getScheduleById } from '~/apis/scheduleApi'
+import { getListSeatAPI } from '~/apis/seat'
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
@@ -29,40 +33,59 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 
 export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
   const { filmId, filmName } = useParams()
-  const film = productData.find(item => item.id.toString() === filmId.toString())
-  const branch = branchs.find(item => item.id.toString() === branchId.toString())
-  const schedule = schedules.find(item => item.id.toString() === scheduleId.toString())
+  const [film, setFilm] = useState({})
+  const [branch, setBranch] = useState({})
+  const [schedule, setSchedule] = useState({})
+  const [seats, setSeat] = useState([])
+  const [rows, setRows] = useState([])
+  const [isSeatsLoaded, setIsSeatsLoaded] = useState(false)
+  useEffect(() => {
+    if (!isSeatsLoaded) {
+      getMovieByIdAPI(filmId).then(res => {
+        setFilm(res)
+      })
+      getBranchbyId(branchId).then(res => {
+        setBranch(res)
+      })
+      getScheduleById(scheduleId).then(res => {
+        setSchedule(res)
+      })
+      getListSeatAPI(scheduleId).then(res => {
+        setSeat(res)
+        const rowA = res?.filter(seat => seat.seatResponse.name.startsWith('A'))
+        const rowB = res?.filter(seat => seat.seatResponse.name.startsWith('B'))
+        const rowC = res?.filter(seat => seat.seatResponse.name.startsWith('C'))
+        const rowD = res?.filter(seat => seat.seatResponse.name.startsWith('D'))
+        setRows([rowA, rowB, rowC, rowD])
+        setIsSeatsLoaded(true)
+      })
+    }
+  }, [filmId, branchId, scheduleId, isSeatsLoaded])
   const [formats, setFormats] = React.useState(() => [''])
   const [total, setTotal] = React.useState(0)
   const handleFormat = (event, newFormats) => {
     setFormats(newFormats)
     console.log('🚀 ~ handleFormat ~ newFormats:', newFormats)
-    console.log('🚀 ~ OrderSeat ~ formats:', formats)
     let sum = 0
     // console.log('🚀 ~ handleFormat ~ newFormats:', newFormats)
     newFormats.map(item => {
       if (item) {
-        sum += seats[item].price
+        sum += seats?.[item].price
       }
     })
     setTotal(sum)
-    orderSeat(newFormats, sum)
+    orderSeat(newFormats, sum, seats)
   }
-  const rowA = seats.filter(seat => seat.name.startsWith('A'))
-  const rowB = seats.filter(seat => seat.name.startsWith('B'))
-  const rowC = seats.filter(seat => seat.name.startsWith('C'))
-  const rowD = seats.filter(seat => seat.name.startsWith('D'))
-  const rows = [rowA, rowB, rowC, rowD]
   return (
     <Box sx={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
       <Box sx={{ alignItems:'center', justifyContent:'center' }}>
-        <img style={{ width: '250px', borderRadius: '10px', height:'350px' }} src={`data:image/jpeg;base64,${film.photo}`} alt="product image" />
+        <img style={{ width: '250px', borderRadius: '10px', height:'350px' }} src={`data:image/jpeg;base64,${film?.photo}`} alt="product image" />
         <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px' }} >
           <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px', color:'white' }}>
             <Box sx={{ alignItems:'center', justifyContent:'center', typography:'h5', borderBottom:'1px solid white', color:'#16FF00', width:'100%' }} >{filmName}</Box>
-            <Box sx={{ typography:'h5', width:' 100%' }}>{branch.name}</Box>
-            <Box sx={{ width:' 100%' }}>{`${schedule.startTime.toString() + ' ' + schedule.startDate+ ' Room: ' + schedule.roomResponse.name}`}</Box>
-            { total!==0 && <Box sx={{ color: 'white', borderTop:'1px solid white', width:' 100%' }}>Tổng hóa đơn: {total}</Box> }
+            <Box sx={{ typography:'h5', width:' 100%' }}>{branch?.name}</Box>
+            <Box sx={{ width:' 100%' }}>{schedule ? `${schedule?.startTime?.toString() + ' ' + schedule?.startDate+ ' Room: ' + schedule?.roomResponse?.name}` : ''}</Box>
+            { total!==0 && <Box sx={{ color: 'white', borderTop:'1px solid white', width:' 100%' }}>Tổng hóa đơn: {total}.000</Box> }
           </Box>
         </Box>
       </Box>
@@ -106,9 +129,9 @@ export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
         </Box>
         <Box sx={{ display:'flex', alignItems:'center', justifyContent:'center' }}>
           <Box sx={{ alignItems:'center', justifyContent:'center' }}>
-            { rows.map((row, index) => {
+            { rows?.map((row, index) => {
               return <Box key={index} sx={{ display: 'flex', alignItems:'center', justifyContent:'center', color: 'white' }}>
-                <Box>{row[0].name[0]}</Box>
+                <Box>{row[0]?.seatResponse?.name[0]}</Box>
                 <StyledToggleButtonGroup
                   size="small"
                   value={formats}
@@ -120,19 +143,19 @@ export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
                     }
                   }}
                 >
-                  { row.map((seat, index1) => {
-                    return !seat.isOrder ? <ToggleButton key={`seat${index1}`} value={seat.seatId} >
+                  { row?.map((seat, index1) => {
+                    return !seat.ordered ? <ToggleButton key={`seat${index1}`} value={seat?.id} >
                       <ChairIcon
                         fontSize='large'
                         sx={{
                           color: formats.includes((index) * 6 + index1+1)
                             ?'#16FF00'
-                            : seat.isOrder ? '#A0153E'
-                              : (seat.name.startsWith('B') || seat.name.startsWith('C')) ?'purple'
+                            : seat.ordered ? '#A0153E'
+                              : (seat.seatResponse.name.startsWith('B') || seat.seatResponse.name.startsWith('C')) ?'purple'
                                 : 'gray'
                         }}
                       />
-                    </ToggleButton> : <ToggleButton key={`seat${index1}`} value={seat.seatId} disabled >
+                    </ToggleButton> : <ToggleButton key={`seat${index1}`} value={seat.id} disabled >
                       <ChairIcon fontSize='large' sx={{ color:  '#A0153E' }}/>
                     </ToggleButton>
                   } ) }

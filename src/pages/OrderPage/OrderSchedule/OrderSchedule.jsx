@@ -9,23 +9,24 @@ import TabPanel from '@mui/lab/TabPanel'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import { CardActionArea, Typography } from '@mui/material'
-import { productData, areas } from '~/mock_data'
 import ListBranchs from './ListTheaters/ListBranchs'
+import { getMovieByIdAPI } from '~/apis/movieApi'
+import { getListAreaAPI } from '~/apis/areaApi'
 
 export default function OrderSchedule({ orderSchedule }) {
   const { filmId, filmName } = useParams()
   const [film, setFilm] = useState({})
-
+  const [areas, setAreas] = useState([])
+  console.log('🚀 ~ OrderSchedule ~ areas:', areas)
   useEffect(() => {
     // call api get Film
-    productData.forEach(item => {
-      if (item.id.toString() === filmId.toString()) {
-        setFilm(item)
-        console.log(1);
-      }
+    getMovieByIdAPI(filmId).then(res => {
+      setFilm(res)
+    })
+    getListAreaAPI().then(res => {
+      setAreas(res)
     })
   }, [filmId])
-  const [showFilmList, setShowFilmList] = useState(false)
 
   const [areaId, setAreaId] = React.useState('1')
 
@@ -76,11 +77,11 @@ export default function OrderSchedule({ orderSchedule }) {
                     overflowX:'auto'
                   }}
                 >
-                  {areas.map((item, index) =>
+                  {areas?.map((item, index) =>
                     <Tab
                       sx={{
                         color: 'white',
-                        '&.Mui-selected': { color: '#16FF00' },
+                        '&.Mui-selected': { color: '#16FF00' }
                       }}
                       key={index}
                       label={`${item.name}`}
