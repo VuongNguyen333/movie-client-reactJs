@@ -144,7 +144,7 @@ export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
                   }}
                 >
                   { row?.map((seat, index1) => {
-                    return !seat.ordered ? <ToggleButton key={`seat${index1}`} value={seat?.id} >
+                    return !seat.ordered ? <ToggleButton key={`seat${index1}`} value={(index) * 6 + index1+1} >
                       <ChairIcon
                         fontSize='large'
                         sx={{
@@ -155,7 +155,7 @@ export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
                                 : 'gray'
                         }}
                       />
-                    </ToggleButton> : <ToggleButton key={`seat${index1}`} value={seat.id} disabled >
+                    </ToggleButton> : <ToggleButton key={`seat${index1}`} value={(index) * 6 + index1+1} disabled >
                       <ChairIcon fontSize='large' sx={{ color:  '#A0153E' }}/>
                     </ToggleButton>
                   } ) }
