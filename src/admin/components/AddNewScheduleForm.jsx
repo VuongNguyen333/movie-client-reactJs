@@ -14,6 +14,10 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs from 'dayjs'
 import { convertDate } from '../utils/convertDate'
+import { getMovieByIdAPI } from '~/apis/movieApi'
+import { getRoomByIdAPI } from '~/apis/roomApi'
+import { addNewScheduleByMovieIdAndRoomIdAPI } from '~/apis/scheduleApi'
+import { toast } from 'react-toastify'
 
 const ProSpan = styled('span')({
   display: 'inline-block',
@@ -51,7 +55,7 @@ function Label({ isProOnly }) {
   }
   return content
 }
-function AddNewScheduleForm({ open, onClose, formData }) {
+function AddNewScheduleForm({ open, onClose, formData, handleAddNew }) {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -88,8 +92,8 @@ function AddNewScheduleForm({ open, onClose, formData }) {
   const [room, setRoom] = useState(formData ? formData.roomId : '')
   useEffect(() => {
     // Call Api get Film and Room
-    setFilm(productData.find(item => item.id.toString() === formData?.movieId?.toString()))
-    setRoom(roomOfBranchThuDuc.find(item => item.id.toString() === formData?.roomId?.toString()))
+    getMovieByIdAPI(formData.movieId).then(res => setFilm(res))
+    getRoomByIdAPI(formData.roomId).then(res => setRoom(res))
   }, [formData?.roomId, formData])
 
   const handleSubmit = async (event) => {
@@ -103,6 +107,11 @@ function AddNewScheduleForm({ open, onClose, formData }) {
       'roomId' : formData.roomId
     }
     console.log('🚀 ~ handleSubmit ~ dataReq:', dataReq)
+    try {
+      addNewScheduleByMovieIdAndRoomIdAPI(dataReq).then(res => handleAddNew(res))
+    } catch (err) {
+      toast.error(err.message)
+    }
     // Call Api
   }
   if (!formData) {

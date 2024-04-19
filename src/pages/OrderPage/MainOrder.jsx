@@ -16,7 +16,8 @@ import { styled } from '@mui/material/styles'
 import OrderSeat from './OrderSeat/OrderSeat'
 import Payment from './Payment'
 import { getDetailSeatAPI } from '~/apis/seat'
-import { addNewTicket } from '~/apis/ticketApi'
+import { addNewTicketAPI } from '~/apis/ticketApi'
+import { toast } from 'react-toastify'
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -106,9 +107,15 @@ export default function MainOrder() {
   const handleNext = () => {
     setActiveStep((prevActiveStep) => {
       if (prevActiveStep === 2) {
+        const form = {
+          userId: 1,
+          seatScheduleId: listSeatId
+        }
+        // console.log('🚀 ~ setActiveStep ~ form:', form)
         // Call Api
-        // addNewTicket({})
-        console.log(stringSeat)
+        addNewTicketAPI(form).then(res => {
+          console.log('🚀 ~ addNewTicketAPI ~ res:', res)
+        })
       }
       return prevActiveStep + 1
     })
@@ -136,16 +143,14 @@ export default function MainOrder() {
   }
 
   const orderSeat = (listSeat, bill, seatBySchedule) => {
-    setListSeatId(listSeat)
     setSeats(seatBySchedule)
     setTotal(bill)
-    let selectedSeatNames = seatBySchedule.map(item => {
-      if (listSeat.includes(item.id)) {
-        return item.seatResponse.name
-      }
-    });
-    const filteredSeatNames = selectedSeatNames.filter(item => item !== undefined)
-    console.log('🚀 ~ orderSeat ~ filteredSeatNames:', filteredSeatNames)
+    const selectedSeat = seatBySchedule.filter((_, index) => listSeat.includes(index))
+    // console.log('🚀 ~ orderSeat ~ selectedSeatNames:', selectedSeat)
+    const filteredSeatNames = selectedSeat.map(seat => seat.seatResponse.name)
+    const filteredSeatId = selectedSeat.map(seat => seat.id)
+    setListSeatId(filteredSeatId)
+    // console.log('🚀 ~ orderSeat ~ filteredSeatNames:', filteredSeatNames)
     setStringSeat(filteredSeatNames.join(', '))
     if ( activeStep === 2 || listSeat.length>1) setEnableNext(1)
     else setEnableNext(0)

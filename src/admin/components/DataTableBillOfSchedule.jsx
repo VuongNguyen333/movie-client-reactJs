@@ -13,92 +13,10 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import { billScheduleId111, ticketBillId10 } from '../../mock_data'
-
-function createData(bill, ticket) {
-  return {
-    bill,
-    history: ticket
-  }
-}
-
-function Row(props) {
-  const { row } = props
-  const [open, setOpen] = React.useState(false)
-
-  return (
-    <React.Fragment>
-      <TableRow sx={{ bgcolor: '#FEFAF6' }}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-            sx={{ color: 'black' }}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell sx={{ color: 'black' }} component="th" scope="row">
-          {row.bill.id}
-        </TableCell>
-        <TableCell sx={{ color: 'black' }} align="center">{`${row.bill.createdDate.toString() + ' ' + row.bill.createdTime}`}</TableCell>
-        <TableCell sx={{ color: 'black' }} align="center">{row.bill.payment}</TableCell>
-        <TableCell sx={{ color: 'black' }} align="center">{row.bill.numberOfTickets}</TableCell>
-        <TableCell sx={{ color: 'black' }} align="center">{row.bill.userResponse.fullName}</TableCell>
-      </TableRow>
-      <TableRow sx={{ borderTop: '1px solid gray' }}>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                List Ticket Of Bill
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="center">Id</TableCell>
-                    <TableCell align="center">Seat</TableCell>
-                    <TableCell align="center" >Price</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.id}>
-                      <TableCell component="th" scope="row" align="center">
-                        {historyRow.id}
-                      </TableCell>
-                      <TableCell align="center">{historyRow.seatResponse.name}</TableCell>
-                      <TableCell align="center">{historyRow.price}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  )
-}
-
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired
-      })
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired
-  }).isRequired
-}
+import { useState } from 'react'
+import { useEffect } from 'react'
+import { getListBillByScheduleIdAPI } from '~/apis/billApi'
+import { getListTicketByBillIdAPI } from '~/apis/ticketApi'
 
 // const rows = [
 //   createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
@@ -108,14 +26,114 @@ Row.propTypes = {
 //   createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5)
 // ]
 
-let rows = []
+export default function DataTableBillOfSchedule({ scheduleId }) {
+  const [rows, setRows] = useState([])
+  const [listBill, setListBill] = useState([])
+  useEffect(() => {
+    getListBillByScheduleIdAPI(scheduleId).then(res => {
+      // Tạo một mảng các promise cho tất cả các cuộc gọi API
+      const promises = res.map(item => getListTicketByBillIdAPI(item.id))
 
-billScheduleId111.map((item) => {
-  // call api
-  rows.push(createData(item, ticketBillId10))
-})
+      // Sử dụng Promise.all để đợi cho tất cả các promise được giải quyết
+      Promise.all(promises).then(responses => {
+        // Tạo dữ liệu mới cho rows từ kết quả của tất cả các cuộc gọi API
+        const newData = res.map((item, index) => createData(item, responses[index]))
+        setRows(newData)
+      }).catch(error => {
+        console.error('Error when fetching ticket data:', error)
+      })
 
-export default function DataTableBillOfSchedule() {
+      setListBill(res)
+    }).catch(error => {
+      console.error('Error when fetching bill data:', error)
+    })
+  }, [scheduleId])
+
+  function createData(bill, ticket) {
+    return {
+      bill,
+      history: ticket
+    }
+  }
+
+  function Row(props) {
+    const { row } = props
+    const [open, setOpen] = React.useState(false)
+
+    return (
+      <React.Fragment>
+        <TableRow sx={{ bgcolor: '#FEFAF6' }}>
+          <TableCell>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+              sx={{ color: 'black' }}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+          <TableCell sx={{ color: 'black' }} component="th" scope="row">
+            {row.bill.id}
+          </TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{`${row.bill.createdDate.toString() + ' ' + row.bill.createdTime}`}</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{row.bill.payment}</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{row.bill.numberOfTickets}</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{row.bill.userResponse.fullName}</TableCell>
+        </TableRow>
+        <TableRow sx={{ borderTop: '1px solid gray' }}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <Typography variant="h6" gutterBottom component="div">
+                  List Ticket Of Bill
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="center">Id</TableCell>
+                      <TableCell align="center">Seat</TableCell>
+                      <TableCell align="center" >Price</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {row.history.map((historyRow) => (
+                      <TableRow key={historyRow.id}>
+                        <TableCell component="th" scope="row" align="center">
+                          {historyRow.id}
+                        </TableCell>
+                        <TableCell align="center">{historyRow.seatResponse.name}</TableCell>
+                        <TableCell align="center">{historyRow.price}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </React.Fragment>
+    )
+  }
+
+  Row.propTypes = {
+    row: PropTypes.shape({
+      calories: PropTypes.number.isRequired,
+      carbs: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      history: PropTypes.arrayOf(
+        PropTypes.shape({
+          amount: PropTypes.number.isRequired,
+          customerId: PropTypes.string.isRequired,
+          date: PropTypes.string.isRequired
+        })
+      ).isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      protein: PropTypes.number.isRequired
+    }).isRequired
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table" sx={{ color: 'black' }}>

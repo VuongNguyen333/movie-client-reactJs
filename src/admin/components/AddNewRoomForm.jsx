@@ -14,10 +14,10 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { styled } from '@mui/material/styles'
 import AddIcon from '@mui/icons-material/Add'
-import { validateBeforeSubmit } from '~/admin/utils/validateBeforeSubmit'
+import { validateBeforeSubmit, validateBeforeSubmitRoom } from '~/admin/utils/validateBeforeSubmit'
 import { JoiObjectRoomAddNew } from '../utils/RoomModel'
 
-function AddNewRoomForm({ branchId }) {
+function AddNewRoomForm({ branchId, handleAddNew }) {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -86,7 +86,7 @@ function AddNewRoomForm({ branchId }) {
       'photo' : photo
     }
     console.log('🚀 ~ handleSubmit ~ data:', data)
-    await validateBeforeSubmit( JoiObjectRoomAddNew, data, handleSetFormData )
+    await validateBeforeSubmitRoom( JoiObjectRoomAddNew, branchId, data, handleSetFormData, handleAddNew, null, null )
   }
 
   return (

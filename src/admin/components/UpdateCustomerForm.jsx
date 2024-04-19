@@ -26,6 +26,8 @@ import { JoiObjectUser } from '~/admin/utils/UserModel'
 import { convertDate } from '../utils/convertDate'
 import { users } from '~/mock_data'
 import convertToListRole from '~/admin/utils/convertToListRole'
+import { getListRoleAPI } from '~/apis/roleApi'
+import { getUserByIdAPI } from '~/apis/userApi'
 
 const ProSpan = styled('span')({
   display: 'inline-block',
@@ -65,21 +67,7 @@ function Label({ isProOnly }) {
   return content
 }
 
-function UpdateCustomerForm({ open, onClose, userId }) {
-  const roles = [
-    {
-      'id': 1,
-      'name': 'ROLE_ADMIN'
-    },
-    {
-      'id': 3,
-      'name': 'ROLE_EDIT'
-    },
-    {
-      'id': 4,
-      'name': 'ROLE_USER'
-    }
-  ]
+function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -122,17 +110,20 @@ function UpdateCustomerForm({ open, onClose, userId }) {
       padding: '4px !important' // override inline-style
     }
   })
+  const [roles, setRoles] = useState([])
   const [user, setUser] = useState({})
   const [fileName, setFileName] = useState('')
   const [devices, setDevices] = useState (convertToListRole(user?.roles))
   const [photo, setPhoto] = useState({})
   useEffect(() => {
-    //Call api get User
-    const newUser = users.find(item => item.id.toString() === userId.toString())
-    const newDevices = convertToListRole(newUser?.roles)
-    // Cập nhật state devices với giá trị mới
-    setUser(newUser)
-    setDevices(newDevices)
+    getListRoleAPI().then(res => {
+      setRoles(res)
+    })
+    getUserByIdAPI(userId).then(res => {
+      setUser(res)
+      const newDevices = convertToListRole(res?.roles)
+      setDevices(newDevices)
+    })
   }, [userId])
 
   const handleDevices = (event, newDevices) => {
@@ -161,19 +152,19 @@ function UpdateCustomerForm({ open, onClose, userId }) {
     // Call Api
   }
 
-  if (!user) {
-    return <Box sx={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: 2,
-      width: '100vh',
-      height: '100vh'
-    }}>
-      <CircularProgress />
-      <Typography>Loading data...</Typography>
-    </Box>
-  }
+  // if (!user) {
+  //   return <Box sx={{
+  //     display: 'flex',
+  //     alignItems: 'center',
+  //     justifyContent: 'center',
+  //     gap: 2,
+  //     width: '100vh',
+  //     height: '100vh'
+  //   }}>
+  //     <CircularProgress />
+  //     <Typography>Loading data...</Typography>
+  //   </Box>
+  // }
 
   return (
     <Modal
@@ -195,15 +186,15 @@ function UpdateCustomerForm({ open, onClose, userId }) {
                   component="img"
                   width='200'
                   height="300px"
-                  image={user ? `data:image/jpeg;base64,${user.avatar}` : ''}
+                  image={user ? `data:image/jpeg;base64,${user?.avatar}` : ''}
                   alt='avatar'
                 />
               </CardActionArea>
             </Card>
           </Box>
           <Box>
-            <ValidationTextField disabled name='fullName' label="Full Name" required variant="outlined" defaultValue={user ? user.fullName : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField disabled name='email' label="Email" required variant="outlined" defaultValue={user ? user.email :''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <ValidationTextField disabled name='fullName' label="Full Name" required variant="outlined" defaultValue={user ? user?.fullName : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <ValidationTextField disabled name='email' label="Email" required variant="outlined" defaultValue={user ? user?.email :''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
             <ToggleButtonGroup
               name='roles'
               color="primary"

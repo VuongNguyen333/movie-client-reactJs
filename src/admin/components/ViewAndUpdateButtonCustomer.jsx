@@ -5,7 +5,7 @@ import BuildIcon from '@mui/icons-material/Build'
 import { useState } from 'react'
 import UpdateCustomerForm from './UpdateCustomerForm'
 import { Link } from 'react-router-dom'
-function ViewAndUpdateButtonCustomer({ params }) {
+function ViewAndUpdateButtonCustomer({ params, handleUpdate }) {
   const handleButtonClick = (id) => {
     setItemId(id)
     // Handle button click action here
@@ -48,7 +48,7 @@ function ViewAndUpdateButtonCustomer({ params }) {
           fontSize='small'
           sx={{ color:'white' }}
         />
-      </Button><UpdateCustomerForm open={open} onClose={handleClose} userId={itemId}/>
+      </Button><UpdateCustomerForm open={open} onClose={handleClose} userId={itemId} handleUpdate={handleUpdate}/>
     </Box>
   )
 }

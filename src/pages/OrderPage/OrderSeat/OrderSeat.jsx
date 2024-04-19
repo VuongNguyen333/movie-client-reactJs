@@ -11,8 +11,8 @@ import './OrderSeat.css'
 import { useEffect } from 'react'
 import { getMovieByIdAPI } from '~/apis/movieApi'
 import { useState } from 'react'
-import { getBranchbyId } from '~/apis/branchApi'
-import { getScheduleById } from '~/apis/scheduleApi'
+import { getBranchbyIdAPI } from '~/apis/branchApi'
+import { getScheduleByIdAPI } from '~/apis/scheduleApi'
 import { getListSeatAPI } from '~/apis/seat'
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -44,10 +44,10 @@ export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
       getMovieByIdAPI(filmId).then(res => {
         setFilm(res)
       })
-      getBranchbyId(branchId).then(res => {
+      getBranchbyIdAPI(branchId).then(res => {
         setBranch(res)
       })
-      getScheduleById(scheduleId).then(res => {
+      getScheduleByIdAPI(scheduleId).then(res => {
         setSchedule(res)
       })
       getListSeatAPI(scheduleId).then(res => {
@@ -144,18 +144,18 @@ export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
                   }}
                 >
                   { row?.map((seat, index1) => {
-                    return !seat.ordered ? <ToggleButton key={`seat${index1}`} value={(index) * 6 + index1+1} >
+                    return !seat.ordered ? <ToggleButton key={`seat${index1}`} value={(index) * 6 + index1} >
                       <ChairIcon
                         fontSize='large'
                         sx={{
-                          color: formats.includes((index) * 6 + index1+1)
+                          color: formats.includes((index) * 6 + index1)
                             ?'#16FF00'
                             : seat.ordered ? '#A0153E'
                               : (seat.seatResponse.name.startsWith('B') || seat.seatResponse.name.startsWith('C')) ?'purple'
                                 : 'gray'
                         }}
                       />
-                    </ToggleButton> : <ToggleButton key={`seat${index1}`} value={(index) * 6 + index1+1} disabled >
+                    </ToggleButton> : <ToggleButton key={`seat${index1}`} value={(index) * 6 + index1} disabled >
                       <ChairIcon fontSize='large' sx={{ color:  '#A0153E' }}/>
                     </ToggleButton>
                   } ) }

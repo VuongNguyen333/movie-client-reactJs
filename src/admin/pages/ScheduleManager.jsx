@@ -6,6 +6,9 @@ import DataTable from '../components/DataTable'
 import ViewAndUpdateButton from '../components/ViewAndUpdateButton'
 import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { getScheduleByMovieIdAPI, getScheduleByRoomIdAPI } from '~/apis/scheduleApi'
+import { getRoomByIdAPI } from '~/apis/roomApi'
+import { getMovieByIdAPI } from '~/apis/movieApi'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -49,21 +52,21 @@ function SchedulesManager() {
   console.log('🚀 ~ SchedulesManager ~ location:', location)
   const [movie, setMovie] = useState({})
   const [room, setRoom] = useState({})
-  const [data, setData] = useState({})
+  const [data, setData] = useState([])
 
   useEffect(() => {
     if (location.state) {
       if (location.state.movieId) {
         const movieId = location.state.movieId
-        console.log('🚀 ~ SchedulesManager ~ movieId:', movieId)
-        setData(scheduleMovieMai)
-        setMovie([...productData].find(item => item.id.toString() === movieId.toString()))
+        // console.log('🚀 ~ SchedulesManager ~ movieId:', movieId)
+        getScheduleByMovieIdAPI(movieId).then(res => setData(res))
+        getMovieByIdAPI(movieId).then(res => setMovie(res))
         setRoom({})
       } else if (location.state.roomId) {
         const roomId = location.state.roomId
-        console.log('🚀 ~ SchedulesManager ~ movieId:', roomId)
-        setData(scheduleOfRoomId52)
-        setRoom([...rooms].find(item => item.id.toString() === roomId.toString()))
+        // console.log('🚀 ~ SchedulesManager ~ movieId:', roomId)
+        getScheduleByRoomIdAPI(roomId).then(res => setData(res))
+        getRoomByIdAPI(roomId).then(res => setRoom(res))
         setMovie({})
       }
     } else {
@@ -87,12 +90,12 @@ function SchedulesManager() {
       }}>
       <Toolbar />
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>SCHEDULE {movie.name ? `FILM ${movie.name.toUpperCase()}` : room.name ? `ROOM ${room.name.toUpperCase()}` : ''}</Box>
+        <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>SCHEDULE {movie?.name ? `FILM ${movie?.name.toUpperCase()}` : room?.name ? `ROOM ${room?.name.toUpperCase()}` : ''}</Box>
       </Box>
       { room?.name &&
         <Box sx={{ height:'45px' }}>
-          <Box typography='h5' sx={{ ml:'5px', fontSize:18 }}>Room: {room.name}</Box>
-          <Box typography='h5' sx={{ ml:'5px', fontSize:18 }}>Branch: {room.branchResponse.name}</Box>
+          <Box typography='h5' sx={{ ml:'5px', fontSize:18 }}>Room: {room?.name}</Box>
+          <Box typography='h5' sx={{ ml:'5px', fontSize:18 }}>Branch: {room?.branchResponse?.name}</Box>
         </Box>
       }
       { movie?.name && <Box sx={{ height:'45px' }}></Box> }

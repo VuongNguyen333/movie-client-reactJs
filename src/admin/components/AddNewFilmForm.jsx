@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-imports */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
@@ -63,7 +63,7 @@ function Label({ isProOnly }) {
   return content
 }
 
-function AddNewForm() {
+function AddNewForm({ handleAddNew }) {
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -141,9 +141,7 @@ function AddNewForm() {
       'releaseDate': convertDate.convertToRequest(formData.get('date')),
       'photo': photo
     }
-    await validateBeforeSubmit(JoiObjectFilmAddNew, data, handleSetFormData)
-    await addNewMovieAPI(data)
-    // Call Api
+    await validateBeforeSubmit(JoiObjectFilmAddNew, data, handleSetFormData, handleAddNew, null, null)
   }
 
 

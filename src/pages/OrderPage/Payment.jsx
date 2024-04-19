@@ -7,8 +7,8 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import { useEffect, useState } from 'react'
-import { getBranchbyId } from '~/apis/branchApi'
-import { getScheduleById } from '~/apis/scheduleApi'
+import { getBranchbyIdAPI } from '~/apis/branchApi'
+import { getScheduleByIdAPI } from '~/apis/scheduleApi'
 import { getDetailSeatAPI, getListSeatAPI } from '~/apis/seat'
 
 export default function Payment({ branchId, scheduleId, total, payment, listSeatId, stringSeat }) {
@@ -18,13 +18,12 @@ export default function Payment({ branchId, scheduleId, total, payment, listSeat
   const [seats, setSeats] = useState([])
   const { filmName } = useParams()
   const [isSeatsLoaded, setIsSeatsLoaded] = useState(false)
-  let listSeat = []
   useEffect(() => {
     if (!isSeatsLoaded) {
-      getBranchbyId(branchId).then(res => {
+      getBranchbyIdAPI(branchId).then(res => {
         setBranch(res)
       })
-      getScheduleById(scheduleId).then(res => {
+      getScheduleByIdAPI(scheduleId).then(res => {
         setSchedule(res)
       })
       getListSeatAPI(scheduleId).then(res => {

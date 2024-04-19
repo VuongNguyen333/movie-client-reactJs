@@ -1,5 +1,6 @@
 import Joi from 'joi'
 export const JoiObjectFilm = Joi.object({
+  id: Joi.number().required('Id is required'),
   name: Joi.string().required('Name is required'),
   actor: Joi.string().required('Actor is required'),
   director:Joi.string().required('Director is required'),

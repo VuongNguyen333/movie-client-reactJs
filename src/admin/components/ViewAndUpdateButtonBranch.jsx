@@ -9,7 +9,7 @@ import { users, branchs, scheduleMovieMai } from '~/mock_data'
 import UpdateBranchForm from './UpdateBranchForm'
 import SchedulesManager from '../pages/ScheduleManager'
 import { Link } from 'react-router-dom'
-function ViewAndUpdateButtonBranch({ params }) {
+function ViewAndUpdateButtonBranch({ params, handleUpdate }) {
   const handleButtonClick = (id) => {
     setItemId(id)
     // Handle button click action here
@@ -50,7 +50,7 @@ function ViewAndUpdateButtonBranch({ params }) {
           sx={{ color:'white' }}
         />
       </Button>
-      <UpdateBranchForm open={open} onClose={handleClose} branchId={itemId}/>
+      <UpdateBranchForm open={open} onClose={handleClose} branchId={itemId} handleUpdate={handleUpdate}/>
     </Box>
   )
 }

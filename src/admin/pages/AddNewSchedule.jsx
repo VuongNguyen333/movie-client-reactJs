@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-imports */
 import { Button, FormControl, InputLabel, MenuItem, Select, Toolbar } from '@mui/material'
 import Box from '@mui/material/Box'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -12,14 +12,21 @@ import { validate } from '../utils/validateBeforeSubmit'
 import { JoiObjectScheduleSearch } from '../utils/ScheduleModel'
 import { toast } from 'react-toastify'
 import DataTableScheduleOfRoom from '../components/DataTableScheduleOfRoom'
+import { getAllMovieAPI } from '~/apis/movieApi'
+import { getListBranchAPI } from '~/apis/branchApi'
 
 export default function AddNewSchedule() {
   const [date, setDate] = useState('')
   const [film, setFilm] = useState('')
+  const [listMovie, setListMovie] = useState([])
+  const [listBranch, setListBranch] = useState([])
   const [branch, setBranch] = useState({})
   const [open, setOpen] = useState(false)
-  const films = productData
-  const listBranch = branchs
+
+  useEffect(() => {
+    getAllMovieAPI().then(res => setListMovie(res))
+    getListBranchAPI().then(res => setListBranch(res))
+  }, [])
 
   const initFormData = {
     startDate: '',
@@ -34,9 +41,10 @@ export default function AddNewSchedule() {
     const formData = new FormData(event.target)
     const data = {
       'startDate': (formData.get('date')),
-      'movieId': formData.get('film'),
-      'branchId': formData.get('branch')
+      'movieId': parseInt(formData.get('film')),
+      'branchId': parseInt(formData.get('branch'))
     }
+    console.log('🚀 ~ handleSubmit ~ data:', data)
     setFormDataReq({
       'startDate': data.startDate,
       'movieId' : data.movieId,
@@ -48,6 +56,7 @@ export default function AddNewSchedule() {
     setBranch(data.branchId)
     try {
       const res = await validate(JoiObjectScheduleSearch, data)
+      console.log('🚀 ~ handleSubmit ~ res:', res)
       setOpen(true)
     } catch (err) {
       toast.error(err.message)
@@ -110,7 +119,7 @@ export default function AddNewSchedule() {
                     sx={{}}
                     name='film'
                   >
-                    {films.map((item, index) => {
+                    {listMovie?.map((item, index) => {
                       return <MenuItem key={`film${index}`} value={item.id}>{item.name}</MenuItem>
                     })}
                   </Select>

@@ -11,12 +11,14 @@ import { styled } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import CircularProgress from '@mui/material/CircularProgress'
-import { CardActionArea } from '@mui/material'
-import { validateBeforeSubmit } from '~/admin/utils/validateBeforeSubmit'
+import { CardActionArea, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { validateBeforeSubmit, validateBeforeSubmitBranch } from '~/admin/utils/validateBeforeSubmit'
 import { JoiObjectBranchUpdate } from '../utils/BranchModel'
 import { branchs } from '~/mock_data'
+import { getBranchbyIdAPI } from '~/apis/branchApi'
+import { getListAreaAPI } from '~/apis/areaApi'
 
-function UpdateBranchForm({ open, onClose, branchId }) {
+function UpdateBranchForm({ open, onClose, branchId, handleUpdate }) {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -62,31 +64,44 @@ function UpdateBranchForm({ open, onClose, branchId }) {
   const [branch, setBranch] = useState({})
   const [fileName, setFileName] = useState('')
   const [photo, setPhoto] = useState({})
+  const [status, setStatus] = useState(null)
+  const [areas, setAreas] = useState([])
+  const [area, setArea] = useState(null)
   useEffect (() => {
     //Call Api get branch
-    const newBranch = branchs.find(item => item.id.toString() === branchId.toString())
-    setBranch(newBranch)
+    getBranchbyIdAPI(branchId).then(res => {
+      setBranch(res)
+      setStatus(res.status)
+      setArea(res.areaResponse.id)
+    })
+    getListAreaAPI().then(res => setAreas(res))
   }, [branchId])
   const handleFileInputChange = (event) => {
     const file = event.target.files[0] // Lấy ra tệp được chọn
     setPhoto(file)
     setFileName(file.name) // Cập nhật tên của tệp vào trạng thái
   }
+  const handleUpdateBranch = (data) => {
+    setBranch(data)
+  }
+  const handleChangeStatus = (event) => {
+    setStatus(event.target.value)
+  }
   const handleSubmit = async (event) => {
     event.preventDefault()
     const formData = new FormData(event.target)
     // Kiểm tra định dạng email
     const data = {
+      'id': branch.id,
       'name': formData.get('name'),
       'address': formData.get('address'),
       'introduction': formData.get('introduction'),
-      'areaId' : formData.get('introduction'),
+      'area' : formData.get('area'),
+      'status' : formData.get('status'),
       'photo' : photo
     }
-    await validateBeforeSubmit(JoiObjectBranchUpdate, data)
-    setFileName('')
-    setPhoto({})
-    onClose
+    console.log('🚀 ~ handleSubmit ~ data:', data)
+    await validateBeforeSubmitBranch(JoiObjectBranchUpdate, data, null, null, handleUpdate, handleUpdateBranch)
     // Call Api
   }
   if (!branch) {
@@ -133,7 +148,39 @@ function UpdateBranchForm({ open, onClose, branchId }) {
             <ValidationTextField name='name' label="Name" required variant="outlined" defaultValue={branch ? branch?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
             <ValidationTextField name='address' multiline label="Address" required variant="outlined" defaultValue={branch ? branch?.address : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
             <ValidationTextField name='introduction' label="Introduction" required variant="outlined" defaultValue={branch ? branch?.introduction : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField name='area' label="Area" required variant="outlined" defaultValue={branch ? branch?.areaResponse?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Area</InputLabel>
+              <Select
+                disabled
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                defaultValue={branch?.areaResponse?.id}
+                value={area}
+                label="Area"
+                sx={{ mb: '10px' }}
+                name='area'
+              >
+                {areas.map((item, index) => {
+                  return <MenuItem key={`area${index}`} value={item?.id}>{item?.name}</MenuItem>
+                })}
+              </Select>
+            </FormControl>
+            <FormControl fullWidth >
+              <InputLabel id="demo-simple-select-label">Status</InputLabel>
+              <Select
+                autoFocus
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={status}
+                label="Status"
+                onChange={handleChangeStatus}
+                sx={{ mb: '10px' }}
+                name='status'
+              >
+                <MenuItem value={true}>Active</MenuItem>
+                <MenuItem value={false}>UnActive</MenuItem>
+              </Select>
+            </FormControl>
             <Button
               component="label"
               role={undefined}

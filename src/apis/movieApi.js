@@ -7,8 +7,6 @@ import { API_ROOT } from '~/utils/constant'
 export const addNewMovieAPI = async (data) => {
   try {
     const res = await axios.post(`${API_ROOT}/movies/addNew`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
-    // lay data qua property data cua axios
-    // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     toast.success('Create Successfully!')
     return res.data
   } catch (error) {
@@ -31,6 +29,27 @@ export const getMovieByIdAPI = async (movieId) => {
     const res = await axios.get(`${API_ROOT}/movies/${movieId}`)
     // lay data qua property data cua axios
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
+    return res.data
+  } catch (error) {
+    return
+  }
+}
+export const getAllMovieAPI = async () => {
+  try {
+    const res = await axios.get(`${API_ROOT}/movies/all`)
+    // lay data qua property data cua axios
+    // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
+    return res.data
+  } catch (error) {
+    return
+  }
+}
+export const updateMovieById = async (data, movieId) => {
+  try {
+    const res = await axios.put(`${API_ROOT}/movies/update/${movieId}`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+    // lay data qua property data cua axios
+    // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
+    toast.success('Update Successfully')
     return res.data
   } catch (error) {
     return

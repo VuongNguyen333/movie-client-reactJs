@@ -4,11 +4,17 @@ import { users } from '~/mock_data'
 import Toolbar from '@mui/material/Toolbar'
 import { useParams } from 'react-router-dom'
 import DataTableBillOfSchedule from '../components/DataTableBillOfSchedule'
+import { getListBillByUserIdAPI } from '~/apis/billApi'
+import { getUserByIdAPI } from '~/apis/userApi'
+import { useEffect, useState } from 'react'
+import DataTableBillOfUser from '../components/DataTableBillOfUser'
 
 function BillOfUserManager() {
   const { userId } = useParams()
-  const user = [...users].find(item => item.id.toString() === userId.toString())
-  console.log('🚀 ~ BillOfUserManager ~ user:', user)
+  const [user, setUser] = useState({})
+  useEffect(() => {
+    getUserByIdAPI(userId).then(res => setUser(res))
+  }, [userId])
   return (
     <Box
       component="main"
@@ -34,8 +40,7 @@ function BillOfUserManager() {
           <Box sx={{ ml: '5px', fontSize: 15 }}>Date Of Birth: {user?.dob}</Box>
         </Box>
       </Box>
-      {/* <DataTable rows={data} columns={columns} /> */}
-      <DataTableBillOfSchedule />
+      <DataTableBillOfUser userId={userId} />
     </Box>
   )
 }

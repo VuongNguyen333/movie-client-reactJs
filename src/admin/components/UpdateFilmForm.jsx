@@ -6,7 +6,7 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
@@ -26,6 +26,7 @@ import dayjs from 'dayjs'
 import { validateBeforeSubmit } from '../utils/validateBeforeSubmit'
 import { JoiObjectFilm } from '../utils/FilmModel'
 import { convertDate } from '../utils/convertDate'
+import { getMovieByIdAPI } from '~/apis/movieApi'
 
 const ProSpan = styled('span')({
   display: 'inline-block',
@@ -65,8 +66,7 @@ function Label({ isProOnly }) {
   return content
 }
 
-function UpdateFilmForm({ open, onClose, itemId }) {
-  const film = productData.find(item => item.id.toString() === itemId.toString())
+function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -108,12 +108,18 @@ function UpdateFilmForm({ open, onClose, itemId }) {
       padding: '4px !important' // override inline-style
     }
   })
+  const [film, setFilm] = useState(null)
   const languages = ['Phụ đề', 'Vietnamese']
   const genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History', 'Horror', 'Music', 'Mystery', 'Romance', 'Science Fiction', 'Thriller', 'War', 'Western']
   const [language, setLanguage] = React.useState(film ? film.language : 'Phụ đề')
   const [category, setCategory] = React.useState(film ? film.category : 'Action')
   const [photo, setPhoto] = React.useState({})
-
+  const [fileName, setFileName] = useState('')
+  useEffect(() => {
+    getMovieByIdAPI(itemId).then(res => {
+      setFilm(res)
+    })
+  }, [itemId])
   const handleChangeLanguage = (event) => {
     setLanguage(event.target.value)
   }
@@ -121,11 +127,16 @@ function UpdateFilmForm({ open, onClose, itemId }) {
     setCategory(event.target.value)
   }
 
+  const handleUpdateFilm = (data) => {
+    setFilm(data)
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     const formData = new FormData(event.target)
     // Kiểm tra định dạng email
     const data = {
+      'id' : film.id,
       'name': formData.get('name'),
       'actor': formData.get('actor'),
       'director': formData.get('director'),
@@ -137,12 +148,11 @@ function UpdateFilmForm({ open, onClose, itemId }) {
       'releaseDate': convertDate.convertToRequest(formData.get('date')),
       'photo': photo
     }
-    await validateBeforeSubmit(JoiObjectFilm, data)
-    console.log('🚀 ~ handleSubmit ~ data:', data)
+    await validateBeforeSubmit(JoiObjectFilm, data, null, null, handleUpdate, handleUpdateFilm)
+    // console.log('🚀 ~ handleSubmit ~ data:', data)
     // Call Api
   }
 
-  const [fileName, setFileName] = useState('')
 
   // Hàm xử lý sự kiện khi người dùng chọn tệp
   const handleFileInputChange = (event) => {

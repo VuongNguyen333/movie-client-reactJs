@@ -18,17 +18,37 @@ export const getListBranchByAreaIdAPI = async (areaId) => {
   try {
     const res = await axios.get(`${API_ROOT}/branches/all/${areaId}`)
     // lay data qua property data cua axios
-    console.log('🚀 ~ addNewMovieAPI ~ res:', res)
+    // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
     return
   }
 }
-export const getBranchbyId = async (id) => {
+export const getBranchbyIdAPI = async (id) => {
   try {
     const res = await axios.get(`${API_ROOT}/branches/${id}`)
     // lay data qua property data cua axios
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
+    return res.data
+  } catch (error) {
+    return
+  }
+}
+export const getListBranchAPI = async () => {
+  try {
+    const res = await axios.get(`${API_ROOT}/branches/all`)
+    // lay data qua property data cua axios
+    // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
+    return res.data
+  } catch (error) {
+    return
+  }
+}
+export const updateBranchAPI = async (data, branchId) => {
+  try {
+    const res = await axios.put(`${API_ROOT}/branches/update/${branchId}`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+    // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
+    toast.success('Update Successfully!')
     return res.data
   } catch (error) {
     return

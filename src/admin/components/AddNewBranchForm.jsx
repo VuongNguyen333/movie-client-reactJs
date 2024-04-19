@@ -2,7 +2,7 @@
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
@@ -13,12 +13,12 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import AddIcon from '@mui/icons-material/Add'
 import { styled } from '@mui/material/styles'
-import { validateBeforeSubmit } from '~/admin/utils/validateBeforeSubmit'
+import { validateBeforeSubmit, validateBeforeSubmitBranch } from '~/admin/utils/validateBeforeSubmit'
 import { JoiObjectBranchAddNew } from '../utils/BranchModel'
-import { areas } from '~/mock_data'
 import { addNewBranchAPI } from '~/apis/branchApi'
+import { getListAreaAPI } from '~/apis/areaApi'
 
-function AddNewBranchForm() {
+function AddNewBranchForm({ handleAddNew }) {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -51,6 +51,7 @@ function AddNewBranchForm() {
     address : '',
     introduction : '',
     area : '',
+    status: false,
     photo : {}
   }
   const [open, setOpen] = useState(false)
@@ -59,6 +60,10 @@ function AddNewBranchForm() {
   const [fileName, setFileName] = useState('')
   const [photo, setPhoto] = useState({})
   const [formDataInit, setFormDataInit] = useState(initFormData)
+  const [areas, setAreas] = useState([])
+  useEffect(() => {
+    getListAreaAPI().then(res => setAreas(res))
+  }, [])
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -83,19 +88,17 @@ function AddNewBranchForm() {
     event.preventDefault()
     const formData = new FormData(event.target)
     // Kiểm tra định dạng email
-    const areaId = formData.get('area')
     const data = {
       'name': formData.get('name'),
       'address': formData.get('address'),
       'introduction': formData.get('introduction'),
-      'areaId' : formData.get('area'),
+      'area' : formData.get('area'),
+      'status': formData.get('status'),
       'photo' : photo
     }
-    console.log('🚀 ~ handleSubmit ~ data:', data)
-    await validateBeforeSubmit( JoiObjectBranchAddNew, data, handleSetFormData )
-    delete data.areaId
-    data.status = true
-    await addNewBranchAPI(data, areaId)
+    // console.log('🚀 ~ handleSubmit ~ data:', data)
+    await validateBeforeSubmitBranch( JoiObjectBranchAddNew, data, handleSetFormData, handleAddNew, null, null )
+
   }
 
   return (
@@ -131,6 +134,21 @@ function AddNewBranchForm() {
                 {areas.map((item, index) => {
                   return <MenuItem key={`area${index}`} value={item?.id}>{item?.name}</MenuItem>
                 })}
+              </Select>
+            </FormControl>
+            <FormControl fullWidth >
+              <InputLabel id="demo-simple-select-label">Status</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formDataInit.status}
+                label="Status"
+                onChange={handleChange}
+                sx={{ mb: '10px' }}
+                name='status'
+              >
+                <MenuItem value={true}>Active</MenuItem>
+                <MenuItem value={false}>InActive</MenuItem>
               </Select>
             </FormControl>
             <Button

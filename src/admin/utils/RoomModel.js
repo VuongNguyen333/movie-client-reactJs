@@ -5,6 +5,7 @@ export const JoiObjectRoomAddNew = Joi.object({
   photo: Joi.object().invalid({}).error(new Error('Photo is required'))
 })
 export const JoiObjectRoomUpdate = Joi.object({
+  id: Joi.number(),
   name: Joi.string(),
   status: Joi.boolean(),
   photo: Joi.object()

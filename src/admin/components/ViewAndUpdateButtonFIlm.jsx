@@ -4,12 +4,8 @@ import PreviewIcon from '@mui/icons-material/Preview'
 import BuildIcon from '@mui/icons-material/Build'
 import { useState } from 'react'
 import UpdateFilmForm from './UpdateFilmForm'
-import UpdateCustomerForm from './UpdateCustomerForm'
-import { users, branchs, scheduleMovieMai } from '~/mock_data'
-import UpdateBranchForm from './UpdateBranchForm'
-import SchedulesManager from '../pages/ScheduleManager'
 import { Link } from 'react-router-dom'
-function ViewAndUpdateButtonFilm({ params }) {
+function ViewAndUpdateButtonFilm({ params, handleUpdate }) {
   const handleButtonClick = (id) => {
     setItemId(id)
     // Handle button click action here
@@ -49,7 +45,7 @@ function ViewAndUpdateButtonFilm({ params }) {
           fontSize='small'
           sx={{ color:'white' }}
         />
-      </Button><UpdateFilmForm open={open} onClose={handleClose} itemId={itemId}/>
+      </Button><UpdateFilmForm open={open} onClose={handleClose} itemId={itemId} handleUpdate={handleUpdate}/>
     </Box>
   )
 }

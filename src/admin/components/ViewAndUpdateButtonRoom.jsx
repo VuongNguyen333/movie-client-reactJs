@@ -6,7 +6,7 @@ import BuildIcon from '@mui/icons-material/Build'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import UpdateRoomForm from './UpdateRoomForm'
-function ViewAndUpdateButtonRoom({ params }) {
+function ViewAndUpdateButtonRoom({ params, handleUpdate }) {
   const handleButtonClick = (id) => {
     setItemId(id)
     // Handle button click action here
@@ -46,7 +46,7 @@ function ViewAndUpdateButtonRoom({ params }) {
           fontSize='small'
           sx={{ color:'white' }}
         />
-      </Button><UpdateRoomForm open={open} onClose={handleClose} roomId={itemId}/>
+      </Button><UpdateRoomForm open={open} onClose={handleClose} roomId={itemId} handleUpdate={handleUpdate}/>
     </Box>
   )
 }

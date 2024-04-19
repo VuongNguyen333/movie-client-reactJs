@@ -12,15 +12,16 @@ import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import CircularProgress from '@mui/material/CircularProgress'
 import { CardActionArea } from '@mui/material'
-import { validateBeforeSubmit } from '~/admin/utils/validateBeforeSubmit'
+import { validateBeforeSubmit, validateBeforeSubmitRoom } from '~/admin/utils/validateBeforeSubmit'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { roomOfBranchThuDuc, rooms } from '~/mock_data'
 import { JoiObjectRoomUpdate } from '../utils/RoomModel'
+import { getRoomByIdAPI } from '~/apis/roomApi'
 
-function UpdateRoomForm({ open, onClose, roomId }) {
+function UpdateRoomForm({ open, onClose, roomId, handleUpdate }) {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -63,17 +64,23 @@ function UpdateRoomForm({ open, onClose, roomId }) {
       padding: '4px !important' // override inline-style
     }
   })
-
   const initFormData = {
     name : '',
-    status : {},
+    status : null,
     photo : {}
   }
   const [room, setRoom] = useState({})
   const [fileName, setFileName] = useState('')
   const [photo, setPhoto] = useState({})
   const [formDataInit, setFormDataInit] = useState(initFormData)
-
+  const [status, setStatus] = useState(null)
+  useEffect (() => {
+    //Call Api get branch
+    getRoomByIdAPI(roomId).then(res => {
+      setRoom(res)
+      setStatus(res.status)
+    })
+  }, [roomId])
   const handleChange = (event) => {
     const { name, value } = event.target
     setFormDataInit((prevData) => ({
@@ -81,31 +88,30 @@ function UpdateRoomForm({ open, onClose, roomId }) {
       [name]: value
     }))
   }
-  useEffect (() => {
-    //Call Api get branch
-    const newRoom = roomOfBranchThuDuc.find(item => item.id.toString() === roomId.toString())
-    setRoom(newRoom)
-  }, [roomId])
+  const handleUpdateRoom = (data) => {
+    setRoom(data)
+  }
   const handleFileInputChange = (event) => {
     const file = event.target.files[0] // Lấy ra tệp được chọn
     setPhoto(file)
     setFileName(file.name) // Cập nhật tên của tệp vào trạng thái
+  }
+  const handleChangeStatus = (event) => {
+    setStatus(event.target.value)
   }
   const handleSubmit = async (event) => {
     event.preventDefault()
     const formData = new FormData(event.target)
     // Kiểm tra định dạng email
     const data = {
+      'id': room.id,
       'name': formData.get('name'),
       'status' : formData.get('status'),
       'photo' : photo
     }
     console.log('🚀 ~ handleSubmit ~ data:', data)
-    await validateBeforeSubmit(JoiObjectRoomUpdate, data)
-    setFileName('')
-    setPhoto({})
-    onClose
-    // Call Api
+    // call api
+    await validateBeforeSubmitRoom(JoiObjectRoomUpdate, null, data, null, null, handleUpdate, handleUpdateRoom)
   }
   if (!rooms) {
     return <Box sx={{
@@ -152,16 +158,17 @@ function UpdateRoomForm({ open, onClose, roomId }) {
             <FormControl fullWidth >
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
               <Select
+                autoFocus
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={room ? room?.status : formDataInit.status}
+                value={status}
                 label="Status"
-                onChange={handleChange}
+                onChange={handleChangeStatus}
                 sx={{ mb: '10px' }}
                 name='status'
               >
                 <MenuItem value={true}>Active</MenuItem>
-                <MenuItem value={false}>InActive</MenuItem>
+                <MenuItem value={false}>UnActive</MenuItem>
               </Select>
             </FormControl>
             <Button
