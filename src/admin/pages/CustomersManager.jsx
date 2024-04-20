@@ -39,8 +39,8 @@ function CustomersManager() {
     { field: 'totalPayment', headerName: 'Total Payment(x1000Vnđ)', width: 200, editable: true },
     {
       field: 'roles',
-      headerName: 'roles',
-      width: 100,
+      headerName: 'Roles',
+      width: 270,
       editable: true,
       valueGetter: (params) => {
         return params.map(role => role.name).join(', ')

@@ -1,12 +1,12 @@
 /* eslint-disable no-restricted-imports */
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import TextField from '@mui/material/TextField'
-import { styled } from '@mui/material/styles'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -22,8 +22,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { validateBeforeSubmit } from '../utils/validateBeforeSubmit'
 import { JoiObjectFilmAddNew } from '../utils/FilmModel'
 import { convertDate } from '../utils/convertDate'
-import dayjs from 'dayjs'
-import { addNewMovieAPI } from '~/apis/movieApi'
 
 const ProSpan = styled('span')({
   display: 'inline-block',
@@ -141,7 +139,7 @@ function AddNewForm({ handleAddNew }) {
       'releaseDate': convertDate.convertToRequest(formData.get('date')),
       'photo': photo
     }
-    console.log('🚀 ~ handleSubmit ~ data:', data)
+    // console.log('🚀 ~ handleSubmit ~ data:', data)
     await validateBeforeSubmit(JoiObjectFilmAddNew, data, handleSetFormData, handleAddNew, null, null)
   }
 

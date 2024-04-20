@@ -1,10 +1,7 @@
 /* eslint-disable no-console */
 import Box from '@mui/material/Box'
-import { users } from '~/mock_data'
 import Toolbar from '@mui/material/Toolbar'
 import { useParams } from 'react-router-dom'
-import DataTableBillOfSchedule from '../components/DataTableBillOfSchedule'
-import { getListBillByUserIdAPI } from '~/apis/billApi'
 import { getUserByIdAPI } from '~/apis/userApi'
 import { useEffect, useState } from 'react'
 import DataTableBillOfUser from '../components/DataTableBillOfUser'

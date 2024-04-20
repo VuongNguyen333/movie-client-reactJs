@@ -71,4 +71,15 @@ export const addNewScheduleByMovieIdAndRoomIdAPI = async (data) => {
     return
   }
 }
+export const updateScheduleByIdAPI = async (data, scheduleId) => {
+  try {
+    const res = await axios.put(`${API_ROOT}/schedules/update/${scheduleId}`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+    // lay data qua property data cua axios
+    // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
+    toast.success('Update Successfully!')
+    return res.data
+  } catch (error) {
+    return
+  }
+}
 

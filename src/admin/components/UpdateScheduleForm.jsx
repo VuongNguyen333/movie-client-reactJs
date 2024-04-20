@@ -1,19 +1,22 @@
 /* eslint-disable no-restricted-imports */
+import { useEffect, useState } from 'react'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import SendIcon from '@mui/icons-material/Send'
 import { styled } from '@mui/material/styles'
-import { productData, roomOfBranchThuDuc } from '~/mock_data'
+import { productData, roomOfBranchThuDuc, scheduleMovieMai } from '~/mock_data'
 import { CircularProgress, Stack, Tooltip } from '@mui/material'
 import { DatePicker, LocalizationProvider, TimePicker } from '@mui/x-date-pickers'
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs from 'dayjs'
 import { convertDate } from '../utils/convertDate'
+import { getScheduleByIdAPI } from '~/apis/scheduleApi'
+import { validateBeforeSubmitSchedule } from '../utils/validateBeforeSubmit'
+import { JoiObjectScheduleUpdate } from '../utils/ScheduleModel'
 
 const ProSpan = styled('span')({
   display: 'inline-block',
@@ -51,7 +54,7 @@ function Label({ isProOnly }) {
   }
   return content
 }
-function UpdateScheduleForm({ open, onClose, formData }) {
+function UpdateScheduleForm({ open, onClose, scheduleId, handleUpdate }) {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -84,26 +87,48 @@ function UpdateScheduleForm({ open, onClose, formData }) {
   })
 
 
-  const [film, setFilm] = useState('')
-  const [room, setRoom] = useState(formData ? formData.roomId : '')
+  const [schedule, setSchedule] = useState({})
+  const [startTime, setStartTime] = useState('')
+  const [startDate, setStartDate] = useState('')
+
   useEffect(() => {
-    // Call Api get Film and Room
-    setFilm(productData.find(item => item.id.toString() === formData?.movieId?.toString()))
-    setRoom(roomOfBranchThuDuc.find(item => item.id.toString() === formData?.roomId?.toString()))
-  }, [formData?.roomId, formData])
+    getScheduleByIdAPI(scheduleId).then(res => {
+      setSchedule(res)
+      setStartDate(res.startDate)
+      setStartTime(res.startTime)
+      console.log('🚀 ~ getScheduleByIdAPI ~ res:', res)
+    })
+  }, [scheduleId])
+
+  const handleUpdateSchedule = (data) => {
+    setSchedule(data)
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     const data = new FormData(event.target)
-    const time = data.get('time').split(' ')[0]
-    const dataReq = {
-      'startDate' : convertDate.convertToRequest(formData.startDate),
-      'startTime' : time,
-      'movieId' : parseInt(formData.movieId),
-      'roomId' : formData.roomId
+    const formData = {
+      id: scheduleId,
+      startTime : data.get('time').split(' ')[0],
+      startDate : convertDate.convertToRequest(data.get('date'))
     }
-    console.log('🚀 ~ handleSubmit ~ dataReq:', dataReq)
+    console.log('🚀 ~ handleSubmit ~ formData:', formData)
+    validateBeforeSubmitSchedule(JoiObjectScheduleUpdate, formData, handleUpdate, handleUpdateSchedule)
     // Call Api
+  }
+
+  if (!schedule) {
+    return <Box sx={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 2,
+      width: '100vh',
+      height: '100vh'
+    }}>
+      <CircularProgress />
+      <Typography>Loading data...</Typography>
+    </Box>
   }
   return (
     <Modal
@@ -115,12 +140,13 @@ function UpdateScheduleForm({ open, onClose, formData }) {
     >
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: '5px' }}>
-          Create Schedule
+          Update Schedule
         </Typography>
         <form onSubmit={handleSubmit} style={{ display:'flex' }}>
           <Box>
-            <ValidationTextField disabled name='name' label="Film" required variant="outlined" defaultValue={film ? film?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField disabled name='address' multiline label="Room" required variant="outlined" defaultValue={room ? room?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <ValidationTextField disabled name='film' label="Film" required variant="outlined" defaultValue={schedule ? schedule?.movieResponse?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <ValidationTextField disabled name='room' multiline label="Room" required variant="outlined" defaultValue={schedule ? schedule?.roomResponse?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <ValidationTextField disabled name='branch' multiline label="Branch" required variant="outlined" defaultValue={schedule ? schedule?.roomResponse?.branchResponse?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer
                 components={[
@@ -132,15 +158,15 @@ function UpdateScheduleForm({ open, onClose, formData }) {
                 sx={{ mb: '5px' }}
               >
                 <DemoItem label={<Label componentName="DatePicker" valueType="release" />}>
-                  <DatePicker name='date' defaultValue={dayjs((formData ? formData.startDate : ''))} />
+                  <DatePicker name='date' value={dayjs(convertDate.convert(startDate))} />
                 </DemoItem>
-                <DemoItem label="Responsive variant">
-                  <TimePicker ampm={false} name='time' defaultValue={dayjs('2022-04-17T15:30')} />
+                <DemoItem label="Start Time">
+                  <TimePicker ampm={false} name='time' value={dayjs(startTime, 'HH:mm')} />
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>
             <Button sx={{ bgcolor:'green', ':hover': { bgcolor:'#90D26D' } }} variant="contained" endIcon={<SendIcon />} type='submit'>
-            Create
+            Update
             </Button>
           </Box>
         </form>

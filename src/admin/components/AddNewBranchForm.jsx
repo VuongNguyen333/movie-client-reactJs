@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-imports */
+import { useEffect, useState } from 'react'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
@@ -13,9 +13,8 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import AddIcon from '@mui/icons-material/Add'
 import { styled } from '@mui/material/styles'
-import { validateBeforeSubmit, validateBeforeSubmitBranch } from '~/admin/utils/validateBeforeSubmit'
+import { validateBeforeSubmitBranch } from '~/admin/utils/validateBeforeSubmit'
 import { JoiObjectBranchAddNew } from '../utils/BranchModel'
-import { addNewBranchAPI } from '~/apis/branchApi'
 import { getListAreaAPI } from '~/apis/areaApi'
 
 function AddNewBranchForm({ handleAddNew }) {

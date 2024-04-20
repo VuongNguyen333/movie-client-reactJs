@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import Box from '@mui/material/Box'
-import { branchs, roomOfBranchThuDuc } from '~/mock_data'
 import Toolbar from '@mui/material/Toolbar'
 import DataTable from '../components/DataTable'
 import { useLocation } from 'react-router-dom'

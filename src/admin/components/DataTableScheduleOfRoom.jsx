@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Collapse from '@mui/material/Collapse'
@@ -12,32 +13,13 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import { roomOfBranchThuDuc, scheduleOfRoomId52 } from '../../mock_data'
+import AddNewScheduleForm from './AddNewScheduleForm'
 import { Button } from '@mui/material'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import AddNewScheduleForm from './AddNewScheduleForm'
 import { getAllRoomByBranchIdAPI } from '~/apis/roomApi'
 import { getScheduleByMovieIdAndRoomIdAPI } from '~/apis/scheduleApi'
 
-
-// Row.propTypes = {
-//   row: PropTypes.shape({
-//     calories: PropTypes.number.isRequired,
-//     carbs: PropTypes.number.isRequired,
-//     fat: PropTypes.number.isRequired,
-//     history: PropTypes.arrayOf(
-//       PropTypes.shape({
-//         amount: PropTypes.number.isRequired,
-//         customerId: PropTypes.string.isRequired,
-//         date: PropTypes.string.isRequired
-//       })
-//     ).isRequired,
-//     name: PropTypes.string.isRequired,
-//     price: PropTypes.number.isRequired,
-//     protein: PropTypes.number.isRequired
-//   }).isRequired
-// }
 export default function DataTableScheduleOfRoom({ data, branchId }) {
   const [formData, setFormData] = useState({})
   const [listRoom, setListRoom] = useState([])
@@ -61,7 +43,7 @@ export default function DataTableScheduleOfRoom({ data, branchId }) {
     })
   }, [branchId, formData])
   const handleAddNew = (data) => {
-    console.log('🚀 ~ handleAddNew ~ data:', data)
+    // console.log('🚀 ~ handleAddNew ~ data:', data)
     rows.map(item => {
       if (item.room.id === data.roomResponse.id) {
         item.history.push(data)
@@ -70,8 +52,6 @@ export default function DataTableScheduleOfRoom({ data, branchId }) {
     setRows(rows)
   }
   useEffect(() => {
-    // console.log('🚀 ~ useEffect ~ data:', data)
-    // console.log('🚀 ~ useEffect ~ branch:', branchId)
     setFormData(data)
   }, [data, branchId])
 

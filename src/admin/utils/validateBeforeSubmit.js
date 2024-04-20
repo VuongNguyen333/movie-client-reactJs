@@ -4,6 +4,7 @@ import { addNewMovieAPI, updateMovieByIdAPI } from '~/apis/movieApi'
 import { addNewRoomAPI, updateRoomAPI } from '~/apis/roomApi'
 import { convertFile } from './fileToBob'
 import { updateUserByIdAPI } from '~/apis/userApi'
+import { updateScheduleByIdAPI } from '~/apis/scheduleApi'
 
 export const validate = async(validData, data) => {
   const res = await validData.validateAsync(data, { abortEarly: 'false' })
@@ -119,6 +120,25 @@ export const validateBeforeSubmitUser = async ( validObject, data, handleUpdate,
       updateUserByIdAPI(newData, data.id).then(res => {
         handleUpdate(res)
         handleUpdateUser(res)
+      })
+      console.log('🚀 ~ validateBeforeSubmitUser ~ newData:', newData)
+    }
+    console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
+  } catch (err) {
+    console.log('🚀 ~ validateBeforeSubmit ~ err:', err)
+    toast.error(err.message)
+  }
+}
+
+export const validateBeforeSubmitSchedule= async ( validObject, data, handleUpdate, handleUpdateSchedule) => {
+  try {
+    const res = await validate(validObject, data)
+    if (handleUpdate) {
+      const newData = { ...data }
+      delete newData.id
+      updateScheduleByIdAPI(newData, data.id).then(res => {
+        handleUpdate(res)
+        handleUpdateSchedule(res)
       })
       console.log('🚀 ~ validateBeforeSubmitUser ~ newData:', newData)
     }

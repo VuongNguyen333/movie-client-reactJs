@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
 import Box from '@mui/material/Box'
-import { schedules } from '~/mock_data'
 import Toolbar from '@mui/material/Toolbar'
-import { useParams } from 'react-router-dom'
 import DataTableBillOfSchedule from '../components/DataTableBillOfSchedule'
+import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { getScheduleByIdAPI } from '~/apis/scheduleApi'
 import { useState } from 'react'

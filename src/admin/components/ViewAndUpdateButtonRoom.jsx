@@ -46,7 +46,8 @@ function ViewAndUpdateButtonRoom({ params, handleUpdate }) {
           fontSize='small'
           sx={{ color:'white' }}
         />
-      </Button><UpdateRoomForm open={open} onClose={handleClose} roomId={itemId} handleUpdate={handleUpdate}/>
+      </Button>
+      <UpdateRoomForm open={open} onClose={handleClose} roomId={itemId} handleUpdate={handleUpdate}/>
     </Box>
   )
 }

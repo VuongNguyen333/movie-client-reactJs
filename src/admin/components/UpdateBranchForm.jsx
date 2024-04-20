@@ -12,9 +12,8 @@ import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import CircularProgress from '@mui/material/CircularProgress'
 import { CardActionArea, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
-import { validateBeforeSubmit, validateBeforeSubmitBranch } from '~/admin/utils/validateBeforeSubmit'
+import { validateBeforeSubmitBranch } from '~/admin/utils/validateBeforeSubmit'
 import { JoiObjectBranchUpdate } from '../utils/BranchModel'
-import { branchs } from '~/mock_data'
 import { getBranchbyIdAPI } from '~/apis/branchApi'
 import { getListAreaAPI } from '~/apis/areaApi'
 
@@ -100,7 +99,7 @@ function UpdateBranchForm({ open, onClose, branchId, handleUpdate }) {
       'status' : formData.get('status'),
       'photo' : photo
     }
-    console.log('🚀 ~ handleSubmit ~ data:', data)
+    // console.log('🚀 ~ handleSubmit ~ data:', data)
     await validateBeforeSubmitBranch(JoiObjectBranchUpdate, data, null, null, handleUpdate, handleUpdateBranch)
     // Call Api
   }

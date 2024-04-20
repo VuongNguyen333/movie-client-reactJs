@@ -25,7 +25,7 @@ function BranchsManager() {
       }
       return branch
     })
-    console.log('🚀 ~ handleUpdate ~ updatedList:', updatedList)
+    // console.log('🚀 ~ handleUpdate ~ updatedList:', updatedList)
     setBranchs(updatedList)
   }
 

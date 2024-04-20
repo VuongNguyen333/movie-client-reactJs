@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import SendIcon from '@mui/icons-material/Send'
 import { styled } from '@mui/material/styles'
-import { productData, roomOfBranchThuDuc } from '~/mock_data'
 import { CircularProgress, Stack, Tooltip } from '@mui/material'
 import { DatePicker, LocalizationProvider, TimePicker } from '@mui/x-date-pickers'
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
@@ -106,7 +105,7 @@ function AddNewScheduleForm({ open, onClose, formData, handleAddNew }) {
       'movieId' : parseInt(formData.movieId),
       'roomId' : formData.roomId
     }
-    console.log('🚀 ~ handleSubmit ~ dataReq:', dataReq)
+    // console.log('🚀 ~ handleSubmit ~ dataReq:', dataReq)
     try {
       addNewScheduleByMovieIdAndRoomIdAPI(dataReq).then(res => handleAddNew(res))
     } catch (err) {

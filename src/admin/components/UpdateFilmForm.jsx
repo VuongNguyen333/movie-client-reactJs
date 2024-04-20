@@ -21,12 +21,11 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { productData } from '~/mock_data'
-import dayjs from 'dayjs'
 import { validateBeforeSubmit } from '../utils/validateBeforeSubmit'
 import { JoiObjectFilm } from '../utils/FilmModel'
 import { convertDate } from '../utils/convertDate'
 import { getMovieByIdAPI } from '~/apis/movieApi'
+import dayjs from 'dayjs'
 
 const ProSpan = styled('span')({
   display: 'inline-block',
@@ -105,19 +104,23 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
     },
     '& input:valid:focus + fieldset': {
       borderLeftWidth: 4,
-      padding: '4px !important' // override inline-style
+      padding: '4px !important'
     }
   })
   const [film, setFilm] = useState(null)
   const languages = ['Subtitle', 'Dubbing']
   const genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History', 'Horror', 'Music', 'Mystery', 'Romance', 'Science Fiction', 'Thriller', 'War', 'Western']
-  const [language, setLanguage] = React.useState(film ? film.language : 'Phụ đề')
-  const [category, setCategory] = React.useState(film ? film.category : 'Action')
+  const [language, setLanguage] = React.useState('')
+  const [category, setCategory] = React.useState('')
+  const [releaseDate, setReleaseDate] = React.useState('')
   const [photo, setPhoto] = React.useState({})
   const [fileName, setFileName] = useState('')
   useEffect(() => {
     getMovieByIdAPI(itemId).then(res => {
       setFilm(res)
+      setLanguage(res.language)
+      setCategory(res.category)
+      setReleaseDate(res.releaseDate)
     })
   }, [itemId])
   const handleChangeLanguage = (event) => {
@@ -197,7 +200,7 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                defaultValue={language}
+                value={language}
                 label="Language"
                 onChange={handleChangeLanguage}
                 sx={{ mb: '10px' }}
@@ -235,7 +238,7 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
                 sx={{ mb: '5px' }}
               >
                 <DemoItem label={<Label componentName="DatePicker" valueType="release" />}>
-                  <DatePicker name='date' defaultValue={dayjs(convertDate.convert(film ? film.releaseDate : ''))} />
+                  <DatePicker name='date' defaultValue={dayjs(convertDate.convert(releaseDate))} />
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>
@@ -255,7 +258,6 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
             Update
             </Button>
           </Box>
-
         </form>
       </Box>
     </Modal>

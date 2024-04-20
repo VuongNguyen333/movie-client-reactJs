@@ -1,23 +1,22 @@
 /* eslint-disable no-restricted-imports */
+import { useEffect, useState } from 'react'
+import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import SendIcon from '@mui/icons-material/Send'
-import { styled } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import CircularProgress from '@mui/material/CircularProgress'
-import { CardActionArea } from '@mui/material'
-import { validateBeforeSubmit, validateBeforeSubmitRoom } from '~/admin/utils/validateBeforeSubmit'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
-import { roomOfBranchThuDuc, rooms } from '~/mock_data'
+import { CardActionArea } from '@mui/material'
+import { validateBeforeSubmitRoom } from '~/admin/utils/validateBeforeSubmit'
 import { JoiObjectRoomUpdate } from '../utils/RoomModel'
 import { getRoomByIdAPI } from '~/apis/roomApi'
 
@@ -113,7 +112,7 @@ function UpdateRoomForm({ open, onClose, roomId, handleUpdate }) {
     // call api
     await validateBeforeSubmitRoom(JoiObjectRoomUpdate, null, data, null, null, handleUpdate, handleUpdateRoom)
   }
-  if (!rooms) {
+  if (!room) {
     return <Box sx={{
       display: 'flex',
       alignItems: 'center',
