@@ -36,8 +36,8 @@ export default function OrderSchedule({ orderSchedule }) {
 
   return (
     <div style={{ overflow: 'auto', width: '100%' }}>
-      <Box>
-        <h1 style={{ color: 'white' }}>{filmName.toUpperCase()}</h1>
+      <Box sx={{display:'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <h2 style={{ color: 'white', alignItems:'center' }}>{filmName.toUpperCase()}</h2>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', overflow: 'auto' }}>
         <Box></Box>
@@ -53,11 +53,11 @@ export default function OrderSchedule({ orderSchedule }) {
               />
             </CardActionArea>
           </Card>
-          <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px', maxWidth:300 }} >
+          <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px', maxWidth:350 }} >
             <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px', color:'white' }}>
-              <Box sx={{ alignItems:'center', justifyContent:'center', typography:'h5', borderBottom:'1px solid white', color:'#16FF00', width:'100%' }} >{filmName}</Box>
-              <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Thời lượng:{<Typography sx={{ color:'white', fontSize:18 }}>{film?.duration} phút</Typography>}</Box>
-              <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Ngôn ngữ:{<Typography sx={{ color:'white', fontSize:18 }}>{film?.language}</Typography>}</Box>
+              <Box sx={{ alignItems:'center', justifyContent:'center', typography:'h6', borderBottom:'1px solid white', color:'#16FF00', width:'100%', maxWidth:300 }} >{filmName.toString()}</Box>
+              <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:16, mb:'8px' }}>Thời lượng:{<Typography sx={{ color:'white', fontSize:16 }}>{film?.duration} phút</Typography>}</Box>
+              <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:16, mb:'8px' }}>Ngôn ngữ:{<Typography sx={{ color:'white', fontSize:16 }}>{film?.language}</Typography>}</Box>
             </Box>
           </Box>
         </Box>

@@ -112,7 +112,7 @@ export default function DataTableScheduleOfRoom({ data, branchId }) {
             {row?.room?.id}
           </TableCell>
           <TableCell align="center">{row?.room?.name}</TableCell>
-          <TableCell align="center">{row?.room?.status ? 'Active' : 'InAcitve'}</TableCell>
+          <TableCell align="center">{row?.room?.status.toString()==='true' ? 'Active' : 'UnAcitve'}</TableCell>
           <TableCell align="center">{row?.room?.branchResponse?.name}</TableCell>
           <TableCell align="center">{row?.room?.branchResponse?.address}</TableCell>
           { row?.room.status

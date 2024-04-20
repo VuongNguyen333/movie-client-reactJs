@@ -109,7 +109,7 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
     }
   })
   const [film, setFilm] = useState(null)
-  const languages = ['Phụ đề', 'Vietnamese']
+  const languages = ['Subtitle', 'Dubbing']
   const genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History', 'Horror', 'Music', 'Mystery', 'Romance', 'Science Fiction', 'Thriller', 'War', 'Western']
   const [language, setLanguage] = React.useState(film ? film.language : 'Phụ đề')
   const [category, setCategory] = React.useState(film ? film.category : 'Action')

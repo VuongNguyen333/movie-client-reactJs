@@ -14,7 +14,7 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { styled } from '@mui/material/styles'
 import AddIcon from '@mui/icons-material/Add'
-import { validateBeforeSubmit, validateBeforeSubmitRoom } from '~/admin/utils/validateBeforeSubmit'
+import { validateBeforeSubmitRoom } from '~/admin/utils/validateBeforeSubmit'
 import { JoiObjectRoomAddNew } from '../utils/RoomModel'
 
 function AddNewRoomForm({ branchId, handleAddNew }) {

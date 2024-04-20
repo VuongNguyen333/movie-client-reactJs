@@ -80,7 +80,7 @@ export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
     <Box sx={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
       <Box sx={{ alignItems:'center', justifyContent:'center' }}>
         <img style={{ width: '250px', borderRadius: '10px', height:'350px' }} src={`data:image/jpeg;base64,${film?.photo}`} alt="product image" />
-        <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px' }} >
+        <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px', maxWidth:300 }} >
           <Box sx={{ alignItems:'center', justifyContent:'center', border:'1px solid white', p:'5px', borderRadius:'10px', color:'white' }}>
             <Box sx={{ alignItems:'center', justifyContent:'center', typography:'h5', borderBottom:'1px solid white', color:'#16FF00', width:'100%' }} >{filmName}</Box>
             <Box sx={{ typography:'h5', width:' 100%' }}>{branch?.name}</Box>

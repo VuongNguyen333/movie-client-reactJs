@@ -12,15 +12,15 @@ import { getMovieByIdAPI } from '~/apis/movieApi'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'startDate', headerName: 'Start Date', width: 100, editable: true },
-  { field: 'startTime', headerName: 'Start Time', width: 100, editable: true },
-  { field: 'revenue', headerName: 'Revenue', width: 100, editable: true },
-  { field: 'numberOfTickets', headerName: 'Ticket sold', width: 100, editable: true },
+  { field: 'startDate', headerName: 'Start Date', width: 100, editable: false },
+  { field: 'startTime', headerName: 'Start Time', width: 100, editable: false },
+  { field: 'revenue', headerName: 'Revenue', width: 100, editable: false },
+  { field: 'numberOfTickets', headerName: 'Ticket sold', width: 100, editable: false },
   {
     field: 'movieResponse',
     headerName: 'Movie',
     width: 200,
-    editable: true,
+    editable: false,
     valueGetter: (params) => {
       return params.name
     }
@@ -29,7 +29,7 @@ const columns = [
     field: 'roomResponse',
     headerName: 'Room',
     width: 350,
-    editable: true,
+    editable: false,
     valueGetter: (params) => {
       return `${params.name} (Branch ${params.branchResponse.name})`
     }

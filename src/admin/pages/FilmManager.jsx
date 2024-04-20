@@ -18,12 +18,8 @@ function FilmManager() {
   }, [])
 
   const handleAddNew = (data) => {
-    const newData = {
-      ...data,
-      id : 1000
-    }
-    const updatedList = [...listMovie, newData]
-    console.log('🚀 ~ handleAddNew ~ updatedList:', updatedList)
+    const updatedList = [...listMovie, data]
+    // console.log('🚀 ~ handleAddNew ~ updatedList:', updatedList)
     setListMovie(updatedList)
   }
 
@@ -32,7 +28,7 @@ function FilmManager() {
       if (film?.id.toString() === data?.id.toString()) {
         return data // Áp dụng dữ liệu mới vào phim cần cập nhật
       }
-      return film // Giữ nguyên các phim khác
+      return film
     })
     console.log('🚀 ~ handleUpdate ~ updatedList:', updatedList)
     setListMovie(updatedList)

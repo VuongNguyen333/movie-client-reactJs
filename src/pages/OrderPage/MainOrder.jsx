@@ -103,32 +103,6 @@ const steps = ['', '', '']
 
 export default function MainOrder() {
   const [activeStep, setActiveStep] = React.useState(0)
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => {
-      if (prevActiveStep === 2) {
-        const form = {
-          userId: 1,
-          seatScheduleId: listSeatId
-        }
-        // console.log('🚀 ~ setActiveStep ~ form:', form)
-        // Call Api
-        addNewTicketAPI(form).then(res => {
-          console.log('🚀 ~ addNewTicketAPI ~ res:', res)
-        })
-      }
-      return prevActiveStep + 1
-    })
-    setEnableNext(0)
-  }
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  }
-  const handleReset = () => {
-    setActiveStep(0)
-  }
-
   const [branchId, setBranchId] = React.useState(0)
   const [scheduleId, setScheduleId] = React.useState(0)
   const [movieId, setMovieId] = React.useState(0)
@@ -154,6 +128,31 @@ export default function MainOrder() {
     setStringSeat(filteredSeatNames.join(', '))
     if ( activeStep === 2 || listSeat.length>1) setEnableNext(1)
     else setEnableNext(0)
+  }
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => {
+      if (prevActiveStep === 2) {
+        const form = {
+          userId: 1,
+          seatScheduleId: listSeatId
+        }
+        // console.log('🚀 ~ setActiveStep ~ form:', form)
+        // Call Api
+        addNewTicketAPI(form).then(res => {
+          console.log('🚀 ~ addNewTicketAPI ~ res:', res)
+        })
+      }
+      return prevActiveStep + 1
+    })
+    setEnableNext(0)
+  }
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
+  }
+  const handleReset = () => {
+    setActiveStep(0)
   }
 
   const orderSchedule = (branchId, scheduleId, movieId) => {

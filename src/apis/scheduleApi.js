@@ -28,7 +28,6 @@ export const getScheduleByRoomIdAPI = async (roomId) => {
     const res = await axios.get(`${API_ROOT}/schedules/all/room/${roomId}`)
     // lay data qua property data cua axios
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
-    
     return res.data
   } catch (error) {
     return
@@ -66,7 +65,7 @@ export const addNewScheduleByMovieIdAndRoomIdAPI = async (data) => {
     const res = await axios.post(`${API_ROOT}/schedules/addNew/${data.movieId}/${data.roomId}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
     // lay data qua property data cua axios
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
-    console.log('🚀 ~ getScheduleByRoomIdAPI ~ res.data:', res.data)
+    toast.success('Create Successfully!')
     return res.data
   } catch (error) {
     return

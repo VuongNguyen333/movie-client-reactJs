@@ -21,7 +21,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { CardActionArea } from '@mui/material'
-import { validateBeforeSubmit } from '~/admin/utils/validateBeforeSubmit'
+import { validateBeforeSubmit, validateBeforeSubmitUser } from '~/admin/utils/validateBeforeSubmit'
 import { JoiObjectUser } from '~/admin/utils/UserModel'
 import { convertDate } from '../utils/convertDate'
 import { users } from '~/mock_data'
@@ -73,7 +73,7 @@ function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    maxWidth: 750,
+    maxWidth: 650,
     bgcolor: 'background.paper',
     border: '1px solid #000',
     boxShadow: 24,
@@ -131,40 +131,25 @@ function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
       setDevices(newDevices)
     }
   }
-  const handleFileInputChange = (event) => {
-    const file = event.target.files[0] // Lấy ra tệp được chọn
-    setPhoto(file)
-    setFileName(file.name) // Cập nhật tên của tệp vào trạng thái
+  const handleUpdateCustomer = (data) => {
+    setUser(data)
   }
   const handleSubmit = async (event) => {
     event.preventDefault()
     const formData = new FormData(event.target)
     // Kiểm tra định dạng email
     const data = {
+      'id': userId,
       'fullName': formData.get('fullName'),
       'email': formData.get('email'),
       'dob': convertDate.convertToRequest(user?.dob),
       'avatar': photo,
-      'roles' : devices
+      'rolesId' : devices
     }
     console.log('🚀 ~ handleSubmit ~ data:', data)
-    await validateBeforeSubmit(JoiObjectUser, data)
+    await validateBeforeSubmitUser(JoiObjectUser, data, handleUpdate, handleUpdateCustomer)
     // Call Api
   }
-
-  // if (!user) {
-  //   return <Box sx={{
-  //     display: 'flex',
-  //     alignItems: 'center',
-  //     justifyContent: 'center',
-  //     gap: 2,
-  //     width: '100vh',
-  //     height: '100vh'
-  //   }}>
-  //     <CircularProgress />
-  //     <Typography>Loading data...</Typography>
-  //   </Box>
-  // }
 
   return (
     <Modal
@@ -172,7 +157,7 @@ function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
       onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
-      sx={{ minWidth: 200 }}
+      sx={{ minWidth: 100 }}
     >
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: '5px' }}>
@@ -180,7 +165,7 @@ function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
         </Typography>
         <form onSubmit={handleSubmit} style={{ display:'flex' }}>
           <Box sx={{ mr:'10px' }}>
-            <Card sx={{ minWidth:100 }}>
+            <Card sx={{ minWidth:200 }}>
               <CardActionArea>
                 <CardMedia
                   component="img"
@@ -192,17 +177,18 @@ function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
               </CardActionArea>
             </Card>
           </Box>
-          <Box>
-            <ValidationTextField disabled name='fullName' label="Full Name" required variant="outlined" defaultValue={user ? user?.fullName : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField disabled name='email' label="Email" required variant="outlined" defaultValue={user ? user?.email :''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+          <Box sx={{ }}>
+            <ValidationTextField disabled name='fullName' label="Full Name" required variant="outlined" defaultValue={user ? user?.fullName : ''} id="validation-outlined-input" sx={{ mb: '10px', width:'100%' }} />
+            <ValidationTextField disabled name='email' label="Email" required variant="outlined" defaultValue={user ? user?.email :''} id="validation-outlined-input" sx={{ mb: '10px', width:'100%' }} />
             <ToggleButtonGroup
+              sx={{ display:'flex' }}
               name='roles'
               color="primary"
               value={devices}
               onChange={handleDevices}
               aria-label="Platform"
             >
-              { roles.map(item => <ToggleButton key={`${item.id}`} value={item?.id}>{item?.name}</ToggleButton>) }
+              { roles.map(item => <ToggleButton sx={{ fontSize:'small', font:10 }} key={`${item.id}`} value={item?.id}>{item?.name}</ToggleButton>) }
             </ToggleButtonGroup>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer
@@ -219,17 +205,6 @@ function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>
-            <Button
-              component="label"
-              role={undefined}
-              variant="contained"
-              tabIndex={-1}
-              startIcon={<CloudUploadIcon />}
-              sx={{ mr:'10px' }}
-            >
-            Upload avatar
-              <VisuallyHiddenInput name='photo' type="file" onChange={handleFileInputChange} />
-            </Button>
             <p style={{ maxWidth:200 }}>{fileName}</p>
             <Button sx={{ bgcolor:'green', ':hover': { bgcolor:'#90D26D' } }} variant="contained" endIcon={<SendIcon />} type='submit'>
             Update

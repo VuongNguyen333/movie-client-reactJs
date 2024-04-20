@@ -24,6 +24,16 @@ export const getMovieAPI = async () => {
     return
   }
 }
+export const getMovieUpComingAPI = async () => {
+  try {
+    const res = await axios.get(`${API_ROOT}/movies/all/upcoming`)
+    // lay data qua property data cua axios
+    // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
+    return res.data
+  } catch (error) {
+    return
+  }
+}
 export const getMovieByIdAPI = async (movieId) => {
   try {
     const res = await axios.get(`${API_ROOT}/movies/${movieId}`)
@@ -44,12 +54,12 @@ export const getAllMovieAPI = async () => {
     return
   }
 }
-export const updateMovieById = async (data, movieId) => {
+export const updateMovieByIdAPI = async (data, movieId) => {
   try {
     const res = await axios.put(`${API_ROOT}/movies/update/${movieId}`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
     // lay data qua property data cua axios
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
-    toast.success('Update Successfully')
+    toast.success('Update Successfully!')
     return res.data
   } catch (error) {
     return

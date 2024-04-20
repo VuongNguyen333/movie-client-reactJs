@@ -39,7 +39,7 @@ function RoomsManager() {
       if (room?.id.toString() === data?.id.toString()) {
         return data // Áp dụng dữ liệu mới vào phim cần cập nhật
       }
-      return room // Giữ nguyên các phim khác
+      return room
     })
     console.log('🚀 ~ handleUpdate ~ updatedList:', updatedList)
     setRooms(updatedList)

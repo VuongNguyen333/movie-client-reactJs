@@ -22,3 +22,13 @@ export const getUserByIdAPI = async (userId) => {
     return
   }
 }
+export const updateUserByIdAPI = async (data, userId) => {
+  try {
+    const res = await axios.put(`${API_ROOT}/users/update/admin/${userId}`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+    // lay data qua property data cua axios
+    // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
+    return res.data
+  } catch (error) {
+    return
+  }
+}

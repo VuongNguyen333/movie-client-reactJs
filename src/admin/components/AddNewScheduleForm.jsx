@@ -158,7 +158,7 @@ function AddNewScheduleForm({ open, onClose, formData, handleAddNew }) {
                   <DatePicker disabled name='date' defaultValue={dayjs((formData ? formData.startDate : ''))} />
                 </DemoItem>
                 <DemoItem label="Responsive variant">
-                  <TimePicker ampm={false} name='time' defaultValue={dayjs('2022-04-17T15:30')} />
+                  <TimePicker ampm={false} name='time' />
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>

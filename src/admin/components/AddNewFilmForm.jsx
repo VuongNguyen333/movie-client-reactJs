@@ -141,15 +141,14 @@ function AddNewForm({ handleAddNew }) {
       'releaseDate': convertDate.convertToRequest(formData.get('date')),
       'photo': photo
     }
+    console.log('🚀 ~ handleSubmit ~ data:', data)
     await validateBeforeSubmit(JoiObjectFilmAddNew, data, handleSetFormData, handleAddNew, null, null)
   }
 
-
-  // Hàm xử lý sự kiện khi người dùng chọn tệp
   const handleFileInputChange = (event) => {
     const file = event.target.files[0] // Lấy ra tệp được chọn
     setPhoto(file)
-    setFileName(file.name) // Cập nhật tên của tệp vào trạng thái
+    setFileName(file.name)
   }
 
   const languages = ['Subtitle', 'Dubbing']
@@ -220,7 +219,7 @@ function AddNewForm({ handleAddNew }) {
                 sx={{ mb: '5px' }}
               >
                 <DemoItem required label={<Label componentName="DatePicker" valueType="release" />}>
-                  <DatePicker required name='date' defaultValue={dayjs(convertDate.convert(formDataInit.releaseDate || ''))} />
+                  <DatePicker required name='date' />
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>

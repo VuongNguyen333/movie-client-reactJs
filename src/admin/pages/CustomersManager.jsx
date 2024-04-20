@@ -15,11 +15,11 @@ function CustomersManager() {
     })
   }, [])
   const handleUpdate = (data) => {
-    const updatedList = listUser.map(film => {
-      if (film?.id.toString() === data?.id.toString()) {
+    const updatedList = listUser.map(user => {
+      if (user?.id.toString() === data?.id.toString()) {
         return data // Áp dụng dữ liệu mới vào phim cần cập nhật
       }
-      return film // Giữ nguyên các phim khác
+      return user
     })
     console.log('🚀 ~ handleUpdate ~ updatedList:', updatedList)
     setListUser(updatedList)

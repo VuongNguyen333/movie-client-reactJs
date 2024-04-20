@@ -5,6 +5,7 @@ import { branchs } from '~/mock_data'
 import Box from '@mui/material/Box'
 import ListSchedule from './ListSchedules/ListSchedule'
 import { getListBranchByAreaIdAPI } from '~/apis/branchApi'
+import { CircularProgress, Typography } from '@mui/material'
 
 const CustomTreeItem = React.forwardRef((props, ref) => (
   <TreeItem2
@@ -27,12 +28,18 @@ const CustomTreeItem = React.forwardRef((props, ref) => (
 
 function ListBranchs({ area_id, orderSchedule }) {
   const [listBranchs, setListBranchs] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     // call api
-    getListBranchByAreaIdAPI(area_id).then(res => {
-      setListBranchs(res)
-    })
+    setLoading(true)
+    getListBranchByAreaIdAPI(area_id)
+      .then(res => {
+        setListBranchs(res)
+      })
+      .finally(() =>
+        setLoading(false)
+      )
   }, [area_id])
 
   return (
@@ -60,11 +67,26 @@ function ListBranchs({ area_id, orderSchedule }) {
           '.Mui-selected' : { bgcolor: 'green' }
         }
       }}>
-        {
-          listBranchs?.map((item, index) =>
-            <CustomTreeItem key={`branch${index}`} itemId={`branch${item?.id}`} label={item?.name}>
-              <ListSchedule orderSchedule={orderSchedule} branchId={item?.id} />
-            </CustomTreeItem>)
+        { loading
+          ? (
+            <Box sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 2
+            }}>
+              <CircularProgress />
+              <Typography>Loading data...</Typography>
+            </Box>
+          )
+          : (
+            listBranchs.length === 0
+              ? <Typography>No schedule available</Typography>
+              : listBranchs?.map((item, index) =>
+                <CustomTreeItem key={`branch${index}`} itemId={`branch${item?.id}`} label={item?.name}>
+                  <ListSchedule orderSchedule={orderSchedule} branchId={item?.id} />
+                </CustomTreeItem>)
+          )
         }
       </Box>
     </SimpleTreeView>

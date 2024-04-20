@@ -9,7 +9,7 @@ import { users, branchs, scheduleMovieMai } from '~/mock_data'
 import UpdateBranchForm from './UpdateBranchForm'
 import SchedulesManager from '../pages/ScheduleManager'
 import { Link } from 'react-router-dom'
-function ViewAndUpdateButton({ params, type }) {
+function ViewAndUpdateButton({ params }) {
   const handleButtonClick = (id) => {
     setItemId(id)
     // Handle button click action here

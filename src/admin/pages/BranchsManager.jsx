@@ -23,7 +23,7 @@ function BranchsManager() {
       if (branch?.id.toString() === data?.id.toString()) {
         return data // Áp dụng dữ liệu mới vào phim cần cập nhật
       }
-      return branch // Giữ nguyên các phim khác
+      return branch
     })
     console.log('🚀 ~ handleUpdate ~ updatedList:', updatedList)
     setBranchs(updatedList)
@@ -31,28 +31,28 @@ function BranchsManager() {
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 50 },
-    { field: 'name', headerName: 'Name', width: 200, editable: true },
+    { field: 'name', headerName: 'Name', width: 200, editable: false },
     {
       field: 'address',
       headerName: 'Address',
       width: 400,
-      editable: true
+      editable: false
     },
     {
       field: 'status',
       headerName: 'Status',
       width: 100,
-      editable: true,
+      editable: false,
       valueGetter: (params) => {
-        return params?.toString()==='true' ? 'Active' : 'UnActive'
+        return params.toString()==='true' ? 'Active' : 'UnActive'
       }
     },
-    { field: 'introduction', headerName: 'Introduction', width: 150, editable: true },
+    { field: 'introduction', headerName: 'Introduction', width: 150, editable: false },
     {
       field: 'areaResponse',
       headerName: 'Area',
       width: 120,
-      editable: true,
+      editable: false,
       valueGetter: (params) => {
         return params.name
       }
