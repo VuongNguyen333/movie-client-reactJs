@@ -9,7 +9,7 @@ export const getListUserAPI = async () => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }
 export const getUserByIdAPI = async (userId) => {
@@ -19,7 +19,7 @@ export const getUserByIdAPI = async (userId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }
 export const updateUserByIdAPI = async (data, userId) => {

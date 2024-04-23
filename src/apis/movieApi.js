@@ -21,7 +21,7 @@ export const getMovieAPI = async () => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }
 export const getMovieUpComingAPI = async () => {
@@ -31,7 +31,7 @@ export const getMovieUpComingAPI = async () => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }
 export const getMovieByIdAPI = async (movieId) => {
@@ -41,7 +41,7 @@ export const getMovieByIdAPI = async (movieId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }
 export const getAllMovieAPI = async () => {
@@ -51,7 +51,7 @@ export const getAllMovieAPI = async () => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }
 export const updateMovieByIdAPI = async (data, movieId) => {

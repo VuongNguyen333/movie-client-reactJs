@@ -161,7 +161,7 @@ function AddNewScheduleForm({ open, onClose, formData, handleAddNew }) {
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>
-            <Button sx={{ bgcolor:'green', ':hover': { bgcolor:'#90D26D' } }} variant="contained" endIcon={<SendIcon />} type='submit'>
+            <Button sx={{ bgcolor:'green', ':hover': { bgcolor:'#90D26D' } }} variant="outlined" endIcon={<SendIcon />} type='submit'>
             Create
             </Button>
           </Box>

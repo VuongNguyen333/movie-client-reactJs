@@ -9,7 +9,7 @@ export const getListSeatAPI = async (scheduleId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }
 export const getListSeatByRoomIdAPI = async (roomId) => {
@@ -19,7 +19,7 @@ export const getListSeatByRoomIdAPI = async (roomId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }
 
@@ -30,6 +30,6 @@ export const getDetailSeatAPI = async (id) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }

@@ -9,6 +9,7 @@ export const getListAreaAPI = async () => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    // console.log(error)
+    return
   }
 }

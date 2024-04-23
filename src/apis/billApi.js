@@ -9,7 +9,7 @@ export const getListBillByScheduleIdAPI = async (scheduleId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }
 export const getListBillByUserIdAPI = async (userId) => {
@@ -19,6 +19,6 @@ export const getListBillByUserIdAPI = async (userId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }

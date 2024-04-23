@@ -153,8 +153,8 @@ export const validateBeforeSubmitSchedule= async ( validObject, data, handleUpda
       updateScheduleByIdAPI(newData, data.id).then(resData => {
         if (resData) {
           console.log('🚀 ~ updateScheduleByIdAPI ~ resData:', resData)
-          // handleUpdate(resData)
-          // handleUpdateSchedule(resData)
+          handleUpdate(resData)
+          handleUpdateSchedule(resData)
         }
       })
       // console.log('🚀 ~ validateBeforeSubmitUser ~ newData:', newData)

@@ -118,9 +118,9 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
   useEffect(() => {
     getMovieByIdAPI(itemId).then(res => {
       setFilm(res)
+      setReleaseDate(res.releaseDate)
       setLanguage(res.language)
       setCategory(res.category)
-      setReleaseDate(res.releaseDate)
     })
   }, [itemId])
   const handleChangeLanguage = (event) => {
@@ -238,7 +238,7 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
                 sx={{ mb: '5px' }}
               >
                 <DemoItem label={<Label componentName="DatePicker" valueType="release" />}>
-                  <DatePicker name='date' defaultValue={dayjs(convertDate.convert(releaseDate))} />
+                  <DatePicker name='date' value={dayjs(convertDate.convert(releaseDate))} />
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>

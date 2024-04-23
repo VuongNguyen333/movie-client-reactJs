@@ -40,6 +40,7 @@ function SchedulesManager() {
   const handleUpdate = (item) => {
     const updatedList = data.map(schedule => {
       if (item?.id.toString() === schedule?.id.toString()) {
+        console.log('🚀 ~ updatedList ~ item:', item)
         return item // Áp dụng dữ liệu mới vào phim cần cập nhật
       }
       return schedule
@@ -49,11 +50,12 @@ function SchedulesManager() {
   }
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
+    // { field: 'id', headerName: 'ID', width: 70 },
     { field: 'startDate', headerName: 'Start Date', width: 100, editable: false },
     { field: 'startTime', headerName: 'Start Time', width: 100, editable: false },
     { field: 'revenue', headerName: 'Revenue', width: 100, editable: false },
     { field: 'numberOfTickets', headerName: 'Ticket sold', width: 100, editable: false },
+    { field: 'numberOfSeats', headerName: 'Total Seat', width: 100, editable: false },
     {
       field: 'movieResponse',
       headerName: 'Movie',

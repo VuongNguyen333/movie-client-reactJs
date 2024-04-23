@@ -9,7 +9,7 @@ export const getAllRoomByBranchIdAPI = async (branchId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }
 export const getRoomByIdAPI = async (id) => {
@@ -19,7 +19,7 @@ export const getRoomByIdAPI = async (id) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    console.log(error)
+    return
   }
 }
 

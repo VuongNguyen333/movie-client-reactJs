@@ -113,12 +113,14 @@ function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
   const [fileName, setFileName] = useState('')
   const [devices, setDevices] = useState (convertToListRole(user?.roles))
   const [photo, setPhoto] = useState({})
+  const [dob, setDob] = useState('')
   useEffect(() => {
     getListRoleAPI().then(res => {
       setRoles(res)
     })
     getUserByIdAPI(userId).then(res => {
       setUser(res)
+      setDob(res.dob)
       const newDevices = convertToListRole(res?.roles)
       setDevices(newDevices)
     })
@@ -199,7 +201,7 @@ function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
                 sx={{ mb: '5px' }}
               >
                 <DemoItem label={<Label componentName="DatePicker" valueType="release" />}>
-                  <DatePicker disabled name='date' defaultValue={dayjs(convertDate.convert(user ? user.dob : ''))}/>
+                  <DatePicker disabled name='date' value={dayjs(convertDate.convert(dob))}/>
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>
