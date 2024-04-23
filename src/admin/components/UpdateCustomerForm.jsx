@@ -19,10 +19,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { CardActionArea } from '@mui/material'
-import { validateBeforeSubmit, validateBeforeSubmitUser } from '~/admin/utils/validateBeforeSubmit'
+import { validateBeforeSubmitUser } from '~/admin/utils/validateBeforeSubmit'
 import { JoiObjectUser } from '~/admin/utils/UserModel'
 import { convertDate } from '../utils/convertDate'
-import { users } from '~/mock_data'
 import convertToListRole from '~/admin/utils/convertToListRole'
 import { getListRoleAPI } from '~/apis/roleApi'
 import { getUserByIdAPI } from '~/apis/userApi'
@@ -82,17 +81,6 @@ function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
     overflowX: 'auto',
     minWidth: 150
   }
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1
-  })
 
   const ValidationTextField = styled(TextField)({
     '& input:valid + fieldset': {

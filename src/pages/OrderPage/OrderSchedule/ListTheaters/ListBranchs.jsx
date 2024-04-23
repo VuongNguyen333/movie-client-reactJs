@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView'
 import { TreeItem2 } from '@mui/x-tree-view/TreeItem2'
-import { branchs } from '~/mock_data'
 import Box from '@mui/material/Box'
 import ListSchedule from './ListSchedules/ListSchedule'
 import { getListBranchByAreaIdAPI } from '~/apis/branchApi'
