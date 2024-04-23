@@ -8,7 +8,7 @@ import Footer from '~/components/Footer'
 import Navbar from '~/components/NavBar/NavBar'
 import styled from '@emotion/styled'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
-import { Label, Visibility } from '@mui/icons-material'
+import { Visibility } from '@mui/icons-material'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
@@ -168,7 +168,7 @@ function Profile() {
   }
   return (
     <Container disableGutters maxWidth={false}>
-      <Navbar />
+      <Navbar avatar={avatar} />
       {/* <Hero></Hero> */}
       {/* <HeroPro /> */}
       <Box sx={{ bgcolor:'#1a1d29' }}>

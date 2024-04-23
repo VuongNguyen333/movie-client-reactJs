@@ -23,8 +23,8 @@ import { loadImage, resizeImage } from '~/utils/resizeImg'
 import convertToListRoleUser from '~/utils/convertToListRoleUser'
 import { CardMedia } from '@mui/material'
 
-const Navbar = () => {
-
+const Navbar = ({ avatar }) => {
+  const [photo, setPhoto] = useState(avatar)
   const [user, setUser] = useState({})
   const pages = ['Lịch chiếu', 'Hệ thống rạp']
   const navigate = useNavigate()
@@ -39,6 +39,10 @@ const Navbar = () => {
         localStorage.setItem('role', convertToListRoleUser(res.roles))
       })
   }, [])
+
+  useEffect(() => {
+    setPhoto(avatar)
+  }, [avatar])
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -195,7 +199,7 @@ const Navbar = () => {
               </MenuItem>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <img style={{ width:50, height:50, borderRadius:'50%' }} alt="Avatar" src={`data:image/jpeg;base64,${user.avatar}`} />
+                  <img style={{ width:50, height:50, borderRadius:'50%' }} alt="Avatar" src={`data:image/jpeg;base64,${photo}`} />
                 </IconButton>
               </Tooltip>
               <Menu
