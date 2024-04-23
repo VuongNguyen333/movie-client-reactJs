@@ -9,7 +9,7 @@ export const getListUserAPI = async () => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }
 export const getUserByIdAPI = async (userId) => {
@@ -19,7 +19,7 @@ export const getUserByIdAPI = async (userId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }
 export const updateUserByIdAPI = async (data, userId) => {
@@ -30,6 +30,6 @@ export const updateUserByIdAPI = async (data, userId) => {
     toast.success('Update Successfully!')
     return res.data
   } catch (error) {
-    return
+    toast.error(error.response.data)
   }
 }

@@ -10,7 +10,7 @@ export const addNewMovieAPI = async (data) => {
     toast.success('Create Successfully!')
     return res.data
   } catch (error) {
-    return
+    toast.error(error.response.data)
   }
 }
 
@@ -21,7 +21,7 @@ export const getMovieAPI = async () => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }
 export const getMovieUpComingAPI = async () => {
@@ -31,7 +31,7 @@ export const getMovieUpComingAPI = async () => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }
 export const getMovieByIdAPI = async (movieId) => {
@@ -41,7 +41,7 @@ export const getMovieByIdAPI = async (movieId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }
 export const getAllMovieAPI = async () => {
@@ -51,7 +51,7 @@ export const getAllMovieAPI = async () => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }
 export const updateMovieByIdAPI = async (data, movieId) => {
@@ -62,6 +62,6 @@ export const updateMovieByIdAPI = async (data, movieId) => {
     toast.success('Update Successfully!')
     return res.data
   } catch (error) {
-    return
+    toast.error(error.response.data)
   }
 }

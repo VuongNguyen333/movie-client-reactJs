@@ -9,6 +9,6 @@ export const getListRoleAPI = async () => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }

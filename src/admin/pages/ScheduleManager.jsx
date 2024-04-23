@@ -12,7 +12,7 @@ import ViewAndUpdateButtonSchedule from '../components/ViewAndUpdateButtonSchedu
 
 function SchedulesManager() {
   const location = useLocation()
-  console.log('🚀 ~ SchedulesManager ~ location:', location)
+  // console.log('🚀 ~ SchedulesManager ~ location:', location)
   const [movie, setMovie] = useState({})
   const [room, setRoom] = useState({})
   const [data, setData] = useState([])
@@ -44,7 +44,7 @@ function SchedulesManager() {
       }
       return schedule
     })
-    console.log('🚀 ~ handleUpdate ~ updatedList:', updatedList)
+    // console.log('🚀 ~ handleUpdate ~ updatedList:', updatedList)
     setData(updatedList)
   }
 

@@ -10,7 +10,7 @@ export const addNewBranchAPI = async (data, areaId) => {
     toast.success('Create Successfully!')
     return res.data
   } catch (error) {
-    return
+    toast.error(error.response.data)
   }
 }
 
@@ -21,7 +21,7 @@ export const getListBranchByAreaIdAPI = async (areaId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }
 export const getBranchbyIdAPI = async (id) => {
@@ -31,7 +31,7 @@ export const getBranchbyIdAPI = async (id) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }
 export const getListBranchAPI = async () => {
@@ -41,7 +41,7 @@ export const getListBranchAPI = async () => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }
 export const updateBranchAPI = async (data, branchId) => {
@@ -51,7 +51,7 @@ export const updateBranchAPI = async (data, branchId) => {
     toast.success('Update Successfully!')
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }
 

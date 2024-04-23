@@ -9,7 +9,7 @@ export const getAllRoomByBranchIdAPI = async (branchId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }
 export const getRoomByIdAPI = async (id) => {
@@ -19,7 +19,7 @@ export const getRoomByIdAPI = async (id) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }
 
@@ -30,7 +30,7 @@ export const updateRoomAPI = async (data, roomId) => {
     toast.success('Update Successfully!')
     return res.data
   } catch (error) {
-    return
+    toast.error(error.response.data)
   }
 }
 
@@ -41,6 +41,6 @@ export const addNewRoomAPI = async (data, branchId) => {
     toast.success('Create Successfully!')
     return res.data
   } catch (error) {
-    return
+    toast.error(error.response.data)
   }
 }

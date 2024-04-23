@@ -9,7 +9,7 @@ export const addNewTicketAPI = async (formData) => {
     toast.success('Order Successfully!')
     return res.data
   } catch (error) {
-    return
+    toast.error(error.response.data)
   }
 }
 export const getListTicketByBillIdAPI = async (billId) => {
@@ -19,6 +19,6 @@ export const getListTicketByBillIdAPI = async (billId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    console.log(error)
   }
 }

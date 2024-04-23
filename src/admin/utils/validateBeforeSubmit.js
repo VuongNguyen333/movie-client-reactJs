@@ -16,15 +16,19 @@ export const validateBeforeSubmit = async ( validObject, data, handleSetFormData
     const res = await validate(validObject, data)
     if (handleAddNew) {
       addNewMovieAPI(data).then(ressult => {
-        handleSetFormData()
-        handleAddNew(ressult)
+        if (ressult) {
+          handleSetFormData()
+          handleAddNew(ressult)
+        }
       })
     }
     if (handleUpdate) {
       updateMovieByIdAPI(data, data.id).then(film => {
-        handleUpdate(film)
-        // console.log('🚀 ~ updateMovieById ~ res:', film)
-        handleUpdateFilm(film)
+        if (film) {
+          handleUpdate(film)
+          // console.log('🚀 ~ updateMovieById ~ res:', film)
+          handleUpdateFilm(film)
+        }
       })
     }
     // console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
@@ -44,8 +48,10 @@ export const validateBeforeSubmitBranch = async ( validObject, data, handleSetFo
       const areaId = data.area
       delete data.area
       addNewBranchAPI(data, areaId).then(res => {
-        console.log('🚀 ~ validateBeforeSubmitBranch ~ res:', res)
-        handleAddNew(res)
+        if (res) {
+          console.log('🚀 ~ validateBeforeSubmitBranch ~ res:', res)
+          handleAddNew(res)
+        }
       })
     }
     if (!handleAddNew && handleUpdate) {
@@ -60,8 +66,10 @@ export const validateBeforeSubmitBranch = async ( validObject, data, handleSetFo
         newData.photo = new File([], 'empty_file.txt', { type: 'text/plain' })
       }
       updateBranchAPI(newData, branchId).then(branch => {
-        handleUpdate(branch)
-        handleUpdateBranch(branch)
+        if (branch) {
+          handleUpdate(branch)
+          handleUpdateBranch(branch)
+        }
       })
     }
     console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
@@ -76,8 +84,10 @@ export const validateBeforeSubmitRoom = async ( validObject, branchId, data, han
     if (handleAddNew) {
       data.photo = await convertFile(data.photo)
       addNewRoomAPI(data, branchId).then(res => {
-        handleAddNew(res)
-        handleSetFormData()
+        if (res) {
+          handleAddNew(res)
+          handleSetFormData()
+        }
       })
     }
     if (handleUpdate) {
@@ -92,8 +102,10 @@ export const validateBeforeSubmitRoom = async ( validObject, branchId, data, han
       }
       console.log('🚀 ~ validateBeforeSubmitRoom ~ newData:', newData)
       updateRoomAPI(newData, roomId).then(room => {
-        handleUpdate(room)
-        handleUpdateRoom(room)
+        if (room) {
+          handleUpdate(room)
+          handleUpdateRoom(room)
+        }
       })
     }
     console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
@@ -117,34 +129,37 @@ export const validateBeforeSubmitUser = async ( validObject, data, handleUpdate,
       } catch (error) {
         newData.photo = new File([], 'empty_file.txt', { type: 'text/plain' })
       }
-      updateUserByIdAPI(newData, data.id).then(res => {
-        handleUpdate(res)
-        handleUpdateUser(res)
+      updateUserByIdAPI(newData, data.id).then(resData => {
+        if (resData) {
+          handleUpdate(resData)
+          handleUpdateUser(resData)
+        }
       })
-      console.log('🚀 ~ validateBeforeSubmitUser ~ newData:', newData)
+      // console.log('🚀 ~ validateBeforeSubmitUser ~ newData:', newData)
     }
-    console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
+    // console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
   } catch (err) {
-    console.log('🚀 ~ validateBeforeSubmit ~ err:', err)
+    // console.log('🚀 ~ validateBeforeSubmit ~ err:', err)
     toast.error(err.message)
   }
 }
 
 export const validateBeforeSubmitSchedule= async ( validObject, data, handleUpdate, handleUpdateSchedule) => {
   try {
-    const res = await validate(validObject, data)
+    await validate(validObject, data)
     if (handleUpdate) {
       const newData = { ...data }
       delete newData.id
-      updateScheduleByIdAPI(newData, data.id).then(res => {
-        handleUpdate(res)
-        handleUpdateSchedule(res)
+      updateScheduleByIdAPI(newData, data.id).then(resData => {
+        if (resData) {
+          console.log('🚀 ~ updateScheduleByIdAPI ~ resData:', resData)
+          // handleUpdate(resData)
+          // handleUpdateSchedule(resData)
+        }
       })
-      console.log('🚀 ~ validateBeforeSubmitUser ~ newData:', newData)
+      // console.log('🚀 ~ validateBeforeSubmitUser ~ newData:', newData)
     }
-    console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
   } catch (err) {
-    console.log('🚀 ~ validateBeforeSubmit ~ err:', err)
     toast.error(err.message)
   }
 }

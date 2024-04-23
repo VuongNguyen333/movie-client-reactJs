@@ -10,7 +10,7 @@ export const getListScheduleByBranchIdAndMovieIdAPI = async (branchId, movieId) 
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    return null
   }
 }
 export const getScheduleByIdAPI = async (id) => {
@@ -20,7 +20,7 @@ export const getScheduleByIdAPI = async (id) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    return null
   }
 }
 export const getScheduleByRoomIdAPI = async (roomId) => {
@@ -30,7 +30,7 @@ export const getScheduleByRoomIdAPI = async (roomId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    return null
   }
 }
 export const getScheduleByMovieIdAPI = async (movieId) => {
@@ -40,7 +40,7 @@ export const getScheduleByMovieIdAPI = async (movieId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    return null
   }
 }
 export const getScheduleByMovieIdAndRoomIdAPI = async (data) => {
@@ -54,7 +54,7 @@ export const getScheduleByMovieIdAndRoomIdAPI = async (data) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    return null
   }
 }
 export const addNewScheduleByMovieIdAndRoomIdAPI = async (data) => {
@@ -68,7 +68,7 @@ export const addNewScheduleByMovieIdAndRoomIdAPI = async (data) => {
     toast.success('Create Successfully!')
     return res.data
   } catch (error) {
-    return
+    toast.error(error.response.data)
   }
 }
 export const updateScheduleByIdAPI = async (data, scheduleId) => {
@@ -79,7 +79,10 @@ export const updateScheduleByIdAPI = async (data, scheduleId) => {
     toast.success('Update Successfully!')
     return res.data
   } catch (error) {
-    return
+    // return error
+    // console.log('🚀 ~ updateScheduleByIdAPI ~ error:', error)
+    toast.error(error.response.data)
+    return null
   }
 }
 
