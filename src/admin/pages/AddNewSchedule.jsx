@@ -11,12 +11,13 @@ import { validate } from '../utils/validateBeforeSubmit'
 import { JoiObjectScheduleSearch } from '../utils/ScheduleModel'
 import { toast } from 'react-toastify'
 import DataTableScheduleOfRoom from '../components/DataTableScheduleOfRoom'
-import { getAllMovieAPI } from '~/apis/movieApi'
+import { getAllMovieAPI, getMovieByIdAPI } from '~/apis/movieApi'
 import { getListBranchAPI } from '~/apis/branchApi'
 
 export default function AddNewSchedule() {
   const [date, setDate] = useState('')
   const [film, setFilm] = useState('')
+  const [movie, setMovie] = useState(null)
   const [listMovie, setListMovie] = useState([])
   const [listBranch, setListBranch] = useState([])
   const [branch, setBranch] = useState({})
@@ -53,6 +54,7 @@ export default function AddNewSchedule() {
     setDate(data.startDate)
     setFilm(data.movieId)
     setBranch(data.branchId)
+    getMovieByIdAPI(data.movieId).then(res => setMovie(res))
     try {
       const res = await validate(JoiObjectScheduleSearch, data)
       console.log('🚀 ~ handleSubmit ~ res:', res)
@@ -85,7 +87,7 @@ export default function AddNewSchedule() {
       <Toolbar />
       <Box>
         <form onSubmit={handleSubmit}>
-          <Box sx={{ display:'flex', gap:1, fontSize:18, mb:'8px', alignItems:'center', width:'100%' }}>
+          <Box sx={{ display:'flex', gap:1, fontSize:18, mb:'8px', alignItems:'center', width:'100%', justifyContent:'center' }}>
             <Box sx={{ display:'flex', alignItems:'center', mr:'10px' }}>
               <Box sx={{ width:'100px' }}>Pick Date:</Box>
               <Box>
@@ -107,7 +109,7 @@ export default function AddNewSchedule() {
             </Box>
             <Box sx={{ display:'flex', width:'100%', alignItems:'center' }}>
               <Box sx={{ width:'60px' }}>Film:</Box>
-              <Box sx={{ width:'40%', alignItems:'center' }}>
+              <Box sx={{ width:'100%', alignItems:'center' }}>
                 <FormControl fullWidth sx={{ }}>
                   <InputLabel id="demo-simple-select-label">Film</InputLabel>
                   <Select
@@ -125,10 +127,8 @@ export default function AddNewSchedule() {
                 </FormControl>
               </Box>
             </Box>
-          </Box>
-          <Box sx={{ display:'flex', gap:1, fontSize:18, mb:'8px', alignItems:'center' }}>
-            <Box sx={{ width:'90px' }}>Branch:</Box>
-            <Box sx={{ width: '30%', display:'flex', alignItems:'center' }}>
+            <Box sx={{ display:'flex', width:'100%', alignItems:'center' }}>
+              <Box sx={{ width:'90px' }}>Branch:</Box>
               <FormControl fullWidth sx={{ minWidth:'30%' }}>
                 <InputLabel id="demo-simple-select-label1">Branch</InputLabel>
                 <Select
@@ -144,8 +144,16 @@ export default function AddNewSchedule() {
                   })}
                 </Select>
               </FormControl>
-              <Button type='submit' sx={{ bgcolor:'green', height:'70%', width:'40%', color:'white', ':hover' : { bgcolor:'#87A922' }, fontSize:'12px' }}>Search<SearchIcon fontSize='small'/></Button>
             </Box>
+          </Box>
+          { movie &&
+                <Box sx={{ display:'flex', ml:'10px', alignItems:'center', justifyContent:'center' }}>
+                  <Box>Duration:  </Box>
+                  <Box> {Math.floor(movie.duration / 60) + ' Hour ' + movie.duration % 60 + ' Minute '} </Box>
+                </Box>
+          }
+          <Box sx={{ width: '100%', display:'flex', alignItems:'center', justifyContent:'center', mt:'10px' }}>
+            <Button type='submit' sx={{ bgcolor:'green', height:'70%', width:'10%', color:'white', ':hover' : { bgcolor:'#87A922' }, fontSize:'12px', borderRadius:'2px solid black' }}>Search<SearchIcon fontSize='small'/></Button>
           </Box>
         </form>
       </Box>

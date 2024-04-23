@@ -74,9 +74,6 @@ export default function DataTableBillOfSchedule({ scheduleId }) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell sx={{ color: 'black' }} component="th" scope="row">
-            {row.bill.id}
-          </TableCell>
           <TableCell sx={{ color: 'black' }} align="center">{`${row.bill.createdDate.toString() + ' ' + row.bill.createdTime}`}</TableCell>
           <TableCell sx={{ color: 'black' }} align="center">{row.bill.payment}</TableCell>
           <TableCell sx={{ color: 'black' }} align="center">{row.bill.numberOfTickets}</TableCell>
@@ -85,24 +82,20 @@ export default function DataTableBillOfSchedule({ scheduleId }) {
         <TableRow sx={{ borderTop: '1px solid gray' }}>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
+              <Box sx={{ margin: 1, width: '300px' }}>
                 <Typography variant="h6" gutterBottom component="div">
-                  List Ticket Of Bill
+                  Ticket Of Bill
                 </Typography>
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Id</TableCell>
                       <TableCell align="center">Seat</TableCell>
-                      <TableCell align="center" >Price</TableCell>
+                      <TableCell align="center">Price</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {row.history.map((historyRow) => (
                       <TableRow key={historyRow.id}>
-                        <TableCell component="th" scope="row" align="center">
-                          {historyRow.id}
-                        </TableCell>
                         <TableCell align="center">{historyRow.seatResponse.name}</TableCell>
                         <TableCell align="center">{historyRow.price}</TableCell>
                       </TableRow>
@@ -141,7 +134,6 @@ export default function DataTableBillOfSchedule({ scheduleId }) {
         <TableHead>
           <TableRow sx={{ color: 'black' }}>
             <TableCell />
-            <TableCell>Id</TableCell>
             <TableCell align="center">Create At</TableCell>
             <TableCell align="center">Payment</TableCell>
             <TableCell align="center">Number Ticket</TableCell>
