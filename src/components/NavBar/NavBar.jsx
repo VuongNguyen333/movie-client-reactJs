@@ -16,15 +16,29 @@ import { useState } from 'react'
 import logo2 from '~/assets/logo2.png'
 
 import './NavBar.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { getUserByIdAPI } from '~/apis/userApi'
+import { loadImage, resizeImage } from '~/utils/resizeImg'
+import convertToListRoleUser from '~/utils/convertToListRoleUser'
+import { CardMedia } from '@mui/material'
 
 const Navbar = () => {
 
+  const [user, setUser] = useState({})
   const pages = ['Lịch chiếu', 'Hệ thống rạp']
-  const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+  const navigate = useNavigate()
 
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
+  useEffect(() => {
+    getUserByIdAPI(1)
+      .then(res => {
+        setUser(res)
+        localStorage.setItem('userId', res.id)
+        localStorage.setItem('role', convertToListRoleUser(res.roles))
+      })
+  }, [])
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -181,7 +195,7 @@ const Navbar = () => {
               </MenuItem>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="" />
+                  <img style={{ width:50, height:50, borderRadius:'50%' }} alt="Avatar" src={`data:image/jpeg;base64,${user.avatar}`} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -200,11 +214,16 @@ const Navbar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu} >
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem
+                  onClick={() => {
+                    navigate('/profile')
+                  }}
+                >
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu} >
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>

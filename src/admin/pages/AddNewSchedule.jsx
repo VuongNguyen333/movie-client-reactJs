@@ -54,9 +54,9 @@ export default function AddNewSchedule() {
     setDate(data.startDate)
     setFilm(data.movieId)
     setBranch(data.branchId)
-    getMovieByIdAPI(data.movieId).then(res => setMovie(res))
     try {
       const res = await validate(JoiObjectScheduleSearch, data)
+      getMovieByIdAPI(data.movieId).then(res => setMovie(res))
       console.log('🚀 ~ handleSubmit ~ res:', res)
       setOpen(true)
     } catch (err) {
