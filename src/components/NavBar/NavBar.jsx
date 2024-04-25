@@ -22,21 +22,22 @@ import { getUserByIdAPI } from '~/apis/userApi'
 import { loadImage, resizeImage } from '~/utils/resizeImg'
 import convertToListRoleUser from '~/utils/convertToListRoleUser'
 import { CardMedia } from '@mui/material'
+import { useAuth } from '~/pages/Auth/AuthProvider'
 
 const Navbar = ({ avatar }) => {
   const [photo, setPhoto] = useState(avatar)
   const [user, setUser] = useState({})
   const pages = ['Lịch chiếu', 'Hệ thống rạp']
+  const userId = localStorage.getItem('userId')
   const navigate = useNavigate()
-
+  const auth = useAuth()
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
   useEffect(() => {
-    getUserByIdAPI(1)
+    console.log('🚀 ~ Navbar ~ userId:', userId)
+    getUserByIdAPI(userId)
       .then(res => {
         setUser(res)
-        localStorage.setItem('userId', res.id)
-        localStorage.setItem('role', convertToListRoleUser(res.roles))
       })
   }, [])
 
@@ -192,16 +193,35 @@ const Navbar = ({ avatar }) => {
               ))}
             </Box>
             <Box sx={{ flexGrow: 0, display:'flex', alignItems:'center', justifyContent:'center' }}>
-              <MenuItem>
+              { localStorage.getItem('userRole')?.includes('ROLE_ADMIN')
+              && <MenuItem>
                 <Link to='/admin'>
                   <Typography textAlign="center" sx={{ color: 'white', mr:'15px' }}>Dashboard</Typography>
                 </Link>
               </MenuItem>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <img style={{ width:50, height:50, borderRadius:'50%' }} alt="Avatar" src={`data:image/jpeg;base64,${photo}`} />
-                </IconButton>
-              </Tooltip>
+              }
+              { userId === null ?
+                <Link to='/login'>
+                  <Button
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      my: 2, color: 'white', display: 'block', '&:hover': {
+                        color: '#87A922' // Chuyển màu văn bản sang xanh khi di chuột vào
+                      },
+                      pt: '0px',
+                      pb: '0px'
+                    }}
+                  >
+                  Login
+                  </Button>
+                </Link>
+                : <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <img style={{ width:50, height:50, borderRadius:'50%' }} alt="Avatar" src={`data:image/jpeg;base64,${photo}`} />
+                  </IconButton>
+                </Tooltip>
+              }
+
               <Menu
                 sx={{}}
                 id="menu-appbar"
@@ -225,7 +245,10 @@ const Navbar = ({ avatar }) => {
                 >
                   <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu} >
+                <MenuItem onClick={() => {
+                  handleCloseUserMenu()
+                  auth.handleLogout()
+                }} >
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
               </Menu>

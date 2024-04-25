@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { toast } from 'react-toastify'
 import { addNewBranchAPI, updateBranchAPI } from '~/apis/branchApi'
 import { addNewMovieAPI, updateMovieByIdAPI } from '~/apis/movieApi'
@@ -13,7 +14,7 @@ export const validate = async(validData, data) => {
 
 export const validateBeforeSubmit = async ( validObject, data, handleSetFormData, handleAddNew, handleUpdate, handleUpdateFilm) => {
   try {
-    const res = await validate(validObject, data)
+    await validate(validObject, data)
     if (handleAddNew) {
       addNewMovieAPI(data).then(ressult => {
         if (ressult) {
@@ -117,7 +118,7 @@ export const validateBeforeSubmitRoom = async ( validObject, branchId, data, han
 
 export const validateBeforeSubmitUser = async ( validObject, data, handleUpdate, handleUpdateUser) => {
   try {
-    const res = await validate(validObject, data)
+    await validate(validObject, data)
     if (handleUpdateUser) {
       const newData = { ...data }
       delete newData.id
@@ -163,3 +164,4 @@ export const validateBeforeSubmitSchedule= async ( validObject, data, handleUpda
     toast.error(err.message)
   }
 }
+

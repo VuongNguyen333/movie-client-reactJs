@@ -5,16 +5,24 @@ import Hero from '~/components/Hero/Hero'
 import Content from '~/components/Content/Content'
 import { useEffect, useState } from 'react'
 import { getUserByIdAPI } from '~/apis/userApi'
+import { useNavigate } from 'react-router-dom'
 function HomePage() {
+  const navigate = useNavigate()
   const [user, setUser] = useState({})
   useEffect(() => {
-    getUserByIdAPI(1).then(res => {
-      setUser(res)
-    })
+    if (!localStorage.getItem('userId')) {
+      setUser(null)
+    } else {
+      getUserByIdAPI(localStorage.getItem('userId')).then(res => {
+        console.log('🚀 ~ getUserByIdAPI ~ res:', res)
+        if (!res) navigate('/login', { replace: true })
+        else setUser(res)
+      })
+    }
   }, [])
   return (
     <Container disableGutters maxWidth={false} >
-      <NavBar avatar={user.avatar}></NavBar>
+      <NavBar avatar={user?.avatar}></NavBar>
       <Hero></Hero>
       <Content></Content>
       <Footer></Footer>

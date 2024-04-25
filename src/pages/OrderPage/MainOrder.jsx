@@ -134,7 +134,7 @@ export default function MainOrder() {
     setActiveStep((prevActiveStep) => {
       if (prevActiveStep === 2) {
         const form = {
-          userId: 1,
+          userId: localStorage.getItem('userId'),
           seatScheduleId: listSeatId
         }
         // console.log('🚀 ~ setActiveStep ~ form:', form)

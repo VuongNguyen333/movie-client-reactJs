@@ -1,19 +1,31 @@
 /* eslint-disable no-restricted-imports */
-import { Button, Container, IconButton, InputAdornment, Stack, TextField, Tooltip, Typography, makeStyles } from '@mui/material'
+import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
-import { useEffect, useState } from 'react'
-import { getUserByIdAPI, updateUserClientByIdAPI } from '~/apis/userApi'
+import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip'
+import TextField from '@mui/material/TextField'
+import Stack from '@mui/material/Stack'
+import InputAdornment from '@mui/material/InputAdornment'
+import IconButton from '@mui/material/IconButton'
+import Container from '@mui/material/Container'
+import CircularProgress from '@mui/material/CircularProgress'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-import Footer from '~/components/Footer'
-import Navbar from '~/components/NavBar/NavBar'
 import styled from '@emotion/styled'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import { useEffect, useState } from 'react'
+import { getUserByIdAPI, updateUserClientByIdAPI } from '~/apis/userApi'
 import { Visibility } from '@mui/icons-material'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
-import dayjs from 'dayjs'
 import { convertDate } from '~/admin/utils/convertDate'
+import { convertFile } from '~/admin/utils/fileToBob'
+import { resetPasswordAPI } from '~/apis/auth'
+import { toast } from 'react-toastify'
+import dayjs from 'dayjs'
+import Footer from '~/components/Footer'
+import Navbar from '~/components/NavBar/NavBar'
+import { useNavigate } from 'react-router-dom'
 function Profile() {
   const ProSpan = styled('span')({
     display: 'inline-block',
@@ -125,13 +137,15 @@ function Profile() {
     // minWidth:'50%'
   }
 
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(null)
   const [avatar, setAvatar] = useState('')
   const [photo, setPhoto] = useState({})
   const [fileName, setFileName] = useState('')
   const [isToggle, setIsToggle] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showCfPassword, setShowCfPassword] = useState(false)
+  const userId = localStorage.getItem('userId')
+  const navigate = useNavigate()
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
   }
@@ -139,12 +153,13 @@ function Profile() {
     setShowCfPassword(!showCfPassword)
   }
   useEffect(() => {
-    getUserByIdAPI(localStorage.getItem('userId'))
+    if (!userId) navigate('/login', { replace:true })
+    getUserByIdAPI(userId)
       .then(res => {
         setUser(res)
         setAvatar(res.avatar)
       })
-  }, [])
+  }, [userId])
 
   const handleFileInputChange = (event) => {
     const file = event.target.files[0]
@@ -152,19 +167,55 @@ function Profile() {
     setFileName(file.name)
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     const formData = new FormData(event.target)
     const data = {
       'fullName': formData.get('fullName'),
-      'dob': formData.get('date'),
+      'dob': convertDate.convertToRequest(formData.get('date')),
       'photo': photo
     }
-    console.log('🚀 ~ handleSubmit ~ data:', data)
-    updateUserClientByIdAPI(data, user.id).then(res => {
-      setAvatar(res.avatar)
-      setUser(res)
-    })
+    const pass = formData.get('password')
+    const cfPass = formData.get('confirmPassword')
+    // console.log('🚀 ~ handleSubmit ~ pass:', pass, cfPass)
+    // console.log('🚀 ~ handleSubmit ~ data:', data)
+    var ok = 0
+    if (pass) {
+      if (pass === cfPass) {
+        resetPasswordAPI ({ email: user.email, password: pass }).then(ok=1)
+      }
+      else toast.error('Mật khẩu không khớp nhau. Vui lòng nhập lại.')
+    }
+    if (ok || !pass) {
+      try {
+        const file = await convertFile(data.photo)
+        data.photo = file
+      } catch (error) {
+        data.photo = new File([], 'empty_file.txt', { type: 'text/plain' })
+      }
+      updateUserClientByIdAPI(data, user.id).then(res => {
+        setAvatar(res.avatar)
+        setUser(res)
+        setFileName('')
+      })
+    }
+  }
+
+  if (!user) {
+    return (
+      <Box sx={{
+        color: 'white',
+        bgcolor:'#1a1d29',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 2,
+        height:'100vh'
+      }}>
+        <CircularProgress />
+        <Typography>Loading data...</Typography>
+      </Box>
+    )
   }
   return (
     <Container disableGutters maxWidth={false}>
@@ -179,7 +230,7 @@ function Profile() {
           <Box sx={{ display:'flex', alignItems:'center', justifyContent:'center', typography:'h5', fontWeight:'bold', mb:'30px' }}>Tài khoản</Box>
           <Box sx={{ display:'flex', alignItems:'center', justifyContent:'center' }}>
             <form onSubmit={handleSubmit}>
-              <Box sx={{ border:'2px solid #454D6A', borderRadius:'8px', width:'50%', padding:2, minWidth:'fit-content' }}>
+              <Box sx={{ border:'2px solid #454D6A', borderRadius:'8px', width:'50%', padding:2, minWidth:'fit-content', mb:3 }}>
                 <Box sx={{ display:'flex' }}>
                   <Box>
                     <img style={{ width:135, height:135, borderRadius:'50%' }} alt="Avatar" src={`data:image/jpeg;base64,${avatar}`} />
@@ -238,13 +289,14 @@ function Profile() {
                       disabled
                       id="outlined-required"
                       // label="Tên"
-                      value={user?.password}
+                      value='1111111111'
                     />
                     { isToggle
                       ? <Box sx={{ display:'flex', mt:1 }}>
                         <Box sx={{ width:'48%', mr:3 }}>
                         Mật khẩu mới
                           <TextField
+                            name='password'
                             type={showPassword ? 'text' : 'password'}
                             sx={styleTextField}
                             InputProps={{
@@ -261,6 +313,7 @@ function Profile() {
                         <Box sx={{ width:'48%' }}>
                         Nhập lại mật khẩu
                           <TextField
+                            name = 'confirmPassword'
                             type={showCfPassword ? 'text' : 'password'}
                             sx={styleTextField}
                             InputProps={{
