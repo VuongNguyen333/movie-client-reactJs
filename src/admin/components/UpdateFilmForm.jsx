@@ -145,12 +145,13 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
       'director': formData.get('director'),
       'trailerURL': formData.get('trailerURL'),
       'description': formData.get('description'),
-      'duration': parseInt(formData.get('duration')),
+      'duration': formData.get('duration'),
       'language': formData.get('language'),
       'category': formData.get('category'),
       'releaseDate': convertDate.convertToRequest(formData.get('date')),
       'photo': photo
     }
+    console.log('🚀 ~ handleSubmit ~ data:', data)
     await validateBeforeSubmit(JoiObjectFilm, data, null, null, handleUpdate, handleUpdateFilm)
     // console.log('🚀 ~ handleSubmit ~ data:', data)
     // Call Api

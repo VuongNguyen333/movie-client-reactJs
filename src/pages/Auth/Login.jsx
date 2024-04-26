@@ -1,10 +1,12 @@
 /* eslint-disable quotes */
 /* eslint-disable react/no-unescaped-entities */
-import Box from '@mui/material/Box'
 import { useEffect, useState } from 'react'
+import Box from '@mui/material/Box'
 import loginImage from '~/assets/login-image1.jpg'
-import SvgIcon from '@mui/material/SvgIcon'
-import { Container, Typography, TextField, Button } from '@mui/material'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
 import VisibilityIcon from '@mui/icons-material/Visibility'
@@ -14,6 +16,7 @@ import Link from '@mui/material/Link'
 import { useNavigate } from 'react-router-dom'
 import { loginAPI } from '~/apis/auth'
 import { useAuth } from './AuthProvider'
+import ForgotPassword from './ForgotPassword'
 
 function Login() {
   const styleTextField = {
@@ -59,8 +62,9 @@ function Login() {
   const [email, setEmail] = useState(null)
   const [isValidEmail, setIsValidEmail] = useState(true)
   const [msgEmail, setMsgEmail] = useState('')
-  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
+  const [open, setOpen] = useState(false)
+  const navigate = useNavigate()
   const auth = useAuth()
 
   const handleSubmit = (event) => {
@@ -109,6 +113,9 @@ function Login() {
         setMsgEmail('❌ Email is invalid. VD: abc@gmail.com')
       }
     }
+  }
+  const handleClose = () => {
+    setOpen(false)
   }
 
   const togglePasswordVisibility = () => {
@@ -221,8 +228,22 @@ function Login() {
               {'Create an account'}
             </Link>
           </Box>
+          <Box sx={{ justifyContent: 'center', display: 'flex', p: 1 }}>
+            <Link
+              onClick={() => {
+                setOpen(true)
+              }}
+              underline="hover"
+              sx={{
+                '&:hover ': { color: '#29ADB2', cursor: 'pointer' }
+              }}
+            >
+              {'Forgot Password?'}
+            </Link>
+          </Box>
         </Box>
       </Container>
+      <ForgotPassword open={open} handleClose={handleClose} />
     </div >
   )
 }

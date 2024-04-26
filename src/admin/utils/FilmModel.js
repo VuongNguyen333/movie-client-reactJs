@@ -6,7 +6,7 @@ export const JoiObjectFilm = Joi.object({
   director:Joi.string().required().error(new Error('Id is required')),
   trailerURL: Joi.string().required().error(new Error('Id is required')),
   description: Joi.string().required().error(new Error('Id is required')),
-  duration: Joi.number().error(new Error('Duration must be a number')).required().error(new Error('Id is required')),
+  duration: Joi.number().error(new Error('Duration must be a number')).required(),
   language: Joi.string().required().error(new Error('Id is required')),
   category: Joi.string().required().error(new Error('Id is required')),
   releaseDate: Joi.string().required().error(new Error('Id is required')),

@@ -19,9 +19,6 @@ import './NavBar.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { getUserByIdAPI } from '~/apis/userApi'
-import { loadImage, resizeImage } from '~/utils/resizeImg'
-import convertToListRoleUser from '~/utils/convertToListRoleUser'
-import { CardMedia } from '@mui/material'
 import { useAuth } from '~/pages/Auth/AuthProvider'
 
 const Navbar = ({ avatar }) => {

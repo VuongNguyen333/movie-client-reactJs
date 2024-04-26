@@ -15,6 +15,7 @@ export const validate = async(validData, data) => {
 export const validateBeforeSubmit = async ( validObject, data, handleSetFormData, handleAddNew, handleUpdate, handleUpdateFilm) => {
   try {
     await validate(validObject, data)
+    data.duration = parseInt(data.duration)
     if (handleAddNew) {
       addNewMovieAPI(data).then(ressult => {
         if (ressult) {

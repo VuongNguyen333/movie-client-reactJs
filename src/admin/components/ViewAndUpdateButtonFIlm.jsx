@@ -45,7 +45,8 @@ function ViewAndUpdateButtonFilm({ params, handleUpdate }) {
           fontSize='small'
           sx={{ color:'white' }}
         />
-      </Button><UpdateFilmForm open={open} onClose={handleClose} itemId={itemId} handleUpdate={handleUpdate}/>
+      </Button>
+      <UpdateFilmForm open={open} onClose={handleClose} itemId={itemId} handleUpdate={handleUpdate}/>
     </Box>
   )
 }
