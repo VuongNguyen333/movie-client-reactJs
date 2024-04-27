@@ -88,7 +88,7 @@ export default function Film(props) {
               <Button
                 startIcon={<ConfirmationNumberIcon fontSize='medium' />}
                 onClick={() => {
-                  navigate(`/order/${props.id}/${props.name}`)
+                  navigate(`/order/${props.id}`)
                 }
                 }>Đặt vé</Button>
             </Box>

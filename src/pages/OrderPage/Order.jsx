@@ -10,7 +10,7 @@ export default function Order() {
   const userId = localStorage.getItem('userId')
   useEffect(() => {
     getUserByIdAPI(userId).then(res => setUser(res))
-  })
+  }, [userId])
 
   return (
     <Container disableGutters sx={{ height: '100vh' }} maxWidth={false}>

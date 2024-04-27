@@ -19,21 +19,13 @@ import { useEffect } from 'react'
 import { getListBillByScheduleIdAPI } from '~/apis/billApi'
 import { getListTicketByBillIdAPI } from '~/apis/ticketApi'
 
-// const rows = [
-//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-//   createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-//   createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-//   createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5)
-// ]
-
 export default function DataTableBillOfSchedule({ scheduleId }) {
   const [rows, setRows] = useState([])
   const [listBill, setListBill] = useState([])
   useEffect(() => {
     getListBillByScheduleIdAPI(scheduleId).then(res => {
       // Tạo một mảng các promise cho tất cả các cuộc gọi API
-      const promises = res.map(item => getListTicketByBillIdAPI(item.id))
+      const promises = res?.map(item => getListTicketByBillIdAPI(item.id))
 
       // Sử dụng Promise.all để đợi cho tất cả các promise được giải quyết
       Promise.all(promises).then(responses => {

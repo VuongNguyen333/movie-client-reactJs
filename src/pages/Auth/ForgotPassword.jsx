@@ -19,7 +19,7 @@ function ForgotPassword({ open, handleClose }) {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    maxWidth: 700,
+    width: 500,
     bgcolor: 'background.paper',
     border: '1px solid #000',
     boxShadow: 24,
@@ -141,7 +141,6 @@ function ForgotPassword({ open, handleClose }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-
         <Box sx={style}>
           { step1 &&
             <form onSubmit={handleSubmitForgotPass}>
@@ -175,6 +174,7 @@ function ForgotPassword({ open, handleClose }) {
                 The OTP code is valid for 5 minutes from the time it is sent.
               </Typography>
               <TextField value={otp} onChange={(event) => setOtp(event.target.value)} name='otp' label="Enter OTP" required variant="outlined" id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+              <TextField value={emailReq} disabled name='emailReq' label="Email" required variant="outlined" id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
               <Button sx={{ bgcolor:'green', ':hover': { bgcolor:'#90D26D' } }} variant="contained" endIcon={<Send />} type='submit'>
                 Send
               </Button>

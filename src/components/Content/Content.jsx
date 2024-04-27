@@ -34,7 +34,7 @@ function Content() {
           gap: 2
         }}>
           <CircularProgress />
-          <Typography>Loading data...</Typography>
+          <Typography sx={{ color:'white' }}>Loading data...</Typography>
         </Box>
         : <ListFilm productData={listFilm} type=''></ListFilm>
       }
@@ -47,7 +47,7 @@ function Content() {
           gap: 2
         }}>
           <CircularProgress />
-          <Typography>Loading data...</Typography>
+          <Typography sx={{ color:'white' }}>Loading data...</Typography>
         </Box>
         : <ListFilm productData={listFilmComing} type='coming'></ListFilm>
       }

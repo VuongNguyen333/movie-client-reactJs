@@ -3,7 +3,7 @@ import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView'
 import { TreeItem2 } from '@mui/x-tree-view/TreeItem2'
 import Box from '@mui/material/Box'
 import ListSchedule from './ListSchedules/ListSchedule'
-import { getListBranchByAreaIdAPI } from '~/apis/branchApi'
+import { getListBranchByAreaIdAPI, getListBranchClientAPI } from '~/apis/branchApi'
 import { CircularProgress, Typography } from '@mui/material'
 
 const CustomTreeItem = React.forwardRef((props, ref) => (
@@ -25,14 +25,14 @@ const CustomTreeItem = React.forwardRef((props, ref) => (
   />
 ))
 
-function ListBranchs({ area_id, orderSchedule }) {
+function ListBranchs({ area_id, orderSchedule, movieId }) {
   const [listBranchs, setListBranchs] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     // call api
     setLoading(true)
-    getListBranchByAreaIdAPI(area_id)
+    getListBranchClientAPI(movieId, area_id)
       .then(res => {
         setListBranchs(res)
       })
@@ -79,8 +79,10 @@ function ListBranchs({ area_id, orderSchedule }) {
             </Box>
           )
           : (
-            listBranchs.length === 0
-              ? <Typography>No schedule available</Typography>
+            listBranchs?.length === 0
+              ? <Box sx={{ display:'flex', alignItems:'center', justifyContent:'center' }}>
+                <Typography sx={{ alignItems:'center', justifyContent:'center' }}>No schedule available</Typography>
+              </Box>
               : listBranchs?.map((item, index) =>
                 <CustomTreeItem key={`branch${index}`} itemId={`branch${item?.id}`} label={item?.name}>
                   <ListSchedule orderSchedule={orderSchedule} branchId={item?.id} />

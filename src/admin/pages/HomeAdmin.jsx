@@ -23,6 +23,7 @@ import RoomsManager from './RoomsManager'
 import BillsManager from './BillsManager'
 import BillOfUserManager from './BillOfUserManager'
 import AddNewSchedule from './AddNewSchedule'
+import NotfoundPage from '~/pages/NotfoundPage'
 
 
 const drawerWidth = 240
@@ -150,6 +151,7 @@ function HomeAdmin() {
           <Route path='bills/schedule/:scheduleId' element={<BillsManager />}></Route>
           <Route path='bills/user/:userId' element={<BillOfUserManager />}></Route>
           <Route path='add/schedule' element={<AddNewSchedule />}></Route>
+          <Route path='*' element={<NotfoundPage />}></Route>
         </Routes>
       </Box>
     </ThemeProvider>

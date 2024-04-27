@@ -187,7 +187,8 @@ function Register() {
         <Box
           sx={{
             backgroundColor: 'white',
-            borderRadius: '15px'
+            borderRadius: '15px',
+            minWidth:'40%'
           }}
         >
           <Box sx={{ justifyContent: 'center', display: 'flex', p: 1 }}>

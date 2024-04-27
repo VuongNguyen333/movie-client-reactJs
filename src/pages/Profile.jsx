@@ -26,6 +26,7 @@ import dayjs from 'dayjs'
 import Footer from '~/components/Footer'
 import Navbar from '~/components/NavBar/NavBar'
 import { useNavigate } from 'react-router-dom'
+import BillOfUserDetails from '~/components/BIllOfUser/BillOfUserDetails'
 function Profile() {
   const ProSpan = styled('span')({
     display: 'inline-block',
@@ -218,10 +219,8 @@ function Profile() {
     )
   }
   return (
-    <Container disableGutters maxWidth={false}>
+    <Container disableGutters maxWidth={false} sx={{ bgcolor:'#1a1d29' }}>
       <Navbar avatar={avatar} />
-      {/* <Hero></Hero> */}
-      {/* <HeroPro /> */}
       <Box sx={{ bgcolor:'#1a1d29' }}>
         <Box sx={{ color:'#1a1d29' }}>1</Box>
         <Box sx={{ color:'#1a1d29' }}>1</Box>
@@ -394,6 +393,12 @@ function Profile() {
           </Box>
         </div>
       </Box>
+      <Box sx={{ display:'flex', alignItems:'center', justifyContent:'center', bgcolor:'#1a1d29' }}>
+        <Box sx={{ bgcolor:'#1a1d29', color:'white', typography:'h4', mb:2 }}>
+          Lịch sử đặt vé
+        </Box>
+      </Box>
+      <BillOfUserDetails userId={userId}/>
       <Footer />
     </Container>
   )

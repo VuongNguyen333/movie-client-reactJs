@@ -141,7 +141,8 @@ function Login() {
         <Box
           sx={{
             backgroundColor: 'white',
-            borderRadius: '15px'
+            borderRadius: '15px',
+            minWidth:'35%'
           }}
         >
           <Box sx={{ justifyContent: 'center', display: 'flex', p: 1 }}>
@@ -199,9 +200,9 @@ function Login() {
                 type='submit'
                 variant="contained"
                 sx={{
+                  width:'70%',
                   alignItems: 'center',
                   justifyItems: 'center',
-                  width: '300px',
                   bgcolor: '#1976d2',
                   color: 'white',
                   '&:hover': { bgcolor: '#1976d2' }
