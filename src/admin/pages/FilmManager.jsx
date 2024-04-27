@@ -6,6 +6,7 @@ import AddNewForm from '../components/AddNewFilmForm'
 import ViewAndUpdateButtonFilm from '../components/ViewAndUpdateButtonFIlm'
 import { useEffect, useState } from 'react'
 import { getAllMovieAPI } from '~/apis/movieApi'
+import { formatNumber } from '~/utils/formatVnd'
 
 
 function FilmManager() {
@@ -48,7 +49,15 @@ function FilmManager() {
     { field: 'category', headerName: 'Category', width: 100, editable: false },
     { field: 'releaseDate', headerName: 'ReleaseDate', width: 100, editable: false },
     { field: 'duration', headerName: 'Duration (minute)', width: 100, editable: false },
-    { field: 'revenue', headerName: 'Revenue', width: 100, editable: false },
+    {
+      field: 'revenue',
+      headerName: 'Revenue',
+      width: 100,
+      editable: false,
+      valueGetter: (params) => {
+        return params !== 0 ? (formatNumber(params) + '.000đ') : 0
+      }
+    },
     { field: 'numberOfTickets', headerName: 'Number Ticket', width: 130, editable: false },
     {
       field: 'button',

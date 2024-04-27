@@ -166,8 +166,8 @@ function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
             </Card>
           </Box>
           <Box sx={{ }}>
-            <ValidationTextField disabled name='fullName' label="Full Name" required variant="outlined" defaultValue={user ? user?.fullName : ''} id="validation-outlined-input" sx={{ mb: '10px', width:'100%' }} />
-            <ValidationTextField disabled name='email' label="Email" required variant="outlined" defaultValue={user ? user?.email :''} id="validation-outlined-input" sx={{ mb: '10px', width:'100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} disabled name='fullName' label="Full Name" required variant="outlined" value={user ? user?.fullName : ''} id="validation-outlined-input" sx={{ mb: '10px', width:'100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} disabled name='email' label="Email" required variant="outlined" value={user ? user?.email :''} id="validation-outlined-input" sx={{ mb: '10px', width:'100%' }} />
             <ToggleButtonGroup
               sx={{ display:'flex' }}
               name='roles'

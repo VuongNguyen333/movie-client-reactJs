@@ -62,6 +62,7 @@ export const updateBranchAPI = async (data, branchId) => {
     toast.success('Update Successfully!')
     return res.data
   } catch (error) {
+    toast.error(error.response.data)
     return
   }
 }

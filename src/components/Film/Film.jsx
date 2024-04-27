@@ -153,7 +153,7 @@ export default function Film(props) {
                       },
                       mr:'20px'
                     }}
-                    onClick={() => navigate(`/order/${selectedMovie.id}/${selectedMovie.name}`)}
+                    onClick={() => navigate(`/order/${selectedMovie.id}`)}
                   >
                     Đặt vé
                   </Button>

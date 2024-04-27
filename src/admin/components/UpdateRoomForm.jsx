@@ -153,7 +153,7 @@ function UpdateRoomForm({ open, onClose, roomId, handleUpdate }) {
             </Card>
           </Box>
           <Box>
-            <ValidationTextField name='name' label="Name" required variant="outlined" defaultValue={room ? room?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} name='name' label="Name" required variant="outlined" value={room ? room?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
             <FormControl fullWidth >
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
               <Select

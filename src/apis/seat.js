@@ -10,9 +10,10 @@ export const getListSeatAPI = async (scheduleId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    return null
   }
 }
+
 export const getListSeatByRoomIdAPI = async (roomId) => {
   try {
     const res = await axios.get(`${API_ROOT}/seats/all/${roomId}`, { headers: getHeader() })
@@ -20,7 +21,7 @@ export const getListSeatByRoomIdAPI = async (roomId) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    return null
   }
 }
 
@@ -31,6 +32,6 @@ export const getDetailSeatAPI = async (id) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    return null
   }
 }

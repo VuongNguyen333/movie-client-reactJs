@@ -107,6 +107,20 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
       padding: '4px !important'
     }
   })
+
+  const initFormData = {
+    name : '',
+    actor : '',
+    director : '',
+    trailerURL : '',
+    description : '',
+    duration: '',
+    language: '',
+    category: '',
+    releaseDate: '',
+    photo: {},
+    fileName: ''
+  }
   const [film, setFilm] = useState(null)
   const languages = ['Subtitle', 'Dubbing']
   const genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History', 'Horror', 'Music', 'Mystery', 'Romance', 'Science Fiction', 'Thriller', 'War', 'Western']
@@ -115,23 +129,36 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
   const [releaseDate, setReleaseDate] = React.useState('')
   const [photo, setPhoto] = React.useState({})
   const [fileName, setFileName] = useState('')
+  const [formDataInit, setFormDataInit] = useState(initFormData)
   useEffect(() => {
     getMovieByIdAPI(itemId).then(res => {
       setFilm(res)
       setReleaseDate(res.releaseDate)
       setLanguage(res.language)
       setCategory(res.category)
+      setFormDataInit({
+        name : res.name,
+        actor: res.actor,
+        director: res.director,
+        duration: res.duration,
+        trailerURL: res.trailerURL,
+        description: res.description,
+        language: res.language,
+        category: res.category
+      })
     })
   }, [itemId])
-  const handleChangeLanguage = (event) => {
-    setLanguage(event.target.value)
-  }
-  const handleChangeCategory = (event) => {
-    setCategory(event.target.value)
-  }
 
   const handleUpdateFilm = (data) => {
     setFilm(data)
+  }
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setFormDataInit((prevData) => ({
+      ...prevData,
+      [name]: value
+    }))
   }
 
   const handleSubmit = async (event) => {
@@ -190,20 +217,20 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
             </Card>
           </Box>
           <Box>
-            <ValidationTextField name='name' label="Name" required variant="outlined" defaultValue={film ? film.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField name='actor' label="Actor" required variant="outlined" defaultValue={film ? film.actor : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField name='director' label="Director" required variant="outlined" defaultValue={film ? film.director : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField name='trailerURL' label="TrailerURL" required variant="outlined" defaultValue={film ? film.trailerURL : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField name='description' label="Description" required variant="outlined" defaultValue={film ? film.description : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} multiline />
-            <ValidationTextField name='duration' multiline label="Duration (minute)" required variant="outlined" defaultValue={film ? film.duration : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} name='name' label="Name" required variant="outlined" value={formDataInit?.name} onChange={handleChange} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} name='actor' label="Actor" required variant="outlined" value={formDataInit?.actor} onChange={handleChange} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} name='director' label="Director" required variant="outlined" value={formDataInit?.director} onChange={handleChange} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} name='trailerURL' label="TrailerURL" required variant="outlined" value={formDataInit?.trailerURL} onChange={handleChange} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} name='description' label="Description" required variant="outlined" value={formDataInit?.description} onChange={handleChange} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} multiline />
+            <TextField InputLabelProps={{ shrink: true }} name='duration' multiline label="Duration (minute)" required variant="outlined" value={formDataInit?.duration} onChange={handleChange} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Language</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={language}
+                value={formDataInit.language}
                 label="Language"
-                onChange={handleChangeLanguage}
+                onChange={handleChange}
                 sx={{ mb: '10px' }}
                 name='language'
               >
@@ -217,10 +244,10 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={category}
+                value={formDataInit.category}
                 label="Category"
                 name='category'
-                onChange={handleChangeCategory}
+                onChange={handleChange}
                 sx={{ mb: '5px' }}
               >
                 {genres.map((item, index) => {

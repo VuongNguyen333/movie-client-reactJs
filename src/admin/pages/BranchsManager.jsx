@@ -5,6 +5,7 @@ import AddNewBranchForm from '../components/AddNewBranchForm'
 import ViewAndUpdateButtonBranch from '../components/ViewAndUpdateButtonBranch'
 import { useEffect, useState } from 'react'
 import { getListBranchAPI } from '~/apis/branchApi'
+import { formatNumber } from '~/utils/formatVnd'
 
 function BranchsManager() {
   const [branchs, setBranchs] = useState([])
@@ -57,7 +58,15 @@ function BranchsManager() {
         return params.name
       }
     },
-    { field: 'revenue', headerName: 'Revenue', width: 70, editable: true },
+    {
+      field: 'revenue',
+      headerName: 'Revenue',
+      width: 150,
+      editable: false,
+      valueGetter: (params) => {
+        return params !== 0 ? (formatNumber(params) + '.000đ') : 0
+      }
+    },
     {
       field: 'button',
       headerName: 'Action',

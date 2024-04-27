@@ -8,6 +8,7 @@ import { getScheduleByMovieIdAPI, getScheduleByRoomIdAPI } from '~/apis/schedule
 import { getRoomByIdAPI } from '~/apis/roomApi'
 import { getMovieByIdAPI } from '~/apis/movieApi'
 import ViewAndUpdateButtonSchedule from '../components/ViewAndUpdateButtonSchedule'
+import { formatNumber } from '~/utils/formatVnd'
 
 
 function SchedulesManager() {
@@ -53,7 +54,9 @@ function SchedulesManager() {
     // { field: 'id', headerName: 'ID', width: 70 },
     { field: 'startDate', headerName: 'Start Date', width: 100, editable: false },
     { field: 'startTime', headerName: 'Start Time', width: 100, editable: false },
-    { field: 'revenue', headerName: 'Revenue', width: 100, editable: false },
+    { field: 'revenue', headerName: 'Revenue', width: 100, editable: false, valueGetter: (params) => {
+      return params !== 0 ? (formatNumber(params) + '.000đ') : 0
+    } },
     { field: 'numberOfTickets', headerName: 'Ticket sold', width: 100, editable: false },
     { field: 'numberOfSeats', headerName: 'Total Seat', width: 100, editable: false },
     {

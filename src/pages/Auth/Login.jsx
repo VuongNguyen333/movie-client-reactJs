@@ -13,7 +13,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import SecurityIcon from '@mui/icons-material/Security'
 import Link from '@mui/material/Link'
-import { useNavigate } from 'react-router-dom'
+import { redirect, useNavigate } from 'react-router-dom'
 import { loginAPI } from '~/apis/auth'
 import { useAuth } from './AuthProvider'
 import ForgotPassword from './ForgotPassword'
@@ -53,17 +53,16 @@ function Login() {
     mr: '5px'
   }
 
-  useEffect(() => {
-    // react-router-dom (key de lam` chuan chinh)
-    // Call api
-    localStorage.setItem('mui-mode', 'light')
-  }, [])
-
   const [email, setEmail] = useState(null)
   const [isValidEmail, setIsValidEmail] = useState(true)
   const [msgEmail, setMsgEmail] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [open, setOpen] = useState(false)
+  const userId = localStorage.getItem('userId')
+
+  if (userId) {
+    window.location.href = 'http://localhost:5173'
+  }
   const navigate = useNavigate()
   const auth = useAuth()
 

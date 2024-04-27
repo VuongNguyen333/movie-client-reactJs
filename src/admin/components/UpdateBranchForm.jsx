@@ -144,9 +144,9 @@ function UpdateBranchForm({ open, onClose, branchId, handleUpdate }) {
             </Card>
           </Box>
           <Box>
-            <ValidationTextField name='name' label="Name" required variant="outlined" defaultValue={branch ? branch?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField name='address' multiline label="Address" required variant="outlined" defaultValue={branch ? branch?.address : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField name='introduction' label="Introduction" required variant="outlined" defaultValue={branch ? branch?.introduction : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} name='name' label="Name" required variant="outlined" defaultValue={branch ? branch?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} name='address' multiline label="Address" required variant="outlined" defaultValue={branch ? branch?.address : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} name='introduction' label="Introduction" required variant="outlined" defaultValue={branch ? branch?.introduction : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Area</InputLabel>
               <Select

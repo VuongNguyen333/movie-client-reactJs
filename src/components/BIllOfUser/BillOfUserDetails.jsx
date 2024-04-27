@@ -18,8 +18,8 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { getListBillByUserIdAPI } from '~/apis/billApi'
 import { getListTicketByBillIdAPI } from '~/apis/ticketApi'
-import Loading from '~/admin/components/Loading'
 import { CircularProgress } from '@mui/material'
+import { formatNumber } from '~/utils/formatVnd'
 
 export default function BillOfUserDetails({ userId }) {
   const [rows, setRows] = useState([])
@@ -41,7 +41,7 @@ export default function BillOfUserDetails({ userId }) {
       setListBill(res)
     }).catch(error => {
       console.error('Error when fetching bill data:', error)
-    })
+    }).finally(setLoading(false))
   }, [userId])
   function createData(bill, ticket) {
     return {
@@ -67,13 +67,13 @@ export default function BillOfUserDetails({ userId }) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell sx={{ color: 'white' }} align="center">{`${row.bill.createdDate.toString() + ' ' + row.bill.createdTime}`}</TableCell>
-          <TableCell sx={{ color: 'white' }} align="center">{row.history[0].scheduleResponse.startDate + ' ' + row.history[0].scheduleResponse.startTime}</TableCell>
-          <TableCell sx={{ color: 'white' }} align="center">{row.history[0].scheduleResponse.movieResponse.name}</TableCell>
-          <TableCell sx={{ color: 'white' }} align="center">{row.history[0].scheduleResponse.roomResponse.branchResponse.name}</TableCell>
-          <TableCell sx={{ color: 'white' }} align="center">{row.bill.payment}</TableCell>
-          <TableCell sx={{ color: 'white' }} align="center">{row.bill.numberOfTickets}</TableCell>
-          <TableCell sx={{ color: 'white' }} align="center">{row.bill.userResponse.fullName}</TableCell>
+          <TableCell sx={{ color: 'white' }} align="center">{`${row?.bill?.createdDate.toString() + ' ' + row?.bill?.createdTime}`}</TableCell>
+          <TableCell sx={{ color: 'white' }} align="center">{row?.history[0]?.scheduleResponse.startDate + ' ' + row?.history[0]?.scheduleResponse.startTime}</TableCell>
+          <TableCell sx={{ color: 'white' }} align="center">{row?.history[0]?.scheduleResponse.movieResponse.name}</TableCell>
+          <TableCell sx={{ color: 'white' }} align="center">{row?.history[0]?.scheduleResponse.roomResponse.branchResponse.name}</TableCell>
+          <TableCell sx={{ color: 'white' }} align="center">{formatNumber(row?.bill?.payment)}.000đ</TableCell>
+          <TableCell sx={{ color: 'white' }} align="center">{row?.bill?.numberOfTickets}</TableCell>
+          <TableCell sx={{ color: 'white' }} align="center">{row?.bill?.userResponse.fullName}</TableCell>
         </TableRow>
         <TableRow sx={{ borderTop: '1px solid gray' }} >
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={10}>
@@ -90,10 +90,10 @@ export default function BillOfUserDetails({ userId }) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row.history.map((historyRow) => (
-                      <TableRow key={historyRow.id}>
-                        <TableCell align="center" sx={{ color: 'white' }}>{historyRow.seatResponse.name}</TableCell>
-                        <TableCell align="center" sx={{ color: 'white' }}>{historyRow.price}</TableCell>
+                    {row?.history?.map((historyRow) => (
+                      <TableRow key={historyRow?.id}>
+                        <TableCell align="center" sx={{ color: 'white' }}>{historyRow?.seatResponse.name}</TableCell>
+                        <TableCell align="center" sx={{ color: 'white' }}>{historyRow?.price}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -144,8 +144,8 @@ export default function BillOfUserDetails({ userId }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
-                  <Row key={row.name} row={row} />
+                {rows?.map((row) => (
+                  <Row key={row?.name} row={row} />
                 ))}
               </TableBody>
             </Table>

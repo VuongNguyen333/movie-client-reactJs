@@ -11,6 +11,9 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
+import Divider from '@mui/material/Divider'
+import Logout from '@mui/icons-material/Logout'
+import ListItemIcon from '@mui/material/ListItemIcon'
 
 import { useState } from 'react'
 import logo2 from '~/assets/logo2.png'
@@ -29,9 +32,10 @@ const Navbar = ({ avatar }) => {
   const navigate = useNavigate()
   const auth = useAuth()
   const [anchorElNav, setAnchorElNav] = React.useState(null)
-  const [anchorElUser, setAnchorElUser] = React.useState(null)
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const open = Boolean(anchorEl)
   useEffect(() => {
-    console.log('🚀 ~ Navbar ~ userId:', userId)
+    // console.log('🚀 ~ Navbar ~ userId:', userId)
     getUserByIdAPI(userId)
       .then(res => {
         setUser(res)
@@ -45,16 +49,9 @@ const Navbar = ({ avatar }) => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget)
-  }
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null)
-  }
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null)
   }
 
   const [color, setColor] = useState(false)
@@ -65,8 +62,15 @@ const Navbar = ({ avatar }) => {
     } else {
       setColor(false)
     }
-
   }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
 
   window.addEventListener('scroll', changeColor)
 
@@ -212,41 +216,67 @@ const Navbar = ({ avatar }) => {
                   Login
                   </Button>
                 </Link>
-                : <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <img style={{ width:50, height:50, borderRadius:'50%' }} alt="Avatar" src={`data:image/jpeg;base64,${photo}`} />
-                  </IconButton>
-                </Tooltip>
+                : <>
+                  <Link to='/profile'>
+                    <Typography textAlign="center" sx={{ mr:2, color: 'white', cursor:'pointer', ':hover' : { color: '#87A922' } }}>{user?.fullName}</Typography>
+                  </Link>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleClick} sx={{ p: 0 }}>
+                      <img style={{ width:50, height:50, borderRadius:'50%' }} alt="Avatar" src={`data:image/jpeg;base64,${photo}`} />
+                    </IconButton>
+                  </Tooltip>
+                </>
               }
-
               <Menu
-                sx={{}}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: 'visible',
+                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                    mt: 1.5,
+                    '& .MuiAvatar-root': {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1
+                    },
+                    '&::before': {
+                      content: '""',
+                      display: 'block',
+                      position: 'absolute',
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: 'background.paper',
+                      transform: 'translateY(-50%) rotate(45deg)',
+                      zIndex: 0
+                    }
+                  }
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
               >
-                <MenuItem
-                  onClick={() => {
-                    navigate('/profile')
-                  }}
-                >
-                  <Typography textAlign="center">Profile</Typography>
-                </MenuItem>
                 <MenuItem onClick={() => {
-                  handleCloseUserMenu()
+                  handleClose()
+                  navigate('/profile')
+                }}>
+                  <Avatar alt="Avatar" src={`data:image/jpeg;base64,${photo}`} /> Profile
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={() => {
+                  handleClose()
                   auth.handleLogout()
-                }} >
-                  <Typography textAlign="center">Logout</Typography>
+                }}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Logout
                 </MenuItem>
               </Menu>
             </Box>

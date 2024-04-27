@@ -143,9 +143,9 @@ function UpdateScheduleForm({ open, onClose, scheduleId, handleUpdate }) {
         </Typography>
         <form onSubmit={handleSubmit} style={{ display:'flex' }}>
           <Box>
-            <ValidationTextField disabled name='film' label="Film" required variant="outlined" defaultValue={schedule ? schedule?.movieResponse?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField disabled name='room' multiline label="Room" required variant="outlined" defaultValue={schedule ? schedule?.roomResponse?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
-            <ValidationTextField disabled name='branch' multiline label="Branch" required variant="outlined" defaultValue={schedule ? schedule?.roomResponse?.branchResponse?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} disabled name='film' label="Film" required variant="outlined" value={schedule ? schedule?.movieResponse?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} disabled name='room' multiline label="Room" required variant="outlined" value={schedule ? schedule?.roomResponse?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} disabled name='branch' multiline label="Branch" required variant="outlined" value={schedule ? schedule?.roomResponse?.branchResponse?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer
                 components={[

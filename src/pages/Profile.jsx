@@ -27,6 +27,7 @@ import Footer from '~/components/Footer'
 import Navbar from '~/components/NavBar/NavBar'
 import { useNavigate } from 'react-router-dom'
 import BillOfUserDetails from '~/components/BIllOfUser/BillOfUserDetails'
+import { formatNumber } from '~/utils/formatVnd'
 function Profile() {
   const ProSpan = styled('span')({
     display: 'inline-block',
@@ -73,20 +74,6 @@ function Profile() {
     left: 0,
     whiteSpace: 'nowrap',
     width: 1
-  })
-  const ValidationTextField = styled(TextField)({
-    '& input:valid + fieldset': {
-      borderColor: '#E0E3E7',
-      borderWidth: 1
-    },
-    '& input:invalid + fieldset': {
-      borderColor: 'red !important',
-      borderWidth: 1
-    },
-    '& input:valid:focus + fieldset': {
-      borderLeftWidth: 4,
-      padding: '4px !important'
-    }
   })
   const styleTextField = {
     color:'white',
@@ -145,6 +132,8 @@ function Profile() {
   const [isToggle, setIsToggle] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showCfPassword, setShowCfPassword] = useState(false)
+  const [resetPass, setResetPass] = useState(false)
+  const [name, setName] = useState('')
   const userId = localStorage.getItem('userId')
   const navigate = useNavigate()
   const togglePasswordVisibility = () => {
@@ -159,6 +148,7 @@ function Profile() {
       .then(res => {
         setUser(res)
         setAvatar(res.avatar)
+        setName(res.fullName)
       })
   }, [userId])
 
@@ -178,16 +168,24 @@ function Profile() {
     }
     const pass = formData.get('password')
     const cfPass = formData.get('confirmPassword')
-    // console.log('🚀 ~ handleSubmit ~ pass:', pass, cfPass)
-    // console.log('🚀 ~ handleSubmit ~ data:', data)
-    var ok = 0
     if (pass) {
       if (pass === cfPass) {
-        resetPasswordAPI ({ email: user.email, password: pass }).then(ok=1)
+        resetPasswordAPI ({ email: user.email, password: pass })
+        try {
+          const file = await convertFile(data.photo)
+          data.photo = file
+        } catch (error) {
+          data.photo = new File([], 'empty_file.txt', { type: 'text/plain' })
+        }
+        updateUserClientByIdAPI(data, user.id).then(res => {
+          setAvatar(res.avatar)
+          setUser(res)
+          setFileName('')
+        })
       }
       else toast.error('Mật khẩu không khớp nhau. Vui lòng nhập lại.')
     }
-    if (ok || !pass) {
+    else {
       try {
         const file = await convertFile(data.photo)
         data.photo = file
@@ -198,6 +196,7 @@ function Profile() {
         setAvatar(res.avatar)
         setUser(res)
         setFileName('')
+        setResetPass(false)
       })
     }
   }
@@ -254,7 +253,7 @@ function Profile() {
                     Số vé đã đặt: {<Typography sx={{ ml:1, color:'#87A922' }} >{user.numberOfTickets}</Typography>}
                     </Box>
                     <Box sx={{ display:'flex' }}>
-                    Tổng chi tiêu: {<Typography sx={{ ml:1, color:'#87A922' }} >{user.totalPayment}.000đ</Typography>}
+                    Tổng chi tiêu: {<Typography sx={{ ml:1, color:'#87A922' }} >{formatNumber(user?.totalPayment)}.000đ</Typography>}
                     </Box>
                     <Typography fontStyle='italic' sx={{ fontSize:13, color:'#CCC' }}>Vui lòng đăng ảnh chân dung, thấy rõ mặt có kích thước: ngang 200 pixel và dọc 200 pixel (dung lượng dưới 1MB)</Typography>
                   </Box>
@@ -262,13 +261,16 @@ function Profile() {
                 <Box sx={{ border:'1px solid #9BA4B5', mb:2 }}></Box>
                 <Box>
                   <Box>Tên*</Box>
-                  <ValidationTextField
+                  <TextField
+                    InputLabelProps={{ shrink: true }}
                     name = 'fullName'
                     sx={styleTextField}
                     required
-                    id="outlined-required"
+                    variant="outlined"
+                    id="validation-outlined-input"
                     // label="Tên"
-                    defaultValue={user?.fullName}
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
                   />
                   <Box sx={{ mt:2 }}>Email*</Box>
                   <TextField

@@ -5,6 +5,7 @@ import DataTable from '../components/DataTable'
 import ViewAndUpdateButtonCustomer from '../components/ViewAndUpdateButtonCustomer'
 import { useEffect, useState } from 'react'
 import { getListUserAPI } from '~/apis/userApi'
+import { formatNumber } from '~/utils/formatVnd'
 
 function CustomersManager() {
   const [listUser, setListUser] = useState([])
@@ -36,7 +37,9 @@ function CustomersManager() {
     { field: 'dob', headerName: 'Birth Day', width: 100, editable: true },
     { field: 'age', headerName: 'Age', width: 60, editable: true },
     { field: 'numberOfTickets', headerName: 'Number Ticket', width: 150, editable: true },
-    { field: 'totalPayment', headerName: 'Total Payment(x1000Vnđ)', width: 200, editable: true },
+    { field: 'totalPayment', headerName: 'Total Payment', width: 200, editable: true, valueGetter: (params) => {
+      return params !== 0 ? (formatNumber(params) + '.000đ') : 0
+    } },
     {
       field: 'roles',
       headerName: 'Roles',

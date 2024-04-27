@@ -18,6 +18,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { getListBillByUserIdAPI } from '~/apis/billApi'
 import { getListTicketByBillIdAPI } from '~/apis/ticketApi'
+import { formatNumber } from '~/utils/formatVnd'
 
 export default function DataTableBillOfUser({ userId }) {
   const [rows, setRows] = useState([])
@@ -65,13 +66,13 @@ export default function DataTableBillOfUser({ userId }) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell sx={{ color: 'black' }} align="center">{`${row.bill.createdDate.toString() + ' ' + row.bill.createdTime}`}</TableCell>
-          <TableCell sx={{ color: 'black' }} align="center">{row.history[0].scheduleResponse.startDate + ' ' + row.history[0].scheduleResponse.startTime}</TableCell>
-          <TableCell sx={{ color: 'black' }} align="center">{row.history[0].scheduleResponse.movieResponse.name}</TableCell>
-          <TableCell sx={{ color: 'black' }} align="center">{row.history[0].scheduleResponse.roomResponse.branchResponse.name}</TableCell>
-          <TableCell sx={{ color: 'black' }} align="center">{row.bill.payment}</TableCell>
-          <TableCell sx={{ color: 'black' }} align="center">{row.bill.numberOfTickets}</TableCell>
-          <TableCell sx={{ color: 'black' }} align="center">{row.bill.userResponse.fullName}</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{`${row?.bill.createdDate.toString() + ' ' + row?.bill.createdTime}`}</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{row?.history[0]?.scheduleResponse.startDate + ' ' + row?.history[0]?.scheduleResponse.startTime}</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{row?.history[0]?.scheduleResponse.movieResponse.name}</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{row?.history[0]?.scheduleResponse.roomResponse.branchResponse.name}</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{formatNumber(row?.bill?.payment)}.000đ</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{row?.bill.numberOfTickets}</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{row?.bill.userResponse.fullName}</TableCell>
         </TableRow>
         <TableRow sx={{ borderTop: '1px solid gray' }}>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -88,10 +89,10 @@ export default function DataTableBillOfUser({ userId }) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row.history.map((historyRow) => (
-                      <TableRow key={historyRow.id}>
-                        <TableCell align="center">{historyRow.seatResponse.name}</TableCell>
-                        <TableCell align="center">{historyRow.price}</TableCell>
+                    {row?.history?.map((historyRow) => (
+                      <TableRow key={historyRow?.id}>
+                        <TableCell align="center">{historyRow?.seatResponse.name}</TableCell>
+                        <TableCell align="center">{formatNumber(historyRow?.price)}.000đ</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
