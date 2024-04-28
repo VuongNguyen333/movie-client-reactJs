@@ -134,7 +134,7 @@ function AddNewRoomForm({ branchId, handleAddNew }) {
             </Button>
             <p>{fileName}</p>
             <Button sx={{ bgcolor:'green', ':hover': { bgcolor:'#90D26D' } }} variant="contained" endIcon={<SendIcon />} type='submit'>
-            Update
+            Create
             </Button>
           </form>
         </Box>

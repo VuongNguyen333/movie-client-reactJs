@@ -157,6 +157,7 @@ const Navbar = ({ avatar }) => {
                 ))}
               </Menu>
             </Box>
+            {/* <Box></Box> */}
             <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, color: 'white' }} />
             <Typography
               variant="h5"
@@ -211,7 +212,7 @@ const Navbar = ({ avatar }) => {
                       pb: '0px'
                     }}
                   >
-                  Login
+                  Login / Register
                   </Button>
                 </Link>
                 : <>

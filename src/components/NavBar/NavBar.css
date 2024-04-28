@@ -21,7 +21,7 @@
   max-width: 1240px;
   margin: auto;
   height: 100%;
-  padding: 0 1rem;
+  /* padding: 0 1rem; */
 }
 
 .header .nav-menu a {
@@ -38,7 +38,7 @@
 }
 
 .header .nav-item {
-  padding: 1rem;
+  /* padding: 1rem; */
   font-weight: 500;
 }
 

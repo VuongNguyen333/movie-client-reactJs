@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import Box from '@mui/material/Box'
 import React, { useState } from 'react'
-import loginImage from '~/assets/login-image1.jpg'
+import loginImage from '~/assets/nen3.jpg'
 import SvgIcon from '@mui/material/SvgIcon'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
@@ -186,7 +186,8 @@ function Register() {
       >
         <Box
           sx={{
-            backgroundColor: 'white',
+            backgroundColor: 'rgba(255, 255, 255, 0.6)',
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.6)',
             borderRadius: '15px',
             minWidth:'40%'
           }}

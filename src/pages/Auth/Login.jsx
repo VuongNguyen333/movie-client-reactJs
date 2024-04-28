@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
-import loginImage from '~/assets/login-image1.jpg'
+import loginImage from '~/assets/nen3.jpg'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
@@ -139,9 +139,10 @@ function Login() {
       >
         <Box
           sx={{
-            backgroundColor: 'white',
             borderRadius: '15px',
-            minWidth:'35%'
+            minWidth:'35%',
+            backgroundColor: 'rgba(255, 255, 255, 0.6)',
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.6)'
           }}
         >
           <Box sx={{ justifyContent: 'center', display: 'flex', p: 1 }}>
