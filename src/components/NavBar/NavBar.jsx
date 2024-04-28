@@ -195,11 +195,9 @@ const Navbar = ({ avatar }) => {
             </Box>
             <Box sx={{ flexGrow: 0, display:'flex', alignItems:'center', justifyContent:'center' }}>
               { localStorage.getItem('userRole')?.includes('ROLE_ADMIN')
-              && <MenuItem>
-                <Link to='/admin'>
-                  <Typography textAlign="center" sx={{ color: 'white', mr:'15px' }}>Dashboard</Typography>
-                </Link>
-              </MenuItem>
+              && <Link to='/admin'>
+                <Typography textAlign="center" sx={{ mr:2, color: 'white', cursor:'pointer', ':hover' : { color: '#87A922' } }}>Dashboard</Typography>
+              </Link>
               }
               { userId === null ?
                 <Link to='/login'>

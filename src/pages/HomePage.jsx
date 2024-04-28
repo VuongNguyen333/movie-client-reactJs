@@ -14,9 +14,7 @@ function HomePage() {
       setUser(null)
     } else {
       getUserByIdAPI(localStorage.getItem('userId')).then(res => {
-        console.log('🚀 ~ getUserByIdAPI ~ res:', res)
-        if (!res) navigate('/login', { replace: true })
-        else setUser(res)
+        setUser(res)
       })
     }
   }, [])
