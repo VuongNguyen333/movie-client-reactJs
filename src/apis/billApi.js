@@ -23,3 +23,14 @@ export const getListBillByUserIdAPI = async (userId) => {
     return
   }
 }
+export const getListBillStatisticIdAPI = async (data) => {
+  try {
+    const res = await axios.post(`${API_ROOT}/statistics/Date_MovieId_BranchId`, data, { headers: getHeader() })
+    // lay data qua property data cua axios
+    // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
+    return res.data
+  } catch (error) {
+    return
+  }
+}
+

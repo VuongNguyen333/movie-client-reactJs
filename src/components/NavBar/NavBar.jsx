@@ -178,9 +178,8 @@ const Navbar = ({ avatar }) => {
               LOGO
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', pt: '0px', pb: '0px' } }}>
-              {pages.map((page) => (
+              <Link to='/branchs'>
                 <Button
-                  key={page}
                   onClick={handleCloseNavMenu}
                   sx={{
                     my: 2, color: 'white', display: 'block', '&:hover': {
@@ -190,9 +189,9 @@ const Navbar = ({ avatar }) => {
                     pb: '0px'
                   }}
                 >
-                  {page}
+                  Hệ thống rạp
                 </Button>
-              ))}
+              </Link>
             </Box>
             <Box sx={{ flexGrow: 0, display:'flex', alignItems:'center', justifyContent:'center' }}>
               { localStorage.getItem('userRole')?.includes('ROLE_ADMIN')
@@ -221,7 +220,7 @@ const Navbar = ({ avatar }) => {
                   </Link>
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleClick} sx={{ p: 0 }}>
-                      <img style={{ width:50, height:50, borderRadius:'50%' }} alt="Avatar" src={`data:image/jpeg;base64,${photo}`} />
+                      <img style={{ width:40, height:40, borderRadius:'50%' }} alt="Avatar" src={`data:image/jpeg;base64,${photo}`} />
                     </IconButton>
                   </Tooltip>
                 </>

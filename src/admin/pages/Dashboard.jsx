@@ -8,6 +8,20 @@ import Deposits from '~/admin/components/Deposits'
 import Orders from '~/admin/components/Orders'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
+import { useEffect, useState } from 'react'
+import { DateRange } from 'react-date-range'
+import { addDays, format } from 'date-fns'
+import { useRef } from 'react'
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { getAllMovieAPI, getMovieAPI } from '~/apis/movieApi'
+import { getListBranchAPI } from '~/apis/branchApi'
+import { Search } from '@mui/icons-material'
+import { validate } from '../utils/validateBeforeSubmit'
+import { JoiObjectScheduleSearch } from '../utils/ScheduleModel'
+import { toast } from 'react-toastify'
+import { convertStringToDate } from '../utils/convertStringToDate'
+import { getListBillStatisticIdAPI } from '~/apis/billApi'
+import DataBillStatistic from '../components/DataBillStatistic'
 function Copyright(props) {
   return (
     <Typography variant="body2" color="white" align="center" {...props}>
@@ -21,6 +35,92 @@ function Copyright(props) {
   )
 }
 function DashBoard() {
+  const ITEM_HEIGHT = 48
+  const ITEM_PADDING_TOP = 8
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250
+      }
+    }
+  }
+  const [range, setRange] = useState([{
+    startDate: new Date(),
+    endDate: addDays(new Date(), 7),
+    key: 'selection'
+  }])
+  const initFormData = {
+    startDate: '',
+    movieId: 0,
+    branchId: '',
+    roomId: ''
+  }
+  const [isOpen, setIsOpen] = useState(false)
+  const refCalen = useRef(null)
+  const [film, setFilm] = useState('')
+  const [listMovie, setListMovie] = useState([])
+  const [listBranch, setListBranch] = useState([])
+  const [branch, setBranch] = useState({})
+  const [formDataReq, setFormDataReq] = useState(initFormData)
+  const [listBill, setListBill] = useState(null)
+  useEffect(() => {
+    document.addEventListener('click', handleClickOver, true)
+    document.addEventListener('keydown', handleClickESC, true)
+  }, [])
+
+  useEffect(() => {
+    console.log(range)
+  }, [range])
+
+  useEffect(() => {
+    getAllMovieAPI().then(res => setListMovie(res))
+    getListBranchAPI().then(res => setListBranch(res))
+  }, [])
+
+  const handleClickOver = (event) => {
+
+    if (refCalen.current && !refCalen.current.contains(event.target)) {
+      setIsOpen(false)
+    }
+  }
+  const handleClickESC = (event) => {
+    if (event.key === 'Escape') {
+      setIsOpen(true)
+    }
+  }
+
+  const handleChangeFilm = (event) => {
+    setFilm(event.target.value)
+  }
+  const handleChangeBranch = (event) => {
+    setBranch(event.target.value)
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const formData = new FormData(event.target)
+    const data = {
+      'startDate': convertStringToDate(range[0].startDate.toString()),
+      'endDate': convertStringToDate(range[0].endDate.toString()),
+      'movieId': parseInt(formData.get('film')),
+      'branchId': parseInt(formData.get('branch'))
+    }
+    console.log('🚀 ~ handleSubmit ~ data:', data)
+    console.log('🚀 ~ handleSubmit ~ start:', convertStringToDate(range[0].startDate.toString()))
+    console.log('🚀 ~ handleSubmit ~ start:', convertStringToDate(range[0].endDate.toString()))
+    try {
+      // const res = await validate(JoiObjectScheduleSearch, data)
+      // getMovieAPI(data.movieId).then(res => setMovie(res))
+      // console.log('🚀 ~ handleSubmit ~ res:', res)
+      getListBillStatisticIdAPI(data).then(res => {
+        console.log('🚀 ~ getListBillStatisticIdAPI ~ res:', res)
+        setListBill(res)
+      })
+    } catch (err) {
+      toast.error(err.message)
+    }
+  }
   return (
     <Box
       component="main"
@@ -34,20 +134,142 @@ function DashBoard() {
       <Toolbar />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4, bgcolor: '#1a1d29' }}>
         <Grid container spacing={3}>
-          {/* Chart */}
           <Grid item xs={12} md={8} lg={9}>
-            <Paper
-              sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 240
-              }}
-            >
-              <Chart />
-            </Paper>
+            <form onSubmit={handleSubmit}>
+              <Box sx={{ display:'flex' }}>
+                <TextField
+                  value={`${format(range[0].startDate, 'dd-MM-yyyy')} - ${format(range[0].endDate, 'dd-MM-yyyy')}`}
+                  onClick={() => setIsOpen(true)}
+                  sx={{ color: 'white',
+                    '& .MuiInputBase-input': {
+                      color: 'white' // Màu chữ của input
+                    },
+                    '& .MuiOutlinedInput-root': {
+                      borderColor: 'white' // Màu viền
+                    },
+                    '& .MuiInputLabel-root': {
+                      color: 'white' // Màu label
+                    },
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'white' // Màu viền nổi
+                    },
+                    '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#87A922' // Màu viền khi hover
+                    } }}
+                />
+                <FormControl sx={{ ml:2, width:'30%',
+                  minWidth: 120,
+                  color:'white',
+                  '& .MuiInputBase-root': {
+                    color: 'white'
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: 'white'
+                  },
+                  '& .MuiSvgIcon-root': {
+                    color: 'white'
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover': {
+                      borderColor: '#87A922' // Màu viền khi hover
+                    },
+                    '&.Mui-focused': {
+                      borderColor: 'white' // Màu viền khi được focus
+                    }
+                  },
+                  '& .MuiInputBase-input': {
+                    color: 'white',
+                    '&:hover': {
+                      borderColor: '#87A922'
+                    }
+                  },
+                  '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#87A922' // Màu viền khi hover
+                  },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'white'
+                  } }} >
+                  <InputLabel id="demo-simple-select-label">Film</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Film"
+                    onChange={handleChangeFilm}
+                    sx={{ }}
+                    name='film'
+                    MenuProps={MenuProps}
+                  >
+                    {listMovie?.map((item, index) => {
+                      return <MenuItem key={`film${index}`} value={item.id}>{item.name}</MenuItem>
+                    })}
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ ml:2, width:'30%',
+                  minWidth: 120,
+                  color:'white',
+                  '& .MuiInputBase-root': {
+                    color: 'white'
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: 'white'
+                  },
+                  '& .MuiSvgIcon-root': {
+                    color: 'white'
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover': {
+                      borderColor: '#87A922' // Màu viền khi hover
+                    },
+                    '&.Mui-focused': {
+                      borderColor: 'white' // Màu viền khi được focus
+                    }
+                  },
+                  '& .MuiInputBase-input': {
+                    color: 'white',
+                    '&:hover': {
+                      borderColor: '#87A922'
+                    }
+                  },
+                  '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#87A922' // Màu viền khi hover
+                  },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'white'
+                  } }}>
+                  <InputLabel id="demo-simple-select-label1">Branch</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label1"
+                    id="demo-simple-select"
+                    label="Branch"
+                    onChange={handleChangeBranch}
+                    sx={{ mr: '15px' }}
+                    name='branch'
+                  >
+                    {listBranch.map((item, index) => {
+                      return <MenuItem key={`branch${index}`} value={item.id}>{item.name}</MenuItem>
+                    })}
+                  </Select>
+                </FormControl>
+              </Box>
+              <div ref={refCalen} >
+                {isOpen && (
+                  <DateRange
+                    onChange={(item) => {
+                      setRange([item.selection])
+                    }}
+                    editableDateInputs={true}
+                    moveRangeOnFirstSelection={false}
+                    ranges={range}
+                    months={1}
+                    direction='horizontal'
+                  />
+                )}
+              </div>
+              <Box sx={{ width: '100%', display:'flex', alignItems:'center', justifyContent:'center', mt:'10px' }}>
+                <Button type='submit' sx={{ bgcolor:'green', height:'70%', width:'10%', color:'white', ':hover' : { bgcolor:'#87A922' }, fontSize:'12px', borderRadius:'2px solid black' }}>Start<Search fontSize='small'/></Button>
+              </Box>
+            </form>
           </Grid>
-          {/* Recent Deposits */}
           <Grid item xs={12} md={4} lg={3}>
             <Paper
               sx={{
@@ -57,13 +279,13 @@ function DashBoard() {
                 height: 240
               }}
             >
-              <Deposits />
+              <Deposits listBill={listBill} />
             </Paper>
           </Grid>
           {/* Recent Orders */}
           <Grid item xs={12}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', color: 'white' }}>
-              <Orders />
+              <DataBillStatistic listBill={listBill} />
             </Paper>
           </Grid>
         </Grid>

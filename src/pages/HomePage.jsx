@@ -24,9 +24,8 @@ function HomePage() {
     }
   }, [])
   return (
-    <Container disableGutters maxWidth={false} >
+    <Container disableGutters maxWidth={false} sx={{ bgcolor: '#1a1d29' }}>
       <NavBar avatar={user?.avatar}></NavBar>
-      {/* <Hero></Hero> */}
       <Box sx={{ width:'100%', height:'100%', alignItems:'center', justifyContent:'center' }}>
         <Box sx={{ alignItems:'center', justifyContent:'center' }}>
           <SliderConponent arrImage={[image1, image2, image3]}/>

@@ -15,6 +15,17 @@ import { getAllMovieAPI, getMovieByIdAPI } from '~/apis/movieApi'
 import { getListBranchAPI } from '~/apis/branchApi'
 
 export default function AddNewSchedule() {
+  const ITEM_HEIGHT = 48
+  const ITEM_PADDING_TOP = 8
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250
+      }
+    }
+  }
+
   const [date, setDate] = useState('')
   const [film, setFilm] = useState('')
   const [movie, setMovie] = useState(null)
@@ -110,15 +121,16 @@ export default function AddNewSchedule() {
             <Box sx={{ display:'flex', width:'100%', alignItems:'center' }}>
               <Box sx={{ width:'60px' }}>Film:</Box>
               <Box sx={{ width:'100%', alignItems:'center' }}>
-                <FormControl fullWidth sx={{ }}>
+                <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Film</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="Film"
                     onChange={handleChangeFilm}
-                    sx={{}}
+                    sx={{ }}
                     name='film'
+                    MenuProps={MenuProps}
                   >
                     {listMovie?.map((item, index) => {
                       return <MenuItem key={`film${index}`} value={item.id}>{item.name}</MenuItem>

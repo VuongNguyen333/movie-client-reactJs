@@ -72,7 +72,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   })
 )
 
-const defaultTheme = createTheme()
+const defaultTheme = createTheme({
+  palette: {
+    mode: 'light'
+  }
+})
 function HomeAdmin() {
   const [open, setOpen] = React.useState(true)
   const toggleDrawer = () => {

@@ -6,6 +6,8 @@ import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Title from './Title'
+import { useState } from 'react'
+import { useEffect } from 'react'
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -52,7 +54,15 @@ function preventDefault(event) {
   event.preventDefault()
 }
 
-export default function Orders() {
+export default function Orders({ listBill }) {
+
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    setData(listBill)
+    console.log('🚀 ~ Orders ~ listBill:', listBill)
+  }, [listBill])
+
   return (
     <React.Fragment>
       <Title>Recent Orders</Title>
@@ -68,7 +78,7 @@ export default function Orders() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.id}>
+              <TableRow key={row.id}>
               <TableCell>{row.date}</TableCell>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.shipTo}</TableCell>

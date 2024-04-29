@@ -1,9 +1,8 @@
 /* eslint-disable no-restricted-imports */
 /* eslint-disable react/no-unescaped-entities */
 import Box from '@mui/material/Box'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import loginImage from '~/assets/nen3.jpg'
-import SvgIcon from '@mui/material/SvgIcon'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
@@ -35,14 +34,14 @@ function Register() {
     backgroundRepeat: 'no-repeat',
     backgroundImage: 'url(https://mui.com/static/x/pro.svg)'
   })
-  
+
   function Label({ isProOnly }) {
     const content = (
       <span>
         <Box >Date of birth</Box>
       </span>
     )
-  
+
     if (isProOnly) {
       return (
         <Stack direction="row" spacing={0.5} component="span">
@@ -58,7 +57,7 @@ function Register() {
         </Stack>
       )
     }
-  
+
     return content
   }
 
@@ -87,8 +86,6 @@ function Register() {
 
   const negative = useNavigate()
   const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState('')
-  const [confirmPass, setConfirmPass] = useState('')
   const [isValidEmail, setIsValidEmail] = useState(true)
   const [isValidPass, setIsValidPass] = useState(true)
   const [msgEmail, setMsgEmail] = useState('')

@@ -20,35 +20,13 @@ import { getListBillByScheduleIdAPI } from '~/apis/billApi'
 import { getListTicketByBillIdAPI } from '~/apis/ticketApi'
 import { formatNumber } from '~/utils/formatVnd'
 
-export default function DataTableBillOfSchedule({ scheduleId }) {
+export default function DataBillStatistic({ listBill }) {
   const [rows, setRows] = useState([])
-  const [listBill, setListBill] = useState([])
+
   useEffect(() => {
-    getListBillByScheduleIdAPI(scheduleId).then(res => {
-      // Tạo một mảng các promise cho tất cả các cuộc gọi API
-      const promises = res?.map(item => getListTicketByBillIdAPI(item.id))
-
-      // Sử dụng Promise.all để đợi cho tất cả các promise được giải quyết
-      Promise.all(promises).then(responses => {
-        // Tạo dữ liệu mới cho rows từ kết quả của tất cả các cuộc gọi API
-        const newData = res.map((item, index) => createData(item, responses[index]))
-        setRows(newData)
-      }).catch(error => {
-        console.error('Error when fetching ticket data:', error)
-      })
-
-      setListBill(res)
-    }).catch(error => {
-      console.error('Error when fetching bill data:', error)
-    })
-  }, [scheduleId])
-
-  function createData(bill, ticket) {
-    return {
-      bill,
-      history: ticket
-    }
-  }
+    setRows(listBill)
+    console.log('🚀 ~ Orders ~ listBill:', listBill)
+  }, [listBill])
 
   function Row(props) {
     const { row } = props
@@ -56,7 +34,7 @@ export default function DataTableBillOfSchedule({ scheduleId }) {
 
     return (
       <React.Fragment>
-        <TableRow sx={{ bgcolor: '#FEFAF6' }}>
+        <TableRow sx={{ }}>
           <TableCell>
             <IconButton
               aria-label="expand row"
@@ -67,30 +45,35 @@ export default function DataTableBillOfSchedule({ scheduleId }) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell sx={{ color: 'black' }} align="center">{`${row?.bill?.createdDate.toString() + ' ' + row?.bill?.createdTime}`}</TableCell>
-          <TableCell sx={{ color: 'black' }} align="center">{formatNumber(row?.bill?.payment)}.000đ</TableCell>
-          <TableCell sx={{ color: 'black' }} align="center">{row?.bill?.numberOfTickets}</TableCell>
-          <TableCell sx={{ color: 'black' }} align="center">{row?.bill?.userResponse?.fullName}</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{row?.date}</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{row?.numberOfTickets}</TableCell>
+          <TableCell sx={{ color: 'black' }} align="center">{formatNumber(row?.revenue).toString() === '0' ? '0' : `${formatNumber(row?.revenue)}.000đ`}</TableCell>
         </TableRow>
         <TableRow sx={{ borderTop: '1px solid gray' }}>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1, width: '300px' }}>
+              <Box sx={{ margin: 1, width: '100%' }}>
                 <Typography variant="h6" gutterBottom component="div">
                   Ticket Of Bill
                 </Typography>
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Seat</TableCell>
-                      <TableCell align="center">Price</TableCell>
+                      <TableCell align="center">Create at</TableCell>
+                      <TableCell align="center">Create Time</TableCell>
+                      <TableCell align="center">Number Of Tickets</TableCell>
+                      <TableCell align="center">Payment</TableCell>
+                      <TableCell align="center">Customer</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row?.history?.map((historyRow) => (
+                    {row?.billResponses?.map((historyRow) => (
                       <TableRow key={historyRow.id}>
-                        <TableCell align="center">{historyRow?.seatResponse?.name}</TableCell>
-                        <TableCell align="center">{formatNumber(historyRow?.price)}.000đ</TableCell>
+                        <TableCell align="center">{historyRow?.createdDate}</TableCell>
+                        <TableCell align="center">{historyRow?.createdTime}</TableCell>
+                        <TableCell align="center">{historyRow?.numberOfTickets}</TableCell>
+                        <TableCell align="center">{formatNumber(historyRow?.payment).toString() === '0' ? '0' : `${formatNumber(historyRow?.payment)}.000đ`}</TableCell>
+                        <TableCell align="center">{historyRow?.userResponse?.fullName}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -109,10 +92,9 @@ export default function DataTableBillOfSchedule({ scheduleId }) {
         <TableHead>
           <TableRow sx={{ color: 'black' }}>
             <TableCell />
-            <TableCell align="center">Create At</TableCell>
-            <TableCell align="center">Payment</TableCell>
-            <TableCell align="center">Number Ticket</TableCell>
-            <TableCell align="center">Name</TableCell>
+            <TableCell align="center">Date</TableCell>
+            <TableCell align="center">NumberOfTicket</TableCell>
+            <TableCell align="center">Revenue</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

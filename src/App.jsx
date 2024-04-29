@@ -17,6 +17,7 @@ import RoomsManager from '~/admin/pages/RoomsManager'
 import BillsManager from '~/admin/pages/BillsManager'
 import BillOfUserManager from '~/admin/pages/BillOfUserManager'
 import AddNewSchedule from '~/admin/pages/AddNewSchedule'
+import BranchSystem from './pages/BranchSystem'
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
           <Profile/>
         </RequireAuth>}></Route>
         <Route path='/login' element={<Login/>}></Route>
+        <Route path='/branchs' element={<BranchSystem/>}></Route>
         <Route path='/register' element={<Register/>}></Route>
         <Route path='/Notfound' element={<Register/>}></Route>
         <Route path='*' element={<NotfoundPage/>}></Route>

@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
 /* eslint-disable react/no-unescaped-entities */
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import loginImage from '~/assets/nen3.jpg'
 import Container from '@mui/material/Container'
@@ -13,7 +13,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import SecurityIcon from '@mui/icons-material/Security'
 import Link from '@mui/material/Link'
-import { redirect, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { loginAPI } from '~/apis/auth'
 import { useAuth } from './AuthProvider'
 import ForgotPassword from './ForgotPassword'
@@ -39,7 +39,7 @@ function Login() {
     },
     '& input:-webkit-autofill': {
       WebkitBoxShadow: '0 0 0 100px #EEF5FF inset !important',
-      WebkitTextFillColor: '#394867!important',
+      WebkitTextFillColor: '#394867!important'
     }
   }
 
@@ -82,10 +82,10 @@ function Login() {
         // console.log('🚀 ~ handleSubmit ~ email:', formData.get('email'))
         // console.log('🚀 ~ handleSubmit ~ password:', formData.get('password'))
         loginAPI({ email: formData.get('email'), password: formData.get('password') }).then(res => {
-          console.log('🚀 ~ loginAPI ~ res:', res)
+          // console.log('🚀 ~ loginAPI ~ res:', res)
           // console.log('🚀 ~ loginAPI ~ roles:', res.roles)
-          const token = res.token
-          auth.handleLogin(token, res.id)
+          // const token = res.token
+          auth.handleLogin(res.token, res.id)
           navigate('/', { replace: true })
         })
       } else {
@@ -212,7 +212,7 @@ function Login() {
               </Button>
             </Box>
           </form>
-          <Box sx={{ justifyContent: 'center', display: 'flex', p: 1 }}>
+          <Box sx={{ justifyContent: 'center', display: 'flex' }}>
             <Typography sx={{ color: 'black' }} > Don't have an account?</Typography>
           </Box>
           <Box sx={{ justifyContent: 'center', display: 'flex', p: 1 }}>
@@ -229,7 +229,7 @@ function Login() {
               {'Create an account'}
             </Link>
           </Box>
-          <Box sx={{ justifyContent: 'center', display: 'flex', p: 1 }}>
+          <Box sx={{ justifyContent: 'center', display: 'flex' }}>
             <Link
               onClick={() => {
                 setOpen(true)

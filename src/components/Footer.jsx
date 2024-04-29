@@ -1,4 +1,4 @@
-import { Typography, Link, Box } from '@mui/material'
+import { Typography, Link, Box, Container } from '@mui/material'
 
 function Footer() {
   return (
@@ -7,7 +7,9 @@ function Footer() {
         color: '#fff',
         padding: '20px',
         textAlign: 'center',
-        bgcolor: '#222831'
+        bgcolor: '#222831',
+        width:'100%',
+        bottom: 0
       }}
     >
       <Link
