@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable no-restricted-imports */
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
@@ -85,7 +84,7 @@ function AddNewRoomForm({ branchId, handleAddNew }) {
       'status': formData.get('status'),
       'photo' : photo
     }
-    console.log('🚀 ~ handleSubmit ~ data:', data)
+    // console.log('🚀 ~ handleSubmit ~ data:', data)
     await validateBeforeSubmitRoom( JoiObjectRoomAddNew, branchId, data, handleSetFormData, handleAddNew, null, null )
   }
 

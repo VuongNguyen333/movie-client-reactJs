@@ -9,7 +9,7 @@ function ViewAndUpdateButtonBranch({ params, handleUpdate }) {
   const handleButtonClick = (id) => {
     setItemId(id)
     // Handle button click action here
-    console.log(`Button clicked for row with ID: ${id}`)
+    // console.log(`Button clicked for row with ID: ${id}`)
   }
   const [itemId, setItemId] = useState(0)
   const [open, setOpen] = useState(false)

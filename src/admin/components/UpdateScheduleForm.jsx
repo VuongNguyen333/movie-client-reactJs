@@ -70,21 +70,6 @@ function UpdateScheduleForm({ open, onClose, scheduleId, handleUpdate }) {
     overflowX: 'auto',
     minWidth: 150
   }
-  const ValidationTextField = styled(TextField)({
-    '& input:valid + fieldset': {
-      borderColor: '#E0E3E7',
-      borderWidth: 1
-    },
-    '& input:invalid + fieldset': {
-      borderColor: 'red !important',
-      borderWidth: 1
-    },
-    '& input:valid:focus + fieldset': {
-      borderLeftWidth: 4,
-      padding: '4px !important' // override inline-style
-    }
-  })
-
 
   const [schedule, setSchedule] = useState({})
   const [startTime, setStartTime] = useState('')
@@ -95,7 +80,7 @@ function UpdateScheduleForm({ open, onClose, scheduleId, handleUpdate }) {
       setSchedule(res)
       setStartDate(res.startDate)
       setStartTime(res.startTime)
-      console.log('🚀 ~ getScheduleByIdAPI ~ res:', res)
+      // console.log('🚀 ~ getScheduleByIdAPI ~ res:', res)
     })
   }, [scheduleId])
 
@@ -111,7 +96,7 @@ function UpdateScheduleForm({ open, onClose, scheduleId, handleUpdate }) {
       startTime : data.get('time').split(' ')[0],
       startDate : convertDate.convertToRequest(data.get('date'))
     }
-    console.log('🚀 ~ handleSubmit ~ formData:', formData)
+    // console.log('🚀 ~ handleSubmit ~ formData:', formData)
     validateBeforeSubmitSchedule(JoiObjectScheduleUpdate, formData, handleUpdate, handleUpdateSchedule)
     // Call Api
   }

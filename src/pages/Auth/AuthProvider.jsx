@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { createContext, useContext, useState } from 'react'
 import { jwtDecode } from 'jwt-decode'
-import { redirect } from 'react-router-dom'
-import { API_ROOT } from '~/utils/constant'
 export const AuthContext=createContext({
   user: null,
   handleLogin:(token) => {},

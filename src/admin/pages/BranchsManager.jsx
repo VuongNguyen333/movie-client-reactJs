@@ -15,7 +15,7 @@ function BranchsManager() {
 
   const handleAddNew = (data) => {
     const updatedList = [...branchs, data]
-    console.log('🚀 ~ handleAddNew ~ updatedList:', updatedList)
+    // console.log('🚀 ~ handleAddNew ~ updatedList:', updatedList)
     setBranchs(updatedList)
   }
 

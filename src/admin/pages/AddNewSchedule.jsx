@@ -55,7 +55,7 @@ export default function AddNewSchedule() {
       'movieId': parseInt(formData.get('film')),
       'branchId': parseInt(formData.get('branch'))
     }
-    console.log('🚀 ~ handleSubmit ~ data:', data)
+    // console.log('🚀 ~ handleSubmit ~ data:', data)
     setFormDataReq({
       'startDate': data.startDate,
       'movieId' : data.movieId,
@@ -66,9 +66,9 @@ export default function AddNewSchedule() {
     setFilm(data.movieId)
     setBranch(data.branchId)
     try {
-      const res = await validate(JoiObjectScheduleSearch, data)
+      await validate(JoiObjectScheduleSearch, data)
       getMovieByIdAPI(data.movieId).then(res => setMovie(res))
-      console.log('🚀 ~ handleSubmit ~ res:', res)
+      // console.log('🚀 ~ handleSubmit ~ res:', res)
       setOpen(true)
     } catch (err) {
       toast.error(err.message)

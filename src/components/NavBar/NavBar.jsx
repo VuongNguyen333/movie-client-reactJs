@@ -14,10 +14,8 @@ import AdbIcon from '@mui/icons-material/Adb'
 import Divider from '@mui/material/Divider'
 import Logout from '@mui/icons-material/Logout'
 import ListItemIcon from '@mui/material/ListItemIcon'
-
 import { useState } from 'react'
 import logo2 from '~/assets/logo2.png'
-
 import './NavBar.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
@@ -27,7 +25,6 @@ import { useAuth } from '~/pages/Auth/AuthProvider'
 const Navbar = ({ avatar }) => {
   const [photo, setPhoto] = useState(avatar)
   const [user, setUser] = useState({})
-  const pages = ['Lịch chiếu', 'Hệ thống rạp']
   const userId = localStorage.getItem('userId')
   const navigate = useNavigate()
   const auth = useAuth()
@@ -40,7 +37,7 @@ const Navbar = ({ avatar }) => {
       .then(res => {
         setUser(res)
       })
-  }, [])
+  }, [userId])
 
   useEffect(() => {
     setPhoto(avatar)
@@ -141,9 +138,8 @@ const Navbar = ({ avatar }) => {
                   borderRadius: '5px'
                 }}
               >
-                {pages.map((page) => (
+                <Link to='/branchs'>
                   <MenuItem
-                    key={page}
                     onClick={handleCloseNavMenu}
                     sx={{
                       ':hover': {
@@ -152,9 +148,9 @@ const Navbar = ({ avatar }) => {
                       bgcolor: '#222831'
                     }}
                   >
-                    <Typography textAlign="center" sx={{ color: 'white' }}>{page}</Typography>
+                    <Typography textAlign="center" sx={{ color: 'white' }}>Hệ thống rạp</Typography>
                   </MenuItem>
-                ))}
+                </Link>
               </Menu>
             </Box>
             {/* <Box></Box> */}

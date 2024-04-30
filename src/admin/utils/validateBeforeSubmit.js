@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+// /* eslint-disable no-console */
 import { toast } from 'react-toastify'
 import { addNewBranchAPI, updateBranchAPI } from '~/apis/branchApi'
 import { addNewMovieAPI, updateMovieByIdAPI } from '~/apis/movieApi'
@@ -42,7 +42,7 @@ export const validateBeforeSubmit = async ( validObject, data, handleSetFormData
 
 export const validateBeforeSubmitBranch = async ( validObject, data, handleSetFormData, handleAddNew, handleUpdate, handleUpdateBranch) => {
   try {
-    const res = await validate(validObject, data)
+    await validate(validObject, data)
     if (handleSetFormData) {
       handleSetFormData()
     }
@@ -51,7 +51,7 @@ export const validateBeforeSubmitBranch = async ( validObject, data, handleSetFo
       delete data.area
       addNewBranchAPI(data, areaId).then(res => {
         if (res) {
-          console.log('🚀 ~ validateBeforeSubmitBranch ~ res:', res)
+          // console.log('🚀 ~ validateBeforeSubmitBranch ~ res:', res)
           handleAddNew(res)
         }
       })
@@ -74,9 +74,9 @@ export const validateBeforeSubmitBranch = async ( validObject, data, handleSetFo
         }
       })
     }
-    console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
+    // console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
   } catch (err) {
-    console.log('🚀 ~ validateBeforeSubmit ~ err:', err)
+    // console.log('🚀 ~ validateBeforeSubmit ~ err:', err)
     toast.error(err.message)
   }
 }
@@ -102,7 +102,7 @@ export const validateBeforeSubmitRoom = async ( validObject, branchId, data, han
       } catch (error) {
         newData.photo = new File([], 'empty_file.txt', { type: 'text/plain' })
       }
-      console.log('🚀 ~ validateBeforeSubmitRoom ~ newData:', newData)
+      // console.log('🚀 ~ validateBeforeSubmitRoom ~ newData:', newData)
       updateRoomAPI(newData, roomId).then(room => {
         if (room) {
           handleUpdate(room)
@@ -110,9 +110,9 @@ export const validateBeforeSubmitRoom = async ( validObject, branchId, data, han
         }
       })
     }
-    console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
+    // console.log('🚀 ~ validateBeforeSubmit ~ res:', res)
   } catch (err) {
-    console.log('🚀 ~ validateBeforeSubmit ~ err:', err)
+    // console.log('🚀 ~ validateBeforeSubmit ~ err:', err)
     toast.error(err.message)
   }
 }
@@ -154,7 +154,7 @@ export const validateBeforeSubmitSchedule= async ( validObject, data, handleUpda
       delete newData.id
       updateScheduleByIdAPI(newData, data.id).then(resData => {
         if (resData) {
-          console.log('🚀 ~ updateScheduleByIdAPI ~ resData:', resData)
+          // console.log('🚀 ~ updateScheduleByIdAPI ~ resData:', resData)
           handleUpdate(resData)
           handleUpdateSchedule(resData)
         }

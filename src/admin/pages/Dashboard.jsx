@@ -3,37 +3,25 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Toolbar from '@mui/material/Toolbar'
-import Chart from '~/admin/components/Charts'
 import Deposits from '~/admin/components/Deposits'
-import Orders from '~/admin/components/Orders'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import TextField from '@mui/material/TextField'
 import { useEffect, useState } from 'react'
 import { DateRange } from 'react-date-range'
-import { addDays, format } from 'date-fns'
+import { format } from 'date-fns'
 import { useRef } from 'react'
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
-import { getAllMovieAPI, getMovieAPI } from '~/apis/movieApi'
+import { getAllMovieAPI } from '~/apis/movieApi'
 import { getListBranchAPI } from '~/apis/branchApi'
 import { Search } from '@mui/icons-material'
-import { validate } from '../utils/validateBeforeSubmit'
-import { JoiObjectScheduleSearch } from '../utils/ScheduleModel'
 import { toast } from 'react-toastify'
 import { convertStringToDate } from '../utils/convertStringToDate'
 import { getListBillStatisticIdAPI } from '~/apis/billApi'
 import DataBillStatistic from '../components/DataBillStatistic'
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="white" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
+
 function DashBoard() {
   const ITEM_HEIGHT = 48
   const ITEM_PADDING_TOP = 8
@@ -47,31 +35,25 @@ function DashBoard() {
   }
   const [range, setRange] = useState([{
     startDate: new Date(),
-    endDate: addDays(new Date(), 7),
+    endDate: new Date(),
     key: 'selection'
   }])
-  const initFormData = {
-    startDate: '',
-    movieId: 0,
-    branchId: '',
-    roomId: ''
-  }
   const [isOpen, setIsOpen] = useState(false)
   const refCalen = useRef(null)
   const [film, setFilm] = useState('')
   const [listMovie, setListMovie] = useState([])
   const [listBranch, setListBranch] = useState([])
   const [branch, setBranch] = useState({})
-  const [formDataReq, setFormDataReq] = useState(initFormData)
   const [listBill, setListBill] = useState(null)
+  const [open, setOpen] = useState(false)
   useEffect(() => {
     document.addEventListener('click', handleClickOver, true)
     document.addEventListener('keydown', handleClickESC, true)
   }, [])
 
-  useEffect(() => {
-    console.log(range)
-  }, [range])
+  // useEffect(() => {
+  //   console.log(range)
+  // }, [range])
 
   useEffect(() => {
     getAllMovieAPI().then(res => setListMovie(res))
@@ -106,15 +88,16 @@ function DashBoard() {
       'movieId': parseInt(formData.get('film')),
       'branchId': parseInt(formData.get('branch'))
     }
-    console.log('🚀 ~ handleSubmit ~ data:', data)
-    console.log('🚀 ~ handleSubmit ~ start:', convertStringToDate(range[0].startDate.toString()))
-    console.log('🚀 ~ handleSubmit ~ start:', convertStringToDate(range[0].endDate.toString()))
+    if (!data.movieId) data.movieId = null
+    if (!data.branchId) data.branchId = null
+    // console.log('🚀 ~ handleSubmit ~ data:', data)
+    // console.log('🚀 ~ handleSubmit ~ start:', convertStringToDate(range[0].startDate.toString()))
+    // console.log('🚀 ~ handleSubmit ~ start:', convertStringToDate(range[0].endDate.toString()))
     try {
-      // const res = await validate(JoiObjectScheduleSearch, data)
-      // getMovieAPI(data.movieId).then(res => setMovie(res))
       // console.log('🚀 ~ handleSubmit ~ res:', res)
       getListBillStatisticIdAPI(data).then(res => {
-        console.log('🚀 ~ getListBillStatisticIdAPI ~ res:', res)
+        // console.log('🚀 ~ getListBillStatisticIdAPI ~ res:', res)
+        setOpen(true)
         setListBill(res)
       })
     } catch (err) {
@@ -157,38 +140,39 @@ function DashBoard() {
                       borderColor: '#87A922' // Màu viền khi hover
                     } }}
                 />
-                <FormControl sx={{ ml:2, width:'30%',
-                  minWidth: 120,
-                  color:'white',
-                  '& .MuiInputBase-root': {
-                    color: 'white'
-                  },
-                  '& .MuiInputLabel-root': {
-                    color: 'white'
-                  },
-                  '& .MuiSvgIcon-root': {
-                    color: 'white'
-                  },
-                  '& .MuiOutlinedInput-root': {
-                    '&:hover': {
+                <FormControl
+                  sx={{ ml:2, width:'30%',
+                    minWidth: 120,
+                    color:'white',
+                    '& .MuiInputBase-root': {
+                      color: 'white'
+                    },
+                    '& .MuiInputLabel-root': {
+                      color: 'white'
+                    },
+                    '& .MuiSvgIcon-root': {
+                      color: 'white'
+                    },
+                    '& .MuiOutlinedInput-root': {
+                      '&:hover': {
+                        borderColor: '#87A922' // Màu viền khi hover
+                      },
+                      '&.Mui-focused': {
+                        borderColor: 'white' // Màu viền khi được focus
+                      }
+                    },
+                    '& .MuiInputBase-input': {
+                      color: 'white',
+                      '&:hover': {
+                        borderColor: '#87A922'
+                      }
+                    },
+                    '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
                       borderColor: '#87A922' // Màu viền khi hover
                     },
-                    '&.Mui-focused': {
-                      borderColor: 'white' // Màu viền khi được focus
-                    }
-                  },
-                  '& .MuiInputBase-input': {
-                    color: 'white',
-                    '&:hover': {
-                      borderColor: '#87A922'
-                    }
-                  },
-                  '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#87A922' // Màu viền khi hover
-                  },
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'white'
-                  } }} >
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'white'
+                    } }} >
                   <InputLabel id="demo-simple-select-label">Film</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -199,6 +183,7 @@ function DashBoard() {
                     name='film'
                     MenuProps={MenuProps}
                   >
+                    <MenuItem key={'filmTmp'} value={''}>Tất cả</MenuItem>
                     {listMovie?.map((item, index) => {
                       return <MenuItem key={`film${index}`} value={item.id}>{item.name}</MenuItem>
                     })}
@@ -245,6 +230,7 @@ function DashBoard() {
                     sx={{ mr: '15px' }}
                     name='branch'
                   >
+                    <MenuItem key={'branchTmp'} value={''}>Tất cả</MenuItem>
                     {listBranch.map((item, index) => {
                       return <MenuItem key={`branch${index}`} value={item.id}>{item.name}</MenuItem>
                     })}
@@ -282,14 +268,14 @@ function DashBoard() {
               <Deposits listBill={listBill} />
             </Paper>
           </Grid>
-          {/* Recent Orders */}
-          <Grid item xs={12}>
+          { open && <Grid item xs={12}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', color: 'white' }}>
               <DataBillStatistic listBill={listBill} />
             </Paper>
           </Grid>
+          }
         </Grid>
-        <Copyright sx={{ pt: 4 }} />
+        {/* <Copyright sx={{ pt: 4 }} /> */}
       </Container>
     </Box>
   )

@@ -30,7 +30,8 @@ export const getListBillStatisticIdAPI = async (data) => {
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
     return res.data
   } catch (error) {
-    return
+    toast.error(error.response.data)
+    return null
   }
 }
 

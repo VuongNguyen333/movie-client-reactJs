@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
 function DataTable({ rows, columns }) {

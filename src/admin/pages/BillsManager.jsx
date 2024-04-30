@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import DataTableBillOfSchedule from '../components/DataTableBillOfSchedule'
@@ -11,7 +10,7 @@ import Loading from '../components/Loading'
 
 function BillsManager() {
   const { scheduleId } = useParams()
-  console.log('🚀 ~ BillsManager ~ scheduleId:', scheduleId)
+  // console.log('🚀 ~ BillsManager ~ scheduleId:', scheduleId)
   const [schedule, setSchedule] = useState({})
   const [loading, setLoading] = useState(true)
   useEffect(() => {

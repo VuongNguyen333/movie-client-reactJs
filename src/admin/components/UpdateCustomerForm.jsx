@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-imports */
 import { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
@@ -82,20 +83,6 @@ function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
     minWidth: 150
   }
 
-  const ValidationTextField = styled(TextField)({
-    '& input:valid + fieldset': {
-      borderColor: '#E0E3E7',
-      borderWidth: 1
-    },
-    '& input:invalid + fieldset': {
-      borderColor: 'red !important',
-      borderWidth: 1
-    },
-    '& input:valid:focus + fieldset': {
-      borderLeftWidth: 4,
-      padding: '4px !important' // override inline-style
-    }
-  })
   const [roles, setRoles] = useState([])
   const [user, setUser] = useState({})
   const [fileName, setFileName] = useState('')
@@ -134,7 +121,7 @@ function UpdateCustomerForm({ open, onClose, userId, handleUpdate }) {
       'avatar': photo,
       'rolesId' : devices
     }
-    console.log('🚀 ~ handleSubmit ~ data:', data)
+    // console.log('🚀 ~ handleSubmit ~ data:', data)
     await validateBeforeSubmitUser(JoiObjectUser, data, handleUpdate, handleUpdateCustomer)
     // Call Api
   }

@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
 import * as React from 'react'
-import PropTypes from 'prop-types'
 import Box from '@mui/material/Box'
 import Collapse from '@mui/material/Collapse'
 import IconButton from '@mui/material/IconButton'
@@ -16,8 +14,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { getListBillByScheduleIdAPI } from '~/apis/billApi'
-import { getListTicketByBillIdAPI } from '~/apis/ticketApi'
 import { formatNumber } from '~/utils/formatVnd'
 
 export default function DataBillStatistic({ listBill }) {
@@ -25,7 +21,7 @@ export default function DataBillStatistic({ listBill }) {
 
   useEffect(() => {
     setRows(listBill)
-    console.log('🚀 ~ Orders ~ listBill:', listBill)
+    // console.log('🚀 ~ Orders ~ listBill:', listBill)
   }, [listBill])
 
   function Row(props) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-imports */
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -178,7 +179,7 @@ function UpdateFilmForm({ open, onClose, itemId, handleUpdate }) {
       'releaseDate': convertDate.convertToRequest(formData.get('date')),
       'photo': photo
     }
-    console.log('🚀 ~ handleSubmit ~ data:', data)
+    // console.log('🚀 ~ handleSubmit ~ data:', data)
     await validateBeforeSubmit(JoiObjectFilm, data, null, null, handleUpdate, handleUpdateFilm)
     // console.log('🚀 ~ handleSubmit ~ data:', data)
     // Call Api

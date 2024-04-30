@@ -48,30 +48,9 @@ function UpdateRoomForm({ open, onClose, roomId, handleUpdate }) {
     whiteSpace: 'nowrap',
     width: 1
   })
-
-  const ValidationTextField = styled(TextField)({
-    '& input:valid + fieldset': {
-      borderColor: '#E0E3E7',
-      borderWidth: 1
-    },
-    '& input:invalid + fieldset': {
-      borderColor: 'red !important',
-      borderWidth: 1
-    },
-    '& input:valid:focus + fieldset': {
-      borderLeftWidth: 4,
-      padding: '4px !important' // override inline-style
-    }
-  })
-  const initFormData = {
-    name : '',
-    status : null,
-    photo : {}
-  }
   const [room, setRoom] = useState({})
   const [fileName, setFileName] = useState('')
   const [photo, setPhoto] = useState({})
-  const [formDataInit, setFormDataInit] = useState(initFormData)
   const [status, setStatus] = useState(null)
   useEffect (() => {
     //Call Api get branch
@@ -80,13 +59,6 @@ function UpdateRoomForm({ open, onClose, roomId, handleUpdate }) {
       setStatus(res.status)
     })
   }, [roomId])
-  const handleChange = (event) => {
-    const { name, value } = event.target
-    setFormDataInit((prevData) => ({
-      ...prevData,
-      [name]: value
-    }))
-  }
   const handleUpdateRoom = (data) => {
     setRoom(data)
   }
@@ -108,7 +80,7 @@ function UpdateRoomForm({ open, onClose, roomId, handleUpdate }) {
       'status' : formData.get('status'),
       'photo' : photo
     }
-    console.log('🚀 ~ handleSubmit ~ data:', data)
+    // console.log('🚀 ~ handleSubmit ~ data:', data)
     // call api
     await validateBeforeSubmitRoom(JoiObjectRoomUpdate, null, data, null, null, handleUpdate, handleUpdateRoom)
   }
@@ -153,7 +125,7 @@ function UpdateRoomForm({ open, onClose, roomId, handleUpdate }) {
             </Card>
           </Box>
           <Box>
-            <TextField InputLabelProps={{ shrink: true }} name='name' label="Name" required variant="outlined" value={room ? room?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
+            <TextField InputLabelProps={{ shrink: true }} name='name' label="Name" required variant="outlined" defaultValue={room ? room?.name : ''} id="validation-outlined-input" sx={{ mb: '10px', width: '100%' }} />
             <FormControl fullWidth >
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
               <Select

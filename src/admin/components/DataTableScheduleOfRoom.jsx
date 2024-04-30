@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Collapse from '@mui/material/Collapse'
@@ -19,6 +19,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { getAllRoomByBranchIdAPI } from '~/apis/roomApi'
 import { getScheduleByMovieIdAndRoomIdAPI } from '~/apis/scheduleApi'
+import { toast } from 'react-toastify'
 
 export default function DataTableScheduleOfRoom({ data, branchId }) {
   const [formData, setFormData] = useState({})
@@ -32,14 +33,15 @@ export default function DataTableScheduleOfRoom({ data, branchId }) {
       // Sử dụng Promise.all để đợi cho tất cả các promise được giải quyết
       Promise.all(promises).then(responses => {
         const newData = res.map((item, index) => createData(item, responses[index]))
-        console.log('🚀 ~ Promise.all ~ newData:', newData)
+        // console.log('🚀 ~ Promise.all ~ newData:', newData)
         setRows(newData)
       }).catch(error => {
-        console.error('Error when fetching ticket data:', error)
+        toast.error(error.response.data)
+        // console.error('Error when fetching ticket data:', error)
       })
       setListRoom(res)
     }).catch(error => {
-      console.error('Error when fetching bill data:', error)
+      toast.error(error.response.data)
     })
   }, [branchId, formData])
   const handleAddNew = (data) => {

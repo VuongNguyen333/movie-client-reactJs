@@ -1,9 +1,6 @@
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 // Create a theme instance.
 const theme = extendTheme({
-  palette: {
-    mode: 'dark'
-  },
   colorSchemes: {
     light: {},
     dark: {}

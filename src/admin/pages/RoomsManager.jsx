@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import DataTable from '../components/DataTable'
@@ -20,7 +19,7 @@ function RoomsManager() {
       const branchId = location.state.branchId
       getBranchbyIdAPI(branchId).then(res => setBranch(res))
       getAllRoomByBranchIdAPI(branchId).then(res => {
-        console.log('🚀 ~ useEffect ~ res:', res)
+        // console.log('🚀 ~ useEffect ~ res:', res)
         return setRooms(res)
       })
     } else {
@@ -29,7 +28,7 @@ function RoomsManager() {
   }, [location])
   const handleAddNew = (data) => {
     const updatedList = [...rooms, data]
-    console.log('🚀 ~ handleAddNew ~ updatedList:', updatedList)
+    // console.log('🚀 ~ handleAddNew ~ updatedList:', updatedList)
     setRooms(updatedList)
   }
 
@@ -40,7 +39,7 @@ function RoomsManager() {
       }
       return room
     })
-    console.log('🚀 ~ handleUpdate ~ updatedList:', updatedList)
+    // console.log('🚀 ~ handleUpdate ~ updatedList:', updatedList)
     setRooms(updatedList)
   }
   const columns = [

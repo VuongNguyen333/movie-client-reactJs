@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import DataTable from '../components/DataTable'
@@ -41,7 +40,7 @@ function SchedulesManager() {
   const handleUpdate = (item) => {
     const updatedList = data.map(schedule => {
       if (item?.id.toString() === schedule?.id.toString()) {
-        console.log('🚀 ~ updatedList ~ item:', item)
+        // console.log('🚀 ~ updatedList ~ item:', item)
         return item // Áp dụng dữ liệu mới vào phim cần cập nhật
       }
       return schedule

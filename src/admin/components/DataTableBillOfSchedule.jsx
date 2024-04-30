@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
 import * as React from 'react'
-import PropTypes from 'prop-types'
 import Box from '@mui/material/Box'
 import Collapse from '@mui/material/Collapse'
 import IconButton from '@mui/material/IconButton'
@@ -19,6 +17,7 @@ import { useEffect } from 'react'
 import { getListBillByScheduleIdAPI } from '~/apis/billApi'
 import { getListTicketByBillIdAPI } from '~/apis/ticketApi'
 import { formatNumber } from '~/utils/formatVnd'
+import { toast } from 'react-toastify'
 
 export default function DataTableBillOfSchedule({ scheduleId }) {
   const [rows, setRows] = useState([])
@@ -34,12 +33,13 @@ export default function DataTableBillOfSchedule({ scheduleId }) {
         const newData = res.map((item, index) => createData(item, responses[index]))
         setRows(newData)
       }).catch(error => {
-        console.error('Error when fetching ticket data:', error)
+        toast.error(error.response.data)
+        // console.error('Error when fetching ticket data:', error)
       })
 
       setListBill(res)
     }).catch(error => {
-      console.error('Error when fetching bill data:', error)
+      toast.error(error.response.data)
     })
   }, [scheduleId])
 
