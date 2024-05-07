@@ -6,13 +6,16 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
+import shopeePay from '~/assets/shopeepay.png'
+import vnPay from '~/assets/vnpay.png'
+import zalopay from '~/assets/zalopay.png'
 import { useEffect, useState } from 'react'
 import { getBranchbyIdAPI } from '~/apis/branchApi'
 import { getScheduleByIdAPI } from '~/apis/scheduleApi'
-import { getDetailSeatAPI, getListSeatAPI } from '~/apis/seat'
+import { getListSeatAPI } from '~/apis/seat'
 
 export default function Payment({ branchId, scheduleId, total, payment, listSeatId, stringSeat }) {
-  console.log('🚀 ~ Payment ~ listSeatId:', listSeatId)
+  // console.log('🚀 ~ Payment ~ listSeatId:', listSeatId)
   const [branch, setBranch] = useState({})
   const [schedule, setSchedule] = useState({})
   const [seats, setSeats] = useState([])
@@ -37,7 +40,7 @@ export default function Payment({ branchId, scheduleId, total, payment, listSeat
       <Box sx={{ alignItems: 'center', justifyContent:'center' }}>
         <Box sx={{ display:'flex', alignContent:'center', justifyContent:'center' }}>
           <Box sx={{ color:'white', typography:'h4' }}>
-        Thanh Toan
+        Thanh Toán
           </Box>
         </Box>
         <Box sx={{ display:'flex', width:'100%', height:'100%', alignContent:'center', justifyContent:'center' }}>
@@ -70,7 +73,7 @@ export default function Payment({ branchId, scheduleId, total, payment, listSeat
                   </FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="ShopeePay"
+                    defaultValue="ZaloPay"
                     name="radio-buttons-group"
                     sx={{ '& .MuiButtonBase-root': {
                       '&.MuiRadio-root.Mui-checked' : { color: 'green' }
@@ -79,19 +82,19 @@ export default function Payment({ branchId, scheduleId, total, payment, listSeat
                       { color: 'white' }
                     }}
                   >
-                    <FormControlLabel value="ShopeePay" control={<Radio onClick={payment('Okok')} />} label={
+                    <FormControlLabel value="ZaloPay" control={<Radio onClick={payment('Okok')} />} label={
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <img
-                          src={'https://www.bhdstar.vn/wp-content/assets/loodo/shopeepay.png?fbclid=IwAR1SLbVoJYraJPC1wSocEksCM3bHDZeX_BhoTlXv2MszJ-jpNq8gdiOrySA_aem_AaHS9v7DyWCIBMzL0aSfyRYo6Gkaj7_QSJtiSGwlSQ4lC3h6ogPUSU2AiJJmtE-Cb4mMcMsUw2m8G4URtVaokaG4'}
-                          alt="VnPay Logo"
+                          src={zalopay}
+                          alt="ZaloPay Logo"
                           style={{ marginRight: '8px', height:'30px' }} />
-                        <Typography>Thanh toán bằng SHOPEEPAY</Typography>
+                        <Typography>Thanh toán bằng ZaloPAY</Typography>
                       </Box>
-                    } />
+                    }/>
                     <FormControlLabel value="VnPay" control={<Radio onClick={payment('1')} />} label={
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <img
-                          src={'https://www.bhdstar.vn/wp-content/assets/loodo/vnpay.png?fbclid=IwAR1Q0f_3CEb9f3kz3mROLOQhaCTECxQ03pBiW9tmqviWUBXC6nGVZbb8hP0_aem_AaFt9MdkKnn7MybvYIDe7vJRTsq8KzIV0AQQLRZtWDguYS_RuQTbNtpUxWZVuTgIzLbDbL7iIwKIJXJv5Ucv7L5P'}
+                          src={vnPay}
                           alt="VnPay Logo"
                           style={{ marginRight: '8px', height:'30px' }} />
                         <Typography>Thanh toán bằng VNPAY</Typography>

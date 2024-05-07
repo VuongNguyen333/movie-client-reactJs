@@ -18,6 +18,7 @@ import BillsManager from '~/admin/pages/BillsManager'
 import BillOfUserManager from '~/admin/pages/BillOfUserManager'
 import AddNewSchedule from '~/admin/pages/AddNewSchedule'
 import BranchSystem from './pages/BranchSystem'
+import SuccessPayment from './pages/OrderPage/SuccessPayment'
 
 
 function App() {
@@ -29,6 +30,11 @@ function App() {
         <Route path="/order/:filmId" element={
           <RequireAuth>
             <Order/>
+          </RequireAuth>
+        }></Route>
+        <Route path="/successPayment" element={
+          <RequireAuth>
+            <SuccessPayment/>
           </RequireAuth>
         }></Route>
         <Route path="/admin/" element={
@@ -52,7 +58,6 @@ function App() {
         <Route path='/login' element={<Login/>}></Route>
         <Route path='/branchs' element={<BranchSystem/>}></Route>
         <Route path='/register' element={<Register/>}></Route>
-        <Route path='/Notfound' element={<Register/>}></Route>
         <Route path='*' element={<NotfoundPage/>}></Route>
       </Routes>
     </>

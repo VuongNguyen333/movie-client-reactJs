@@ -7,9 +7,12 @@ import SliderConponent from '~/components/Slider/SliderComponent'
 import { useEffect, useState } from 'react'
 import { getUserByIdAPI } from '~/apis/userApi'
 import { useNavigate } from 'react-router-dom'
-import image1 from '~/assets/img3.png'
-import image2 from '~/assets/img4.jpg'
-import image3 from '~/assets/img5.jpg'
+import image1 from '~/assets/img7.jpg'
+import image2 from '~/assets/img8.jpg'
+// import image3 from '~/assets/img5.jpg'
+import image3 from '~/assets/img6.jpg'
+import image4 from '~/assets/img9.jpg'
+import image5 from '~/assets/img10.jpg'
 import { Box } from '@mui/material'
 function HomePage() {
   const navigate = useNavigate()
@@ -26,9 +29,11 @@ function HomePage() {
   return (
     <Container disableGutters maxWidth={false} sx={{ bgcolor: '#1a1d29' }}>
       <NavBar avatar={user?.avatar}></NavBar>
-      <Box sx={{ width:'100%', height:'100%', alignItems:'center', justifyContent:'center' }}>
-        <Box sx={{ alignItems:'center', justifyContent:'center' }}>
-          <SliderConponent arrImage={[image1, image2, image3]}/>
+      <Box sx={{ alignItems:'center', height:'100vh', justifyContent:'center', display:'flex' }}>
+        <Box sx={{ width:'100%', alignItems:'center', justifyContent:'center' }}>
+          <Box sx={{ height:'100%', alignItems:'center', justifyContent:'center' }}>
+            <SliderConponent arrImage={[image1, image2, image3, image4, image5]}/>
+          </Box>
         </Box>
       </Box>
       <Content></Content>

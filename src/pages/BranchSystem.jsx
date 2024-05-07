@@ -1,6 +1,4 @@
-import { experimentalStyled as styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -19,14 +17,6 @@ import { getListBranchByAreaIdAPI } from '~/apis/branchApi'
 import BranchDetail from '~/components/BranchDetail'
 
 function BranchSystem() {
-
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary
-  }))
 
   const [listBranch, setListBranch] = useState([])
   const [listArea, setListArea] = useState([])
@@ -55,7 +45,7 @@ function BranchSystem() {
   useEffect(() => {
     setLoading(true)
     getListBranchByAreaIdAPI(areaId).then(res => {
-      console.log('🚀 ~ getListBranchByAreaIdAPI ~ res:', res)
+      // console.log('🚀 ~ getListBranchByAreaIdAPI ~ res:', res)
       setListBranch(res)
     }).finally(() => setLoading(false))
   }, [areaId])
@@ -165,7 +155,6 @@ function BranchSystem() {
         <Footer />
       </Container>
     </Container>
-
   )
 }
 

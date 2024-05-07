@@ -65,7 +65,7 @@ export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
   const [total, setTotal] = React.useState(0)
   const handleFormat = (event, newFormats) => {
     setFormats(newFormats)
-    console.log('🚀 ~ handleFormat ~ newFormats:', newFormats)
+    // console.log('🚀 ~ handleFormat ~ newFormats:', newFormats)
     let sum = 0
     // console.log('🚀 ~ handleFormat ~ newFormats:', newFormats)
     newFormats.map(item => {
@@ -93,7 +93,6 @@ export default function OrderSeat({ branchId, scheduleId, orderSeat }) {
       <Box>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '50px' }}>
           <div className='container'>
-            <div style={{ marginTop: '0px', alignItems: 'center', justifyContent: 'center' }}>Screen</div>
             <div className="moon"></div>
           </div>
         </Box>

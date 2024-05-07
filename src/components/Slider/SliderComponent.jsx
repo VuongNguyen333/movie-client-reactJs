@@ -1,28 +1,5 @@
-import Box from '@mui/material/Box'
 import Slider from 'react-slick'
 import './SliderCssCustom.css'
-
-function SampleNextArrow(props) {
-  const { className, style, onClick } = props
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: 'block', background: 'red', mr:'100px' }}
-      onClick={onClick}
-    />
-  )
-}
-
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: 'block', background: 'green' }}
-      onClick={onClick}
-    />
-  )
-}
 
 function SliderConponent({ arrImage }) {
   const settings = {
@@ -39,7 +16,7 @@ function SliderConponent({ arrImage }) {
     <Slider {...settings}>
       {arrImage.map((img, index) => {
         return (
-          <img key={`image${index}`} src={img}/>
+          <img key={`image${index}`} src={img} style={{ height:'700' }}/>
         )
       })}
     </Slider>

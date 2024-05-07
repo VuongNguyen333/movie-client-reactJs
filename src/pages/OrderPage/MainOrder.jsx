@@ -18,6 +18,9 @@ import Payment from './Payment'
 import { getDetailSeatAPI } from '~/apis/seat'
 import { addNewTicketAPI } from '~/apis/ticketApi'
 import { toast } from 'react-toastify'
+import { useState } from 'react'
+import FinishPayment from './FinishPayment'
+import { createPaymentAPI } from '~/apis/paymentApi'
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -102,17 +105,19 @@ ColorlibStepIcon.propTypes = {
 const steps = ['', '', '']
 
 export default function MainOrder() {
-  const [activeStep, setActiveStep] = React.useState(0)
-  const [branchId, setBranchId] = React.useState(0)
-  const [scheduleId, setScheduleId] = React.useState(0)
-  const [movieId, setMovieId] = React.useState(0)
-  const [enableNext, setEnableNext] = React.useState(0)
-  const [listSeatId, setListSeatId] = React.useState(() => [])
-  const [total, setTotal] = React.useState(0)
-  const [stringSeat, setStringSeat] = React.useState('')
-  const [seats, setSeats] = React.useState([])
+  const [activeStep, setActiveStep] = useState(0)
+  const [branchId, setBranchId] = useState(0)
+  const [scheduleId, setScheduleId] = useState(0)
+  const [movieId, setMovieId] = useState(0)
+  const [enableNext, setEnableNext] = useState(0)
+  const [listSeatId, setListSeatId] = useState(() => [])
+  const [total, setTotal] = useState(0)
+  const [stringSeat, setStringSeat] = useState('')
+  const [seats, setSeats] = useState([])
+  const [typePayment, setTypePayment] = useState(null)
   const payment = (type) => {
     // console.log('🚀 ~ payment ~ type:', type)
+    setTypePayment(type)
     if (type) setEnableNext(1)
   }
 
@@ -133,14 +138,20 @@ export default function MainOrder() {
   const handleNext = () => {
     setActiveStep((prevActiveStep) => {
       if (prevActiveStep === 2) {
-        const form = {
-          userId: localStorage.getItem('userId'),
-          seatScheduleId: listSeatId
+        const formData = {
+          userId: parseInt(localStorage.getItem('userId')),
+          seatScheduleId: listSeatId,
+          amount: total * 1000
         }
-        // console.log('🚀 ~ setActiveStep ~ form:', form)
+        // console.log('🚀 ~ MainOrder ~ typePayment:', typePayment)
+        // console.log('🚀 ~ setActiveStep ~ form:', formData)
         // Call Api
-        addNewTicketAPI(form).then(res => {
-          console.log('🚀 ~ addNewTicketAPI ~ res:', res)
+        // addNewTicketAPI(form).then()
+        createPaymentAPI(formData).then(res => {
+          // console.log('🚀 ~ createPaymentAPI ~ res:', res)
+          if (res) {
+            window.location.href = res.url
+          }
         })
       }
       return prevActiveStep + 1
@@ -187,15 +198,7 @@ export default function MainOrder() {
                   </Stepper></Box>
               </Box>
               {activeStep === steps.length ? (
-                <React.Fragment>
-                  <Typography sx={{ mt: 2, mb: 1, color: 'white' }}>
-                All steps completed - you&apos;re finished
-                  </Typography>
-                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                    <Box sx={{ flex: '1 1 auto' }} />
-                    <Button onClick={handleReset}>Reset</Button>
-                  </Box>
-                </React.Fragment>
+                <FinishPayment handleReset={handleReset} />
               ) : (
                 <React.Fragment>
                   {activeStep === 0 ?
@@ -236,7 +239,7 @@ export default function MainOrder() {
                         color: '#16FF00'
                       }}
                     >
-                      {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                      Next
                     </Button>
                   </Box>
                 </React.Fragment>

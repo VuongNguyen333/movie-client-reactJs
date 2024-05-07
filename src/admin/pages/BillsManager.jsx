@@ -50,8 +50,6 @@ function BillsManager() {
         </Box>
         <DataTableBillOfSchedule scheduleId={scheduleId}/>
       </Box> )
-
-
   )
 }
 
