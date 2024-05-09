@@ -1,14 +1,13 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React from 'react'
-function FinishPayment({ handleReset }) {
+function FinishPayment() {
   return (
     <React.Fragment>
       <Typography sx={{ mt: 2, mb: 1, color: 'white' }}>
-        Payment SuccessFully!
+        Payment Loading...
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Box sx={{ flex: '1 1 auto' }} />
-        <Button onClick={handleReset}>Finish</Button>
       </Box>
     </React.Fragment>
   )

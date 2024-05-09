@@ -6,7 +6,6 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
-import shopeePay from '~/assets/shopeepay.png'
 import vnPay from '~/assets/vnpay.png'
 import zalopay from '~/assets/zalopay.png'
 import { useEffect, useState } from 'react'
@@ -33,6 +32,7 @@ export default function Payment({ branchId, scheduleId, total, payment, listSeat
         setSeats(res)
         setIsSeatsLoaded(true)
       })
+      localStorage.setItem('listSeat', listSeatId)
     }
   }, [branchId, scheduleId, seats, isSeatsLoaded, listSeatId])
   return (
@@ -82,16 +82,19 @@ export default function Payment({ branchId, scheduleId, total, payment, listSeat
                       { color: 'white' }
                     }}
                   >
-                    <FormControlLabel value="ZaloPay" control={<Radio onClick={payment('Okok')} />} label={
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <img
-                          src={zalopay}
-                          alt="ZaloPay Logo"
-                          style={{ marginRight: '8px', height:'30px' }} />
-                        <Typography>Thanh toán bằng ZaloPAY</Typography>
-                      </Box>
-                    }/>
-                    <FormControlLabel value="VnPay" control={<Radio onClick={payment('1')} />} label={
+                    <FormControlLabel
+                      value="ZaloPay"
+                      control={<Radio onClick={() => payment('ZaloPay')} />}
+                      label={
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <img
+                            src={zalopay}
+                            alt="ZaloPay Logo"
+                            style={{ marginRight: '8px', height:'30px' }} />
+                          <Typography>Thanh toán bằng ZaloPAY</Typography>
+                        </Box>
+                      }/>
+                    <FormControlLabel value="VnPay" control={<Radio onClick={() => payment('VnPay')} />} label={
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <img
                           src={vnPay}

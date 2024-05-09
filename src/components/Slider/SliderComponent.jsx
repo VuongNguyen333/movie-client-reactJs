@@ -16,7 +16,7 @@ function SliderConponent({ arrImage }) {
     <Slider {...settings}>
       {arrImage.map((img, index) => {
         return (
-          <img key={`image${index}`} src={img} style={{ height:'700' }}/>
+          <img key={`image${index}`} src={img} style={{ height: '700' }}/>
         )
       })}
     </Slider>

@@ -20,7 +20,7 @@ import { addNewTicketAPI } from '~/apis/ticketApi'
 import { toast } from 'react-toastify'
 import { useState } from 'react'
 import FinishPayment from './FinishPayment'
-import { createPaymentAPI } from '~/apis/paymentApi'
+import { createPaymentVnPayAPI, createPaymentZaloPayAPI } from '~/apis/paymentApi'
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -116,7 +116,6 @@ export default function MainOrder() {
   const [seats, setSeats] = useState([])
   const [typePayment, setTypePayment] = useState(null)
   const payment = (type) => {
-    // console.log('🚀 ~ payment ~ type:', type)
     setTypePayment(type)
     if (type) setEnableNext(1)
   }
@@ -143,16 +142,32 @@ export default function MainOrder() {
           seatScheduleId: listSeatId,
           amount: total * 1000
         }
-        // console.log('🚀 ~ MainOrder ~ typePayment:', typePayment)
+        const userId = localStorage.getItem('userId')
         // console.log('🚀 ~ setActiveStep ~ form:', formData)
         // Call Api
         // addNewTicketAPI(form).then()
-        createPaymentAPI(formData).then(res => {
-          // console.log('🚀 ~ createPaymentAPI ~ res:', res)
-          if (res) {
-            window.location.href = res.url
-          }
-        })
+        addNewTicketAPI({ userId: userId, seatScheduleId: listSeatId })
+          .then(res => {
+            if (res) {
+              if (typePayment === 'VnPay') {
+                createPaymentVnPayAPI(formData).then(res => {
+                // console.log('🚀 ~ createPaymentAPI ~ res:', res)
+                  if (res) {
+                    window.location.href = res.url
+                  }
+                })
+              }
+              else {
+                createPaymentZaloPayAPI(formData).then(res => {
+                  // console.log('🚀 ~ createPaymentAPI ~ res:', res)
+                  if (res) {
+                    console.log('🚀 ~ createPaymentZaloPayAPI ~ res:', res)
+                    window.location.href = res.order_url
+                  }
+                })
+              }
+            }
+          })
       }
       return prevActiveStep + 1
     })

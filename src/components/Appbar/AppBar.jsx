@@ -102,7 +102,7 @@ function AppBarCustom({ avatar }) {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="http://localhost:5173"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },

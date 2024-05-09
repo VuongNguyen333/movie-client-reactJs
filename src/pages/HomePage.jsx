@@ -1,12 +1,10 @@
 import Container from '@mui/material/Container'
 import Footer from '~/components/Footer'
 import NavBar from '~/components/NavBar/NavBar'
-import Hero from '~/components/Hero/Hero'
 import Content from '~/components/Content/Content'
 import SliderConponent from '~/components/Slider/SliderComponent'
 import { useEffect, useState } from 'react'
 import { getUserByIdAPI } from '~/apis/userApi'
-import { useNavigate } from 'react-router-dom'
 import image1 from '~/assets/img7.jpg'
 import image2 from '~/assets/img8.jpg'
 // import image3 from '~/assets/img5.jpg'
@@ -15,7 +13,6 @@ import image4 from '~/assets/img9.jpg'
 import image5 from '~/assets/img10.jpg'
 import { Box } from '@mui/material'
 function HomePage() {
-  const navigate = useNavigate()
   const [user, setUser] = useState({})
   useEffect(() => {
     if (!localStorage.getItem('userId')) {
@@ -36,6 +33,7 @@ function HomePage() {
           </Box>
         </Box>
       </Box>
+      <div style={{ borderBottom: '5px solid rgba(255, 255, 255, 0.1)', marginTop: '30px' }}></div>
       <Content></Content>
       <Footer></Footer>
     </Container >

@@ -7,7 +7,7 @@ export const addNewTicketAPI = async (formData) => {
   try {
     const res = await axios.post(`${API_ROOT}/tickets/addNew`, formData, { headers: getHeader() })
     // console.log('🚀 ~ addNewMovieAPI ~ res:', res)
-    toast.success('Order Successfully!')
+    // toast.success('Order Successfully!')
     return res.data
   } catch (error) {
     toast.error(error.response.data)
