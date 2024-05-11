@@ -21,6 +21,7 @@ import { getListBillByUserIdAPI } from '~/apis/billApi'
 import { getListTicketByBillIdAPI } from '~/apis/ticketApi'
 import { CircularProgress } from '@mui/material'
 import { formatNumber } from '~/utils/formatVnd'
+import Loading from '../Loading'
 
 export default function BillOfUserDetails({ userId }) {
   const [rows, setRows] = useState([])
@@ -28,21 +29,22 @@ export default function BillOfUserDetails({ userId }) {
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     setLoading(true)
+    let completedPromises = 0
     getListBillByUserIdAPI(userId).then(res => {
       // Tạo một mảng các promise cho tất cả các cuộc gọi API
       const promises = res.map(item => getListTicketByBillIdAPI(item.id))
       // Sử dụng Promise.all để đợi cho tất cả các promise được giải quyết
       Promise.all(promises).then(responses => {
         const newData = res.map((item, index) => createData(item, responses[index]))
-        console.log('🚀 ~ Promise.all ~ newData:', newData)
+        // console.log('🚀 ~ Promise.all ~ newData:', newData)
         setRows(newData)
       }).catch(error => {
-        console.error('Error when fetching ticket data:', error)
-      }).finally(setLoading(false))
+        // console.error('Error when fetching ticket data:', error)
+      }).finally(() => setLoading(false))
       setListBill(res)
     }).catch(error => {
       console.error('Error when fetching bill data:', error)
-    }).finally(setLoading(false))
+    })
   }, [userId])
   function createData(bill, ticket) {
     return {
@@ -108,19 +110,8 @@ export default function BillOfUserDetails({ userId }) {
   }
 
   return (
-    loading ? (<Box sx={{
-      display:'flex',
-      color: 'white',
-      flexGrow: 1,
-      width:'100%',
-      overflow: 'auto',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
-      <CircularProgress />
-      <Typography>Loading data...</Typography>
-    </Box>) : (
-      <Box
+    loading ? (<Loading />)
+      : (<Box
         sx={{
           width:'100%',
           bgcolor:'#1a1d29',
@@ -153,6 +144,7 @@ export default function BillOfUserDetails({ userId }) {
           </TableContainer>
         </Box>
       </Box>
-    )
+
+      )
   )
 }

@@ -12,15 +12,21 @@ import image3 from '~/assets/img6.jpg'
 import image4 from '~/assets/img9.jpg'
 import image5 from '~/assets/img10.jpg'
 import { Box } from '@mui/material'
+import { objectToJson } from '~/utils/objectToJson'
 function HomePage() {
   const [user, setUser] = useState({})
   useEffect(() => {
     if (!localStorage.getItem('userId')) {
       setUser(null)
     } else {
-      getUserByIdAPI(localStorage.getItem('userId')).then(res => {
-        setUser(res)
-      })
+      if (localStorage.getItem('user')) {
+        const userLocal = JSON.parse(localStorage.getItem('user'))
+        setUser(userLocal)
+      } else {
+        getUserByIdAPI(localStorage.getItem('userId')).then(res => {
+          setUser(res)
+        })
+      }
     }
   }, [])
   return (

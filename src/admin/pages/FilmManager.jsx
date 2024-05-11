@@ -7,15 +7,20 @@ import ViewAndUpdateButtonFilm from '../components/ViewAndUpdateButtonFIlm'
 import { useEffect, useState } from 'react'
 import { getAllMovieAPI } from '~/apis/movieApi'
 import { formatNumber } from '~/utils/formatVnd'
+import Loading from '~/admin/components/Loading'
 
 
 function FilmManager() {
   const [listMovie, setListMovie] = useState([])
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
-    getAllMovieAPI().then(res => {
-      setListMovie(res)
-      console.log('🚀 ~ getAllMovieAPI ~ res:', res)
-    })
+    setLoading(true)
+    getAllMovieAPI()
+      .then(res => {
+        setListMovie(res)
+        console.log('🚀 ~ getAllMovieAPI ~ res:', res)
+      })
+      .finally(() => setLoading(false))
   }, [])
 
   const handleAddNew = (data) => {
@@ -91,7 +96,7 @@ function FilmManager() {
         <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>LIST FILM</Box>
       </Box>
       <AddNewForm handleAddNew={handleAddNew} />
-      <DataTable rows={listMovie} columns={columns}/>
+      { loading ? <Loading /> : <DataTable rows={listMovie} columns={columns}/> }
     </Box>
   )
 }

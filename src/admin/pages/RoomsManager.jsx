@@ -8,20 +8,24 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { getAllRoomByBranchIdAPI } from '~/apis/roomApi'
 import { getBranchbyIdAPI } from '~/apis/branchApi'
-
+import Loading from '~/admin/components/Loading'
 
 function RoomsManager() {
   const location = useLocation()
   const [rooms, setRooms] = useState([])
   const [branch, setBranch] = useState({})
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     if (location.state) {
+      setLoading(true)
       const branchId = location.state.branchId
       getBranchbyIdAPI(branchId).then(res => setBranch(res))
-      getAllRoomByBranchIdAPI(branchId).then(res => {
+      getAllRoomByBranchIdAPI(branchId)
+        .then(res => {
         // console.log('🚀 ~ useEffect ~ res:', res)
-        return setRooms(res)
-      })
+          return setRooms(res)
+        })
+        .finally(() => setLoading(false))
     } else {
       setRooms({})
     }
@@ -95,7 +99,7 @@ function RoomsManager() {
         <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center', mt:'3px' }}>{branch?.name?.toUpperCase()}</Box>
       </Box>
       <AddNewRoomForm branchId={branch?.id} handleAddNew={handleAddNew}/>
-      <DataTable rows={rooms} columns={columns} />
+      { loading ? <Loading /> : <DataTable rows={rooms} columns={columns} /> }
     </Box>
   )
 }

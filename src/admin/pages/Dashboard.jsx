@@ -10,6 +10,7 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
+import Loading from '~/admin/components/Loading'
 import { useEffect, useState } from 'react'
 import { DateRange } from 'react-date-range'
 import { format } from 'date-fns'
@@ -46,6 +47,7 @@ function DashBoard() {
   const [branch, setBranch] = useState({})
   const [listBill, setListBill] = useState(null)
   const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     document.addEventListener('click', handleClickOver, true)
     document.addEventListener('keydown', handleClickESC, true)
@@ -94,12 +96,15 @@ function DashBoard() {
     // console.log('🚀 ~ handleSubmit ~ start:', convertStringToDate(range[0].startDate.toString()))
     // console.log('🚀 ~ handleSubmit ~ start:', convertStringToDate(range[0].endDate.toString()))
     try {
+      setLoading(true)
       // console.log('🚀 ~ handleSubmit ~ res:', res)
-      getListBillStatisticIdAPI(data).then(res => {
+      getListBillStatisticIdAPI(data)
+        .then(res => {
         // console.log('🚀 ~ getListBillStatisticIdAPI ~ res:', res)
-        setOpen(true)
-        setListBill(res)
-      })
+          setOpen(true)
+          setListBill(res)
+        })
+        .finally(() => setLoading(false))
     } catch (err) {
       toast.error(err.message)
     }
@@ -270,7 +275,7 @@ function DashBoard() {
           </Grid>
           { open && <Grid item xs={12}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', color: 'white' }}>
-              <DataBillStatistic listBill={listBill} />
+              { loading ? <Loading /> : <DataBillStatistic listBill={listBill} /> }
             </Paper>
           </Grid>
           }

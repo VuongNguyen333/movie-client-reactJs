@@ -5,12 +5,17 @@ import { useParams } from 'react-router-dom'
 import { getUserByIdAPI } from '~/apis/userApi'
 import { useEffect, useState } from 'react'
 import DataTableBillOfUser from '../components/DataTableBillOfUser'
+import Loading from '~/admin/components/Loading'
 
 function BillOfUserManager() {
   const { userId } = useParams()
   const [user, setUser] = useState({})
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
-    getUserByIdAPI(userId).then(res => setUser(res))
+    setLoading(true)
+    getUserByIdAPI(userId)
+      .then(res => setUser(res))
+      .finally(() => setLoading(false))
   }, [userId])
   return (
     <Box
@@ -37,7 +42,7 @@ function BillOfUserManager() {
           <Box sx={{ ml: '5px', fontSize: 15 }}>Date Of Birth: {user?.dob}</Box>
         </Box>
       </Box>
-      <DataTableBillOfUser userId={userId} />
+      { loading ? <Loading /> : <DataTableBillOfUser userId={userId} /> }
     </Box>
   )
 }

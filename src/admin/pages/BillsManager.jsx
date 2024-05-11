@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { getScheduleByIdAPI } from '~/apis/scheduleApi'
 import { useState } from 'react'
 import NotfoundPageAdmin from './NotfoundPageAdmin'
-import Loading from '../components/Loading'
+import Loading from '~/admin/components/Loading'
 
 function BillsManager() {
   const { scheduleId } = useParams()

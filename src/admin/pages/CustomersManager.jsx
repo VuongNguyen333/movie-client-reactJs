@@ -6,14 +6,17 @@ import ViewAndUpdateButtonCustomer from '../components/ViewAndUpdateButtonCustom
 import { useEffect, useState } from 'react'
 import { getListUserAPI } from '~/apis/userApi'
 import { formatNumber } from '~/utils/formatVnd'
+import Loading from '~/admin/components/Loading'
 
 function CustomersManager() {
   const [listUser, setListUser] = useState([])
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
+    setLoading(true)
     getListUserAPI().then(res => {
       setListUser(res)
       console.log('🚀 ~ getListUserAPI ~ res:', res)
-    })
+    }).finally(() => setLoading(false))
   }, [])
   const handleUpdate = (data) => {
     const updatedList = listUser.map(user => {
@@ -81,7 +84,7 @@ function CustomersManager() {
         <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>LIST CUSTOMERS</Box>
       </Box>
       <Box sx={{ height: '42px' }}></Box>
-      <DataTable rows={listUser} columns={columns} />
+      { loading ? <Loading /> : <DataTable rows={listUser} columns={columns} />}
     </Box>
   )
 }

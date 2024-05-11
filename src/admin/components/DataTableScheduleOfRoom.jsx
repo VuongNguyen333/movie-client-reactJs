@@ -14,6 +14,7 @@ import Paper from '@mui/material/Paper'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import AddNewScheduleForm from './AddNewScheduleForm'
+import Loading from '~/admin/components/Loading'
 import { Button } from '@mui/material'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -25,7 +26,9 @@ export default function DataTableScheduleOfRoom({ data, branchId }) {
   const [formData, setFormData] = useState({})
   const [listRoom, setListRoom] = useState([])
   const [rows, setRows] = useState([])
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
+    setLoading(true)
     getAllRoomByBranchIdAPI(branchId).then(res => {
       // Tạo một mảng các promise cho tất cả các cuộc gọi API
       const promises = res.map(item => getScheduleByMovieIdAndRoomIdAPI({ ...formData, roomId: item.id }))
@@ -35,10 +38,12 @@ export default function DataTableScheduleOfRoom({ data, branchId }) {
         const newData = res.map((item, index) => createData(item, responses[index]))
         // console.log('🚀 ~ Promise.all ~ newData:', newData)
         setRows(newData)
-      }).catch(error => {
-        toast.error(error.response.data)
-        // console.error('Error when fetching ticket data:', error)
       })
+        .catch(error => {
+          toast.error(error.response.data)
+          // console.error('Error when fetching ticket data:', error)
+        })
+        .finally(() => setLoading(false))
       setListRoom(res)
     }).catch(error => {
       toast.error(error.response.data)
@@ -164,28 +169,34 @@ export default function DataTableScheduleOfRoom({ data, branchId }) {
   }
 
   return (
-    <Box>
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell>Id</TableCell>
-              <TableCell align="center">Room</TableCell>
-              <TableCell align="center">Status</TableCell>
-              <TableCell align="center">Branch</TableCell>
-              <TableCell align="center">Address</TableCell>
-              <TableCell align="center">Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows?.map((row) => (
-              <Row key={row?.name} row={row} formData = {formData}/>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+    loading
+      ? (<Loading/>)
+      :
+      (
+        <Box>
+          <TableContainer component={Paper}>
+            <Table aria-label="collapsible table">
+              <TableHead>
+                <TableRow>
+                  <TableCell />
+                  <TableCell>Id</TableCell>
+                  <TableCell align="center">Room</TableCell>
+                  <TableCell align="center">Status</TableCell>
+                  <TableCell align="center">Branch</TableCell>
+                  <TableCell align="center">Address</TableCell>
+                  <TableCell align="center">Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows?.map((row) => (
+                  <Row key={row?.name} row={row} formData = {formData}/>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      )
+
 
   )
 }

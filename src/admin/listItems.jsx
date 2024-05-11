@@ -51,32 +51,6 @@ export const mainListItems = (
         <ListItemText primary="Add New Schedule" />
       </ListItemButton>
     </Link>
-  </React.Fragment>
-)
-
-export const secondaryListItems = (
-  <React.Fragment>
-    <ListSubheader component="div" inset sx={{ bgcolor:'#1a1d29', color:'white' }}>
-      Saved reports
-    </ListSubheader>
-    <ListItemButton sx={{ color:'white' }}>
-      <ListItemIcon>
-        <AssignmentIcon sx={{ color:'white' }} />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItemButton>
-    <ListItemButton sx={{ color:'white' }}>
-      <ListItemIcon>
-        <AssignmentIcon sx={{ color:'white' }} />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItemButton>
-    <ListItemButton sx={{ color:'white' }}>
-      <ListItemIcon>
-        <AssignmentIcon sx={{ color:'white' }} />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItemButton>
     <Link to='/'>
       <ListItemButton sx={{ color:'white' }}>
         <ListItemIcon>
@@ -85,6 +59,10 @@ export const secondaryListItems = (
         <ListItemText primary="Home Page" />
       </ListItemButton>
     </Link>
+  </React.Fragment>
+)
 
+export const secondaryListItems = (
+  <React.Fragment>
   </React.Fragment>
 )

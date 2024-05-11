@@ -19,11 +19,14 @@ import { getListBillByUserIdAPI } from '~/apis/billApi'
 import { getListTicketByBillIdAPI } from '~/apis/ticketApi'
 import { formatNumber } from '~/utils/formatVnd'
 import { toast } from 'react-toastify'
+import Loading from './Loading'
 
 export default function DataTableBillOfUser({ userId }) {
   const [rows, setRows] = useState([])
   const [listBill, setListBill] = useState([])
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
+    setLoading(true)
     getListBillByUserIdAPI(userId).then(res => {
       // Tạo một mảng các promise cho tất cả các cuộc gọi API
       const promises = res.map(item => getListTicketByBillIdAPI(item.id))
@@ -33,9 +36,11 @@ export default function DataTableBillOfUser({ userId }) {
         const newData = res.map((item, index) => createData(item, responses[index]))
         // console.log('🚀 ~ Promise.all ~ newData:', newData)
         setRows(newData)
-      }).catch(error => {
-        toast.error(error.response.data)
       })
+        .catch(error => {
+          toast.error(error.response.data)
+        })
+        .finally(() => setLoading(false))
       setListBill(res)
     }).catch(error => {
       toast.error(error.response.data)
@@ -124,26 +129,32 @@ export default function DataTableBillOfUser({ userId }) {
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table" sx={{ color: 'black' }}>
-        <TableHead>
-          <TableRow sx={{ color: 'black' }}>
-            <TableCell />
-            <TableCell align="center">Create At</TableCell>
-            <TableCell align="center">Show Time</TableCell>
-            <TableCell align="center">Film</TableCell>
-            <TableCell align="center">Branch</TableCell>
-            <TableCell align="center">Payment</TableCell>
-            <TableCell align="center">Number Ticket</TableCell>
-            <TableCell align="center">Name</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    loading
+      ? (<Loading />)
+      :
+      (
+        <TableContainer component={Paper}>
+          <Table aria-label="collapsible table" sx={{ color: 'black' }}>
+            <TableHead>
+              <TableRow sx={{ color: 'black' }}>
+                <TableCell />
+                <TableCell align="center">Create At</TableCell>
+                <TableCell align="center">Show Time</TableCell>
+                <TableCell align="center">Film</TableCell>
+                <TableCell align="center">Branch</TableCell>
+                <TableCell align="center">Payment</TableCell>
+                <TableCell align="center">Number Ticket</TableCell>
+                <TableCell align="center">Name</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <Row key={row.name} row={row} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )
+
   )
 }

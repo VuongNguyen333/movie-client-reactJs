@@ -28,6 +28,7 @@ import Navbar from '~/components/NavBar/NavBar'
 import { useNavigate } from 'react-router-dom'
 import BillOfUserDetails from '~/components/BIllOfUser/BillOfUserDetails'
 import { formatNumber } from '~/utils/formatVnd'
+import { objectToJson } from '~/utils/objectToJson'
 function Profile() {
   const ProSpan = styled('span')({
     display: 'inline-block',
@@ -144,6 +145,12 @@ function Profile() {
   }
   useEffect(() => {
     if (!userId) navigate('/login', { replace:true })
+    if (localStorage.getItem('user')) {
+      const userLocal = JSON.parse(localStorage.getItem('user'))
+      setUser(userLocal)
+      setAvatar(userLocal.avatar)
+      setName(userLocal.fullName)
+    }
     getUserByIdAPI(userId)
       .then(res => {
         setUser(res)
@@ -151,7 +158,6 @@ function Profile() {
         setName(res.fullName)
       })
   }, [userId])
-
   const handleFileInputChange = (event) => {
     const file = event.target.files[0]
     setPhoto(file)

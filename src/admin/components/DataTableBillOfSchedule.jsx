@@ -18,11 +18,14 @@ import { getListBillByScheduleIdAPI } from '~/apis/billApi'
 import { getListTicketByBillIdAPI } from '~/apis/ticketApi'
 import { formatNumber } from '~/utils/formatVnd'
 import { toast } from 'react-toastify'
+import Loading from '~/admin/components/Loading'
 
 export default function DataTableBillOfSchedule({ scheduleId }) {
   const [rows, setRows] = useState([])
   const [listBill, setListBill] = useState([])
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
+    setLoading(true)
     getListBillByScheduleIdAPI(scheduleId).then(res => {
       // Tạo một mảng các promise cho tất cả các cuộc gọi API
       const promises = res?.map(item => getListTicketByBillIdAPI(item.id))
@@ -35,8 +38,7 @@ export default function DataTableBillOfSchedule({ scheduleId }) {
       }).catch(error => {
         toast.error(error.response.data)
         // console.error('Error when fetching ticket data:', error)
-      })
-
+      }).finally(() => setLoading(false))
       setListBill(res)
     }).catch(error => {
       toast.error(error.response.data)
@@ -104,23 +106,27 @@ export default function DataTableBillOfSchedule({ scheduleId }) {
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table" sx={{ color: 'black' }}>
-        <TableHead>
-          <TableRow sx={{ color: 'black' }}>
-            <TableCell />
-            <TableCell align="center">Create At</TableCell>
-            <TableCell align="center">Payment</TableCell>
-            <TableCell align="center">Number Ticket</TableCell>
-            <TableCell align="center">Name</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows?.map((row) => (
-            <Row key={row?.name} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    loading
+      ? ( <Loading />)
+      : (
+        <TableContainer component={Paper}>
+          <Table aria-label="collapsible table" sx={{ color: 'black' }}>
+            <TableHead>
+              <TableRow sx={{ color: 'black' }}>
+                <TableCell />
+                <TableCell align="center">Create At</TableCell>
+                <TableCell align="center">Payment</TableCell>
+                <TableCell align="center">Number Ticket</TableCell>
+                <TableCell align="center">Name</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows?.map((row) => (
+                <Row key={row?.name} row={row} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )
   )
 }

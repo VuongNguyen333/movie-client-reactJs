@@ -6,11 +6,16 @@ import ViewAndUpdateButtonBranch from '../components/ViewAndUpdateButtonBranch'
 import { useEffect, useState } from 'react'
 import { getListBranchAPI } from '~/apis/branchApi'
 import { formatNumber } from '~/utils/formatVnd'
+import Loading from '~/admin/components/Loading'
 
 function BranchsManager() {
   const [branchs, setBranchs] = useState([])
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
-    getListBranchAPI().then(res => setBranchs(res))
+    setLoading(true)
+    getListBranchAPI()
+      .then(res => setBranchs(res))
+      .finally(() => setLoading(false))
   }, [])
 
   const handleAddNew = (data) => {
@@ -99,7 +104,7 @@ function BranchsManager() {
         <Box typography='h4' sx={{ alignItems: 'center', justifyContent: 'center' }}>LIST BRANCHS</Box>
       </Box>
       <AddNewBranchForm handleAddNew={handleAddNew} />
-      <DataTable rows={branchs} columns={columns} />
+      { loading ? <Loading /> : <DataTable rows={branchs} columns={columns} /> }
     </Box>
   )
 }

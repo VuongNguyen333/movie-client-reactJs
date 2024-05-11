@@ -33,9 +33,14 @@ function BranchSystem() {
     if (!localStorage.getItem('userId')) {
       setUser(null)
     } else {
-      getUserByIdAPI(localStorage.getItem('userId')).then(res => {
-        setUser(res)
-      })
+      if (localStorage.getItem('user')) {
+        const userLocal = JSON.parse(localStorage.getItem('user'))
+        setUser(userLocal)
+      } else {
+        getUserByIdAPI(localStorage.getItem('userId')).then(res => {
+          setUser(res)
+        })
+      }
     }
     getListAreaAPI().then(res => {
       setListArea(res)

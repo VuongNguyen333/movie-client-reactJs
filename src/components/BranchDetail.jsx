@@ -126,6 +126,7 @@ function BranchDetail({ branch }) {
                   <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Địa điểm:{<Typography sx={{ color:'white', fontSize:18 }}>{selectedBranch?.address}</Typography>}</Box>
                   <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Giới thiệu:{<Typography sx={{ color:'white', fontSize:18 }}>{selectedBranch?.introduction}</Typography>}</Box>
                   <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Khu vực:{<Typography sx={{ color:'white', fontSize:18 }}>{selectedBranch?.areaResponse?.name}</Typography>}</Box>
+                  <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Số phòng chiếu:{<Typography sx={{ color:'white', fontSize:18 }}>{selectedBranch?.numberOfRooms}</Typography>}</Box>
                   <Box sx={{ color: '#B4B4B8', display:'flex', gap:1, fontSize:18, mb:'8px' }}>Trạng thái:{<Typography sx={{ color:'white', fontSize:18 }}>{selectedBranch?.status.toString() === 'true' ? 'Đang hoạt động' : 'Dừng hoạt động'}</Typography>}</Box>
                   <Box sx={{ color:'#72be43', typography:'h6' }}>
                     CÁC QUY ĐỊNH GIÁ VÉ

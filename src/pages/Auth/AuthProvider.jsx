@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { createContext, useContext, useState } from 'react'
 import { jwtDecode } from 'jwt-decode'
+import { objectToJson } from '~/utils/objectToJson'
+import { getUserByIdAPI } from '~/apis/userApi'
 export const AuthContext=createContext({
   user: null,
   handleLogin:(token) => {},
@@ -14,12 +16,20 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem('userId', userId)
     localStorage.setItem('userRole', decodedUser.roles)
     localStorage.setItem('token', token)
-    setUser(decodedUser)
+    getUserByIdAPI(userId).then(res => {
+      setUser(decodedUser)
+      delete res.email
+      delete res.id
+      delete res.password
+      delete res.roles
+      localStorage.setItem('user', objectToJson(res))
+    })
   }
   const handleLogout=() => {
     localStorage.removeItem('userId')
     localStorage.removeItem('userRole')
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
     setUser(null)
     window.location.href = 'http://localhost:5173'
   }

@@ -6,8 +6,9 @@ import { useEffect, useState } from 'react'
 import { getScheduleByMovieIdAPI, getScheduleByRoomIdAPI } from '~/apis/scheduleApi'
 import { getRoomByIdAPI } from '~/apis/roomApi'
 import { getMovieByIdAPI } from '~/apis/movieApi'
-import ViewAndUpdateButtonSchedule from '../components/ViewAndUpdateButtonSchedule'
 import { formatNumber } from '~/utils/formatVnd'
+import ViewAndUpdateButtonSchedule from '../components/ViewAndUpdateButtonSchedule'
+import Loading from '~/admin/components/Loading'
 
 
 function SchedulesManager() {
@@ -16,20 +17,26 @@ function SchedulesManager() {
   const [movie, setMovie] = useState({})
   const [room, setRoom] = useState({})
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (location.state) {
+      setLoading(true)
       if (location.state.movieId) {
         const movieId = location.state.movieId
         // console.log('🚀 ~ SchedulesManager ~ movieId:', movieId)
-        getScheduleByMovieIdAPI(movieId).then(res => setData(res))
         getMovieByIdAPI(movieId).then(res => setMovie(res))
+        getScheduleByMovieIdAPI(movieId)
+          .then(res => setData(res))
+          .finally(() => setLoading(false))
         setRoom({})
       } else if (location.state.roomId) {
         const roomId = location.state.roomId
         // console.log('🚀 ~ SchedulesManager ~ movieId:', roomId)
-        getScheduleByRoomIdAPI(roomId).then(res => setData(res))
         getRoomByIdAPI(roomId).then(res => setRoom(res))
+        getScheduleByRoomIdAPI(roomId)
+          .then(res => setData(res))
+          .finally(() => setLoading(false))
         setMovie({})
       }
     } else {
@@ -115,7 +122,7 @@ function SchedulesManager() {
         </Box>
       }
       { movie?.name && <Box sx={{ height:'45px' }}></Box> }
-      <DataTable rows={data} columns={columns} />
+      { loading ? <Loading /> : <DataTable rows={data} columns={columns} /> }
     </Box>
   )
 }

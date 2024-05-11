@@ -21,6 +21,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { getUserByIdAPI } from '~/apis/userApi'
 import { useAuth } from '~/pages/Auth/AuthProvider'
+import { objectToJson } from '~/utils/objectToJson'
 
 const Navbar = ({ avatar }) => {
   const [photo, setPhoto] = useState(avatar)
@@ -32,11 +33,16 @@ const Navbar = ({ avatar }) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   useEffect(() => {
+    if (localStorage.getItem('user')) {
+      const userLocal = JSON.parse(localStorage.getItem('user'))
+      setUser(userLocal)
+    } else {
+      getUserByIdAPI(userId)
+        .then(res => {
+          setUser(res)
+        })
+    }
     // console.log('🚀 ~ Navbar ~ userId:', userId)
-    getUserByIdAPI(userId)
-      .then(res => {
-        setUser(res)
-      })
   }, [userId])
 
   useEffect(() => {
