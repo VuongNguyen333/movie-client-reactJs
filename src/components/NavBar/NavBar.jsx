@@ -21,10 +21,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { getUserByIdAPI } from '~/apis/userApi'
 import { useAuth } from '~/pages/Auth/AuthProvider'
-import { objectToJson } from '~/utils/objectToJson'
 
 const Navbar = ({ avatar }) => {
-  const [photo, setPhoto] = useState(avatar)
   const [user, setUser] = useState({})
   const userId = localStorage.getItem('userId')
   const navigate = useNavigate()
@@ -32,6 +30,7 @@ const Navbar = ({ avatar }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
+  const [photo, setPhoto] = useState(avatar)
   useEffect(() => {
     if (localStorage.getItem('user')) {
       const userLocal = JSON.parse(localStorage.getItem('user'))
@@ -80,9 +79,9 @@ const Navbar = ({ avatar }) => {
   return (
     <div className={color ? 'header header-bg' : 'header'}>
       <nav className='navbar'>
-        <a href='/' className='logo' >
+        <Link to='/' className='logo' >
           <img style={{ width: '100px', height: '60px' }} src={logo2} alt='logo' />
-        </a>
+        </Link>
         <Container maxWidth="xl" sx={{ zIndex: 10 }}>
           <Toolbar disableGutters sx={{ pt: '0px', pb: '0px' }}>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: 'white' }} />
@@ -266,7 +265,7 @@ const Navbar = ({ avatar }) => {
                   handleClose()
                   navigate('/profile')
                 }}>
-                  <Avatar alt="Avatar" src={`data:image/jpeg;base64,${photo}`} /> Profile
+                  <Avatar alt="Avatar" src={`data:image/jpeg;base64,${photo}`} /> Thông tin
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={() => {
@@ -276,7 +275,7 @@ const Navbar = ({ avatar }) => {
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>
-                  Logout
+                  Đăng xuất
                 </MenuItem>
               </Menu>
             </Box>

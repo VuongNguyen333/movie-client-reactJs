@@ -12,13 +12,39 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { getUserByIdAPI } from '~/apis/userApi'
+import { Avatar, ListItemIcon } from '@mui/material'
+import { Logout } from '@mui/icons-material'
+import { useAuth } from '~/pages/Auth/AuthProvider'
 
-const pages = ['Products', 'Pricing', 'Blog']
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+const pages = ['Hệ thống rạp']
+const settings = ['Profile', 'Logout']
 
 function AppBarCustom({ avatar }) {
+  const auth = useAuth()
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
+  const userId = localStorage.getItem('userId')
+  const [photo, setPhoto] = useState(avatar)
+  const [user, setUser] = useState({})
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      const userLocal = JSON.parse(localStorage.getItem('user'))
+      setUser(userLocal)
+    } else {
+      getUserByIdAPI(userId)
+        .then(res => {
+          setUser(res)
+        })
+    }
+    // console.log('🚀 ~ Navbar ~ userId:', userId)
+  }, [userId])
+
+  useEffect(() => {
+    setPhoto(avatar)
+  }, [avatar])
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -34,10 +60,6 @@ function AppBarCustom({ avatar }) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
-
-  useEffect(() => {
-
-  })
 
   return (
     <AppBar position="static" >
@@ -149,11 +171,20 @@ function AppBarCustom({ avatar }) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              <Link to='/profile'>
+                <MenuItem sx={{ color:'black' }}>
+                  <Avatar alt="Avatar" src={`data:image/jpeg;base64,${photo}`} /> 
+                  <Box sx={{ ml:1 }}>Thông tin</Box>
                 </MenuItem>
-              ))}
+              </Link>
+              <MenuItem onClick={() => {
+                auth.handleLogout()
+              }}>
+                <ListItemIcon>
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                  Đăng xuất
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

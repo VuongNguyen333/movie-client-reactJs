@@ -1,7 +1,6 @@
 import Typography from '@mui/material/Typography'
-import Link from '@mui/material/Link'
 import Box from '@mui/material/Box'
-
+import { HashLink as Link } from 'react-router-hash-link'
 function Footer() {
   return (
     <Box
@@ -15,32 +14,26 @@ function Footer() {
       }}
     >
       <Link
-        href="#"
-        target="_blank"
-        rel="noopener"
-        sx={{ color: '#fff', marginLeft: '10px' }}
+        to="/rules#terms"
+        style={{ color:'#66CCCC', marginRight: '20px', textDecoration: 'underline' }}
       >
-        Điều khoản sử dụng
+            Điều khoản sử dụng
       </Link>
       <Link
-        href="#"
-        target="_blank"
-        rel="noopener"
-        sx={{ color: '#fff', marginLeft: '10px' }}
+        to="/rules#customer-care"
+        style={{ color:'#66CCCC', marginRight: '20px', textDecoration: 'underline' }}
       >
-        Chăm sóc khách hàng
+            Chăm sóc khách hàng
       </Link>
       <Link
-        href="#"
-        target="_blank"
-        rel="noopener"
-        sx={{ color: '#fff', marginLeft: '10px' }}
+        to="/rules#privacy-policy"
+        style={{ color:'#66CCCC', textDecoration: 'underline' }}
       >
-        Chính sách bảo mật
+            Chính sách bảo mật
       </Link>
       <Typography variant="body1">
-        Bạn đang muốn thưởng thức những bộ phim mới nhất? Hãy truy cập vào
-        trang web của chúng tôi để đặt vé phim online ngay hôm nay!
+            Bạn đang muốn thưởng thức những bộ phim mới nhất? Hãy truy cập vào
+            trang web của chúng tôi để đặt vé phim online ngay hôm nay!
       </Typography>
       <Typography variant="body2" sx={{ marginTop: '10px' }}>
         © {new Date().getFullYear()} Vé Phim Online. Mọi quyền được bảo lưu.

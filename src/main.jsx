@@ -10,6 +10,9 @@ import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/s
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import AuthProvider from './pages/Auth/AuthProvider.jsx'
+import reportWebVitals from './reportWebVitals.js'
+
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
     <CssVarsProvider theme={theme}>
@@ -32,3 +35,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </CssVarsProvider>
   </>
 )
+
+reportWebVitals()

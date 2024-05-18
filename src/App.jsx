@@ -1,3 +1,5 @@
+window.global ||= window
+
 import { Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import Order from './pages/OrderPage/Order'
@@ -19,6 +21,7 @@ import BillOfUserManager from '~/admin/pages/BillOfUserManager'
 import AddNewSchedule from '~/admin/pages/AddNewSchedule'
 import BranchSystem from './pages/BranchSystem'
 import SuccessPayment from './pages/OrderPage/SuccessPayment'
+import Rules from './pages/Rules'
 
 
 function App() {
@@ -58,6 +61,7 @@ function App() {
         <Route path='/login' element={<Login/>}></Route>
         <Route path='/branchs' element={<BranchSystem/>}></Route>
         <Route path='/register' element={<Register/>}></Route>
+        <Route path='/rules' element={<Rules/>}></Route>
         <Route path='*' element={<NotfoundPage/>}></Route>
       </Routes>
     </>

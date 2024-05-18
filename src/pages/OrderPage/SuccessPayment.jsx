@@ -15,6 +15,7 @@ import Navbar from '~/components/NavBar/NavBar'
 import { formatNumber } from '~/utils/formatVnd'
 import formatVnpPayDate from '~/utils/formatVnPayDate'
 import formatZaloPayDate from '~/utils/formatZaloPayDate'
+import { addNewTicketAPI } from '~/apis/ticketApi'
 function SuccessPayment() {
   const [avatar, setAvatar] = useState('')
   const userId = localStorage.getItem('userId')
@@ -23,6 +24,10 @@ function SuccessPayment() {
   const [bank, setBank] = useState('')
   const [payDate, setPayDate] = useState('')
   const [tranNo, setTranNo] = useState('')
+  const myListSeatString = localStorage.getItem('seatScheduleId')
+
+  // Chuyển đổi chuỗi JSON trở lại thành mảng
+  const myListSeat = JSON.parse(myListSeatString)
   const navigate = useNavigate()
   useEffect(() => {
     if (!userId) navigate('/login', { replace:true })
@@ -33,6 +38,7 @@ function SuccessPayment() {
       setIsFail(true)
     }
     else {
+      addNewTicketAPI({ userId: userId, seatScheduleId: myListSeat })
       const amount_res = (searchParams.get('vnp_Amount') / 100) || (searchParams.get('amount'))
       const bankCode = (searchParams.get('vnp_BankCode')) || ('Zalo Pay')
       const date_res = searchParams.get('vnp_PayDate') || searchParams.get('apptransid')

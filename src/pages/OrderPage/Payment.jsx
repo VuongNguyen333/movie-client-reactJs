@@ -13,7 +13,7 @@ import { getBranchbyIdAPI } from '~/apis/branchApi'
 import { getScheduleByIdAPI } from '~/apis/scheduleApi'
 import { getListSeatAPI } from '~/apis/seat'
 
-export default function Payment({ branchId, scheduleId, total, payment, listSeatId, stringSeat }) {
+export default function Payment({ branchId, scheduleId, total, payment, listSeatIdToReq, stringSeat }) {
   // console.log('🚀 ~ Payment ~ listSeatId:', listSeatId)
   const [branch, setBranch] = useState({})
   const [schedule, setSchedule] = useState({})
@@ -32,9 +32,9 @@ export default function Payment({ branchId, scheduleId, total, payment, listSeat
         setSeats(res)
         setIsSeatsLoaded(true)
       })
-      localStorage.setItem('listSeat', listSeatId)
+      localStorage.setItem('listSeat', listSeatIdToReq)
     }
-  }, [branchId, scheduleId, seats, isSeatsLoaded, listSeatId])
+  }, [branchId, scheduleId, seats, isSeatsLoaded, listSeatIdToReq])
   return (
     <Box sx={{ height:'100%', alignItems: 'center', justifyContent:'center' }}>
       <Box sx={{ alignItems: 'center', justifyContent:'center' }}>
