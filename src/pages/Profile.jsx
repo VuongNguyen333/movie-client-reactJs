@@ -226,7 +226,7 @@ function Profile() {
   return (
     <Container maxWidth={false} sx={{ bgcolor:'#222831', height:'100vh' }} disableGutters>
       <Container disableGutters maxWidth={false} sx={{ bgcolor:'#1a1d29' }}>
-        <Navbar avatar={avatar} />
+        <Navbar avatar={avatar} fullName={name}/>
         <Box sx={{ bgcolor:'#1a1d29' }}>
           <Box sx={{ color:'#1a1d29' }}>1</Box>
           <Box sx={{ color:'#1a1d29' }}>1</Box>

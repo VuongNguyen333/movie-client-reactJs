@@ -14,6 +14,7 @@ import AdbIcon from '@mui/icons-material/Adb'
 import Divider from '@mui/material/Divider'
 import Logout from '@mui/icons-material/Logout'
 import ListItemIcon from '@mui/material/ListItemIcon'
+import DashboardIcon from '@mui/icons-material/Dashboard'
 import { useState } from 'react'
 import logo2 from '~/assets/logo2.png'
 import './NavBar.css'
@@ -21,8 +22,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { getUserByIdAPI } from '~/apis/userApi'
 import { useAuth } from '~/pages/Auth/AuthProvider'
+import { Dashboard } from '@mui/icons-material'
 
-const Navbar = ({ avatar }) => {
+const Navbar = ({ avatar, fullName }) => {
   const [user, setUser] = useState({})
   const userId = localStorage.getItem('userId')
   const navigate = useNavigate()
@@ -31,6 +33,7 @@ const Navbar = ({ avatar }) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const [photo, setPhoto] = useState(avatar)
+  const [name, setName] = useState(fullName)
   useEffect(() => {
     if (localStorage.getItem('user')) {
       const userLocal = JSON.parse(localStorage.getItem('user'))
@@ -41,12 +44,15 @@ const Navbar = ({ avatar }) => {
           setUser(res)
         })
     }
-    // console.log('🚀 ~ Navbar ~ userId:', userId)
   }, [userId])
 
   useEffect(() => {
     setPhoto(avatar)
   }, [avatar])
+
+  useEffect(() => {
+    setName(fullName)
+  }, [fullName])
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -193,13 +199,22 @@ const Navbar = ({ avatar }) => {
                   Hệ thống rạp
                 </Button>
               </Link>
+              <Link to='/rules'>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    my: 2, color: 'white', display: 'block', '&:hover': {
+                      color: '#87A922' // Chuyển màu văn bản sang xanh khi di chuột vào
+                    },
+                    pt: '0px',
+                    pb: '0px'
+                  }}
+                >
+                  Về chúng tôi
+                </Button>
+              </Link>
             </Box>
             <Box sx={{ flexGrow: 0, display:'flex', alignItems:'center', justifyContent:'center' }}>
-              { localStorage.getItem('userRole')?.includes('ROLE_ADMIN')
-              && <Link to='/admin'>
-                <Typography textAlign="center" sx={{ mr:2, color: 'white', cursor:'pointer', ':hover' : { color: '#87A922' } }}>Dashboard</Typography>
-              </Link>
-              }
               { userId === null ?
                 <Link to='/login'>
                   <Button
@@ -268,6 +283,16 @@ const Navbar = ({ avatar }) => {
                   <Avatar alt="Avatar" src={`data:image/jpeg;base64,${photo}`} /> Thông tin
                 </MenuItem>
                 <Divider />
+                { localStorage.getItem('userRole')?.includes('ROLE_ADMIN')
+                && <Link to='/admin'>
+                  <MenuItem sx={{ color:'black' }}>
+                    <ListItemIcon>
+                      <Dashboard fontSize="small" />
+                    </ListItemIcon>
+                    Dashboard
+                  </MenuItem>
+                </Link>
+                }
                 <MenuItem onClick={() => {
                   handleClose()
                   auth.handleLogout()
